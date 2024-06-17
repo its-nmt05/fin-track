@@ -14,7 +14,8 @@ import {
 } from "@nextui-org/react"
 
 import { useLocation } from "react-router-dom"
-import { Logo, SearchIcon } from "../icons"
+import { CiSearch } from "react-icons/ci"
+import { Logo } from "../icons"
 
 export default function Header() {
   const navItems = [
@@ -60,7 +61,7 @@ export default function Header() {
           }}
           placeholder="Type to search..."
           size="sm"
-          startContent={<SearchIcon />}
+          startContent={<CiSearch />}
           type="search"
         />
         <Dropdown placement="bottom-end">
