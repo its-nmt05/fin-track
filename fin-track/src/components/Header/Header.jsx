@@ -27,7 +27,6 @@ export default function Header() {
   ]
 
   const location = useLocation()
-  useEffect(() => {}, [])
 
   return (
     <Navbar isBordered maxWidth="full">

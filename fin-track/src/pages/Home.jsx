@@ -1,5 +1,7 @@
-import { InfoCard } from "../components"
-import React from "react"
+import { InfoCard, StockGraph } from "../components"
+import React, { useEffect } from "react"
+import stock from "../stocks/stock"
+import { data } from "../stocks/dummy-data"
 
 function Home() {
   const companies = [
@@ -32,16 +34,44 @@ function Home() {
       ticker: "NVDA",
       currentPrice: "$130.90",
       change: { value: "0.01%", increase: true },
-      image: "https://logowik.com/content/uploads/images/599_nvidia.jpg"
+      image: "https://logowik.com/content/uploads/images/599_nvidia.jpg",
     },
   ]
 
+  const stockInfo = {
+    name: "Meta Platform, Inc.",
+    img: "https://1000logos.net/wp-content/uploads/2021/10/logo-Meta.png",
+    platform: "NASDAQ",
+    ticker: "FB",
+    industries: ["Social Media", "Internet"],
+    currentPrice: "$305.66",
+    change: { percent: "1.84%", price: "5.51" },
+  }
+
+  // useEffect(() => {
+  //   stock
+  //     .getData({ symbol: "GOOG" })
+  //     .then((data) => console.log(data))
+  //     .catch((e) => console.log(e))
+  // }, [])
+
   return (
-    <div className="flex space-x-2 mx-2 my-2">
-      {companies.map((company) => (
-        <InfoCard companyInfo={company} className="min-w-[19rem]" />
-      ))}
-    </div>
+    <>
+      <div className="flex space-x-2 mx-2 my-2">
+        {companies.map((company) => (
+          <InfoCard
+            key={company.ticker}
+            companyInfo={company}
+            className="min-w-[19rem]"
+          />
+        ))}
+      </div>
+      <StockGraph
+        className="mx-[20%] my-5"
+        stockInfo={stockInfo}
+        stockData={data.quote[0].high}
+      />
+    </>
   )
 }
 
