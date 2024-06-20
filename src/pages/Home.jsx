@@ -48,13 +48,6 @@ function Home() {
     change: { percent: "1.84%", price: "5.51" },
   }
 
-  // useEffect(() => {
-  //   stock
-  //     .getData({ symbol: "GOOG" })
-  //     .then((data) => console.log(data))
-  //     .catch((e) => console.log(e))
-  // }, [])
-
   return (
     <>
       <div className="flex space-x-2 mx-2 my-2">
@@ -70,6 +63,7 @@ function Home() {
         className="mx-[20%] my-5"
         stockInfo={stockInfo}
         stockData={data.quote[0].high}
+        stockId="GOOG"
       />
     </>
   )

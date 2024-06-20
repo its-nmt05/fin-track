@@ -1,13 +1,32 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { LineChart } from "@mui/x-charts/LineChart"
 import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from "@nextui-org/react"
 import { FaArrowUp } from "react-icons/fa6"
+import stock from "../stocks/stock"
 
 function StockGraph({
   className = "",
+  stockId,
   stockInfo: { name, img, platform, ticker, industries, currentPrice, change },
-  stockData,
 }) {
+  const timeOptions = [
+    { id: "1d", label: "1D" },
+    { id: "7d", label: "7D" },
+    { id: "1mo", label: "1M" },
+    { id: "1y", label: "1Y" },
+    { id: "max", label: "All" },
+  ]
+
+  const [timeOption, setTimeOption] = useState(timeOptions[0].id)
+  const [stockData, setStockData] = useState({})
+
+  useEffect(() => {
+    stock
+      .getData({ stockId, range: timeOption })
+      .then((data) => setStockData(data))
+      .catch((e) => console.log(e))
+  }, [timeOption])
+
   return (
     <div className={`space-y-4 ${className}`}>
       <Card className="px-4 py-2">
@@ -46,39 +65,42 @@ function StockGraph({
         </CardBody>
       </Card>
       <Card className="px-4 py-2">
-        <CardHeader>
-          <div className="flex-col space-y-4 justify-center items-center">
-            <p className="text-xl font-bold">Overview</p>
-            <Tabs aria-label="Options">
-              <Tab title="Summary"></Tab>
-              <Tab title="Chart"></Tab>
-              <Tab title="Fundamental"></Tab>
-              <Tab title="Statistic"></Tab>
-              <Tab title="Corporate Action"></Tab>
-              <Tab title="Profile"></Tab>
-            </Tabs>
-          </div>
+        <CardHeader className="flex-col space-y-4 items-start">
+          <p className="text-xl font-bold">Overview</p>
+          <Tabs
+            aria-label="Date options"
+            items={timeOptions}
+            selectedKey={timeOption}
+            onSelectionChange={setTimeOption}
+          >
+            {(item) => <Tab title={item.label} key={item.id} />}
+          </Tabs>
         </CardHeader>
-        <CardBody>
-          <LineChart
-            grid={{ horizontal: true }}
-            series={[
-              {
-                id: "root",
-                data: stockData,
-                showMark: false,
-                area: true,
-              },
-            ]}
-            sx={{ "& .MuiAreaElement-series-root": { fill: "#b1fada" } }}
-            width={600}
-            height={300}
-            bottomAxis={{ disableTicks: true }}
-            leftAxis={{
-              disableLine: true,
-              disableTicks: true,
-            }}
-          />
+        <CardBody className="inline-flex items-center justify-center">
+          {stockData?.indicators && (
+            <LineChart
+              grid={{ horizontal: true }}
+              series={[
+                {
+                  data: stockData?.indicators.open,
+                  showMark: false,
+                },
+              ]}
+              width={650}
+              height={300}
+              bottomAxis={{ disableTicks: true }}
+              leftAxis={{
+                disableLine: true,
+                disableTicks: true,
+              }}
+              xAxis={[
+                {
+                  data: stockData.timestamp,
+                  scaleType: "time",
+                },
+              ]}
+            />
+          )}
         </CardBody>
       </Card>
     </div>
