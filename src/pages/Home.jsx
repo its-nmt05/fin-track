@@ -63,7 +63,7 @@ function Home() {
         className="mx-[20%] my-5"
         stockInfo={stockInfo}
         stockData={data.quote[0].high}
-        stockId="GOOG"
+        stockId="NVDA"
       />
     </>
   )

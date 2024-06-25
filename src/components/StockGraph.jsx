@@ -47,7 +47,7 @@ function StockGraph({
               </div>
             </div>
             <div className="text-end space-y-2">
-              <p className="text-3xl font-bold text-blue-500">{currentPrice}</p>
+              <p className="text-3xl font-bold text-blue-500">${stockData.regularMarketDayHigh}</p>
               <div className="flex items-center justify-end space-x-1">
                 <Chip
                   startContent={<FaArrowUp />}
