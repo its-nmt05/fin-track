@@ -1,13 +1,10 @@
 import React, { useState } from "react"
-import { Button, Input, Link, user } from "@nextui-org/react"
+import { Button, Input, Link } from "@nextui-org/react"
 import { useForm } from "react-hook-form"
 import authService from "../supabase/auth"
 import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { login as authLogin } from "../store/authSlice"
 
 function Signup() {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const [error, setError] = useState(null)
@@ -17,7 +14,6 @@ function Signup() {
     const { data, error } = await authService.signup(userData)
 
     if (data.user) {
-      dispatch(authLogin(data.user))
       navigate("/")
     }
     setError(error?.message)

@@ -1,24 +1,9 @@
 import { InfoCard, StockGraph } from "../components"
-import React, { useEffect } from "react"
+import React from "react"
 import stock from "../stocks/stock"
 import { data } from "../stocks/dummy-data"
-import { useDispatch } from "react-redux"
-import { login, logout } from "../store/authSlice"
-import authService from "../supabase/auth"
 
 function Home() {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    authService.getUser().then((user) => {
-      if (user) {
-        dispatch(login({ user }))
-      } else {
-        dispatch(logout())
-      }
-    })
-  }, [])
-
   const companies = [
     {
       name: "Apple Inc",

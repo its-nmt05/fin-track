@@ -11,6 +11,7 @@ import {
   Avatar,
   DropdownMenu,
   DropdownItem,
+  Tooltip,
 } from "@nextui-org/react"
 
 import { useLocation, useNavigate } from "react-router-dom"

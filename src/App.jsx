@@ -1,6 +1,5 @@
 import { NextUIProvider } from "@nextui-org/react"
 import { useNavigate, Route, Routes } from "react-router-dom"
-
 import { Layout, AuthLayout } from "./components"
 import {
   GetStarted,
@@ -12,7 +11,6 @@ import {
   Signup,
 } from "./pages"
 import { Provider } from "react-redux"
-
 import store from "./store/store"
 
 function App() {
@@ -64,7 +62,7 @@ function App() {
               }
             />
           </Route>
-          
+
           <Route
             path="/login"
             element={

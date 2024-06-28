@@ -1,5 +1,7 @@
 import { createClient } from "@supabase/supabase-js"
 import config from "../config/config"
+import store from "../store/store"
+import { setUser, clearUser } from "../store/authSlice"
 
 export class AuthService {
     constructor() {
@@ -7,6 +9,14 @@ export class AuthService {
             config.supabaseUrl,
             config.supabaseProjectAPIKey
         )
+
+        this.client.auth.onAuthStateChange((event, session) => {
+            if (session?.user) {
+                store.dispatch(setUser(session))
+            } else {
+                store.dispatch(clearUser())
+            }
+        })
     }
 
     async signup({ name, email, password }) {
