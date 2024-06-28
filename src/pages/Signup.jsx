@@ -44,6 +44,7 @@ function Signup() {
               placeholder="Enter your full name"
               labelPlacement="outside"
               radius="sm"
+              autoComplete="off"
               classNames={{
                 label: "font-semibold ml-2",
                 inputWrapper: "mb-4",
@@ -57,6 +58,7 @@ function Signup() {
               placeholder="Enter your email"
               labelPlacement="outside"
               radius="sm"
+              autoComplete="off"
               classNames={{
                 label: "font-semibold ml-2",
                 inputWrapper: "mb-4",

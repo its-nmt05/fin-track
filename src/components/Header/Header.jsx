@@ -13,10 +13,11 @@ import {
   DropdownItem,
 } from "@nextui-org/react"
 
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { CiSearch } from "react-icons/ci"
 import { Logo } from "../icons"
 import { useSelector } from "react-redux"
+import authService from "../../supabase/auth"
 
 export default function Header() {
   const navItems = [
@@ -28,7 +29,17 @@ export default function Header() {
   ]
 
   const location = useLocation()
+  const navigate = useNavigate()
   const user = useSelector((state) => state.user)
+
+  const logout = async () => {
+    const { error } = await authService.signout()
+    if (error) {
+      console.log(error)
+    } else {
+      navigate("/login")
+    }
+  }
 
   return (
     <Navbar isBordered maxWidth="full">
@@ -78,6 +89,13 @@ export default function Header() {
           <DropdownMenu
             aria-label="Profile Actions"
             variant="flat"
+            onAction={(key) => {
+              switch (key) {
+                case "logout":
+                  logout()
+                  break
+              }
+            }}
           >
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>

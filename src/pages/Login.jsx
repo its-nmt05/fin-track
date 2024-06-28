@@ -45,6 +45,7 @@ function Login() {
               placeholder="Enter your email"
               labelPlacement="outside"
               radius="sm"
+              autoComplete="off"
               classNames={{
                 label: "font-semibold ml-2",
                 inputWrapper: "mb-4",

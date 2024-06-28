@@ -24,6 +24,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route
+              path="/"
+              element={
+                <AuthLayout authReq>
+                  <Home />
+                </AuthLayout>
+              }
+            />
+            <Route
               path="get-started"
               element={
                 <AuthLayout authReq>
@@ -31,12 +39,32 @@ function App() {
                 </AuthLayout>
               }
             />
-            <Route path="" element={<Home />} />
-            <Route path="portfolio" element={<Portfolio />} />
-            <Route path="invest" element={<Invest />} />
-            <Route path="wallet" element={<Wallet />} />
+            <Route
+              path="portfolio"
+              element={
+                <AuthLayout authReq>
+                  <Portfolio />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="invest"
+              element={
+                <AuthLayout authReq>
+                  <Invest />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="wallet"
+              element={
+                <AuthLayout authReq>
+                  <Wallet />
+                </AuthLayout>
+              }
+            />
           </Route>
-
+          
           <Route
             path="/login"
             element={
@@ -45,7 +73,6 @@ function App() {
               </AuthLayout>
             }
           />
-
           <Route
             path="/signup"
             element={

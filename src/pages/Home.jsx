@@ -65,7 +65,7 @@ function Home() {
 
   return (
     <>
-      {/* <div className="flex space-x-2 mx-2 my-2">
+      <div className="flex space-x-2 mx-2 my-2">
         {companies.map((company) => (
           <InfoCard
             key={company.ticker}
@@ -79,7 +79,7 @@ function Home() {
         stockInfo={stockInfo}
         stockData={data.quote[0].high}
         stockId="NVDA"
-      /> */}
+      />
     </>
   )
 }
