@@ -2,8 +2,23 @@ import { InfoCard, StockGraph } from "../components"
 import React, { useEffect } from "react"
 import stock from "../stocks/stock"
 import { data } from "../stocks/dummy-data"
+import { useDispatch } from "react-redux"
+import { login, logout } from "../store/authSlice"
+import authService from "../supabase/auth"
 
 function Home() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    authService.getUser().then((user) => {
+      if (user) {
+        dispatch(login({ user }))
+      } else {
+        dispatch(logout())
+      }
+    })
+  }, [])
+
   const companies = [
     {
       name: "Apple Inc",
@@ -50,7 +65,7 @@ function Home() {
 
   return (
     <>
-      <div className="flex space-x-2 mx-2 my-2">
+      {/* <div className="flex space-x-2 mx-2 my-2">
         {companies.map((company) => (
           <InfoCard
             key={company.ticker}
@@ -64,7 +79,7 @@ function Home() {
         stockInfo={stockInfo}
         stockData={data.quote[0].high}
         stockId="NVDA"
-      />
+      /> */}
     </>
   )
 }

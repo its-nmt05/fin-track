@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import {
   Navbar,
   NavbarBrand,
@@ -16,17 +16,19 @@ import {
 import { useLocation } from "react-router-dom"
 import { CiSearch } from "react-icons/ci"
 import { Logo } from "../icons"
+import { useSelector } from "react-redux"
 
 export default function Header() {
   const navItems = [
     { name: "Get started", route: "/get-started", active: true },
-    { name: "Home", route: "/home", active: true },
+    { name: "Home", route: "/", active: true },
     { name: "Portfolio", route: "/portfolio", active: true },
     { name: "Invest", route: "/invest", active: true },
     { name: "Wallet", route: "/wallet", active: true },
   ]
 
   const location = useLocation()
+  const user = useSelector((state) => state.user)
 
   return (
     <Navbar isBordered maxWidth="full">
@@ -69,16 +71,18 @@ export default function Header() {
               isBordered
               as="button"
               className="transition-transform"
-              color="secondary"
               size="sm"
               src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
             />
           </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
+          <DropdownMenu
+            aria-label="Profile Actions"
+            variant="flat"
+          >
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold max-w-[10rem] truncate">
-                nmt@example.com
+                {user?.email}
               </p>
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>

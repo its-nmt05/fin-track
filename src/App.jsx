@@ -1,22 +1,61 @@
 import { NextUIProvider } from "@nextui-org/react"
 import { useNavigate, Route, Routes } from "react-router-dom"
 
-import { Layout } from "./components"
-import { GetStarted, Home, Portfolio, Invest, Wallet } from "./pages"
+import { Layout, AuthLayout } from "./components"
+import {
+  GetStarted,
+  Home,
+  Portfolio,
+  Invest,
+  Wallet,
+  Login,
+  Signup,
+} from "./pages"
+import { Provider } from "react-redux"
+
+import store from "./store/store"
 
 function App() {
   const navigate = useNavigate()
+
   return (
     <NextUIProvider navigate={navigate}>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="get-started" element={<GetStarted />} />
-          <Route path="home" element={<Home />} />
-          <Route path="portfolio" element={<Portfolio />} />
-          <Route path="invest" element={<Invest />} />
-          <Route path="wallet" element={<Wallet />} />
-        </Route>
-      </Routes>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route
+              path="get-started"
+              element={
+                <AuthLayout authReq>
+                  <GetStarted />
+                </AuthLayout>
+              }
+            />
+            <Route path="" element={<Home />} />
+            <Route path="portfolio" element={<Portfolio />} />
+            <Route path="invest" element={<Invest />} />
+            <Route path="wallet" element={<Wallet />} />
+          </Route>
+
+          <Route
+            path="/login"
+            element={
+              <AuthLayout>
+                <Login />
+              </AuthLayout>
+            }
+          />
+
+          <Route
+            path="/signup"
+            element={
+              <AuthLayout>
+                <Signup />
+              </AuthLayout>
+            }
+          />
+        </Routes>
+      </Provider>
     </NextUIProvider>
   )
 }

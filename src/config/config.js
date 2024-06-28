@@ -1,5 +1,8 @@
 const config = {
-    YHFinanceAPIkey: String(import.meta.env.VITE_YH_FINANCE_API_KEY),
+    supabaseUrl: String(import.meta.env.VITE_SUPABASE_PROJECT_URL),
+    supabaseProjectAPIKey: String(
+        import.meta.env.VITE_SUPABASE_PROJECT_API_KEY
+    ),
 }
 
 export default config
