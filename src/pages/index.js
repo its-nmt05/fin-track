@@ -6,5 +6,16 @@ import Account from "./Account"
 import Invest from "./Invest"
 import Login from "./Login"
 import Signup from "./Signup"
+import NotFound from "./NotFound"
 
-export { GetStarted, Home, Portfolio, Wallet, Account, Invest, Login, Signup }
+export {
+    GetStarted,
+    Home,
+    Portfolio,
+    Wallet,
+    Account,
+    Invest,
+    Login,
+    Signup,
+    NotFound,
+}

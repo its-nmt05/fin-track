@@ -9,6 +9,7 @@ import {
   Wallet,
   Login,
   Signup,
+  NotFound,
 } from "./pages"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
@@ -22,7 +23,7 @@ function App() {
 
   useEffect(() => {
     authService.getUser().then((data) => {
-      if (data) {
+      if (data?.user) {
         dispatch(setUser(data))
       } else {
         navigate("/login")
@@ -77,7 +78,6 @@ function App() {
             }
           />
         </Route>
-
         <Route
           path="/login"
           element={
@@ -94,6 +94,7 @@ function App() {
             </AuthLayout>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </NextUIProvider>
   ) : (

@@ -15,7 +15,7 @@ function Signup() {
 
   const signup = async (userData) => {
     const { data, error } = await authService.signup(userData)
-    if (data) {
+    if (data.user) {
       dispatch(setUser(data))
       navigate("/")
     }

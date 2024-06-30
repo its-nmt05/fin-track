@@ -21,10 +21,15 @@ function StockGraph({
   const [stockData, setStockData] = useState({})
 
   useEffect(() => {
+    const abortController = new AbortController()
+    const signal = abortController.signal
     stock
       .getData({ stockId, range: timeOption })
-      .then((data) => setStockData(data))
-      .catch((e) => console.log(e))
+      .then((data) => !signal.aborted && setStockData(data))
+      .catch((e) => !signal.aborted && console.log(e))
+    return () => {
+      abortController.abort()
+    }
   }, [timeOption])
 
   return (
@@ -47,7 +52,9 @@ function StockGraph({
               </div>
             </div>
             <div className="text-end space-y-2">
-              <p className="text-3xl font-bold text-blue-500">${stockData.regularMarketDayHigh}</p>
+              <p className="text-3xl font-bold text-blue-500">
+                ${stockData.regularMarketDayHigh}
+              </p>
               <div className="flex items-center justify-end space-x-1">
                 <Chip
                   startContent={<FaArrowUp />}
