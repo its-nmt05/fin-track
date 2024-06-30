@@ -11,14 +11,14 @@ import {
   Avatar,
   DropdownMenu,
   DropdownItem,
-  Tooltip,
 } from "@nextui-org/react"
 
 import { useLocation, useNavigate } from "react-router-dom"
 import { CiSearch } from "react-icons/ci"
 import { Logo } from "../icons"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import authService from "../../supabase/auth"
+import { clearUser } from "../../store/authSlice"
 
 export default function Header() {
   const navItems = [
@@ -31,13 +31,16 @@ export default function Header() {
 
   const location = useLocation()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
 
   const logout = async () => {
     const { error } = await authService.signout()
+
     if (error) {
       console.log(error)
     } else {
+      dispatch(clearUser())
       navigate("/login")
     }
   }

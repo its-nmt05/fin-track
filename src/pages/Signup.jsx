@@ -3,19 +3,23 @@ import { Button, Input, Link } from "@nextui-org/react"
 import { useForm } from "react-hook-form"
 import authService from "../supabase/auth"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setUser } from "../store/authSlice"
 
 function Signup() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [error, setError] = useState(null)
   const { register, handleSubmit } = useForm("")
 
   const signup = async (userData) => {
     const { data, error } = await authService.signup(userData)
-
-    if (data.user) {
+    if (data) {
+      dispatch(setUser(data))
       navigate("/")
     }
+
     setError(error?.message)
   }
 
