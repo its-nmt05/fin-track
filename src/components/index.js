@@ -4,5 +4,16 @@ import Layout from "./Layout"
 import InfoCard from "./InfoCard"
 import StockGraph from "./StockGraph"
 import AuthLayout from "./AuthLayout"
+import StockDetails from "./StockDetails"
+import TransactionsTable from "./TransactionsTable"
 
-export { Header, Footer, Layout, InfoCard, StockGraph, AuthLayout }
+export {
+    Header,
+    Footer,
+    Layout,
+    InfoCard,
+    StockGraph,
+    AuthLayout,
+    StockDetails,
+    TransactionsTable,
+}

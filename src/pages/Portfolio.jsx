@@ -1,8 +1,11 @@
-import React from 'react'
+import React from "react"
+import { TransactionsTable } from "../components"
 
 function Portfolio() {
   return (
-    <div>Portfolio</div>
+    <div>
+      <TransactionsTable />
+    </div>
   )
 }
 

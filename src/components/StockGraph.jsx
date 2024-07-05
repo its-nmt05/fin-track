@@ -6,7 +6,7 @@ import stock from "../stocks/stock"
 
 function StockGraph({
   className = "",
-  stockId,
+  symbol,
   stockInfo: { name, img, platform, ticker, industries, currentPrice, change },
 }) {
   const timeOptions = [
@@ -24,7 +24,7 @@ function StockGraph({
     const abortController = new AbortController()
     const signal = abortController.signal
     stock
-      .getData({ stockId, range: timeOption })
+      .getData({ symbol })
       .then((data) => !signal.aborted && setStockData(data))
       .catch((e) => !signal.aborted && console.log(e))
     return () => {
