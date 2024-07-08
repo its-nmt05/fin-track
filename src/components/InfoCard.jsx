@@ -16,9 +16,7 @@ function InfoCard({
             <p className="text-sm">{name}</p>
           </div>
         </div>
-        <div>
-          <FaEllipsis />
-        </div>
+        <FaEllipsis />
       </CardHeader>
       <CardBody className="flex-row justify-between items-end">
         <p className="text-xl font-semibold">{currentPrice}</p>

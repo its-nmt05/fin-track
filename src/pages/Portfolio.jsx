@@ -1,9 +1,10 @@
 import React from "react"
-import { TransactionsTable } from "../components"
+import { PortfolioAllocations, TransactionsTable } from "../components"
 
 function Portfolio() {
   return (
-    <div>
+    <div className="space-y-12 m-5">
+      <PortfolioAllocations />
       <TransactionsTable />
     </div>
   )

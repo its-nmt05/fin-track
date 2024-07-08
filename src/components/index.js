@@ -6,6 +6,7 @@ import StockGraph from "./StockGraph"
 import AuthLayout from "./AuthLayout"
 import StockDetails from "./StockDetails"
 import TransactionsTable from "./TransactionsTable"
+import PortfolioAllocations from "./PortfolioAllocations"
 
 export {
     Header,
@@ -16,4 +17,5 @@ export {
     AuthLayout,
     StockDetails,
     TransactionsTable,
+    PortfolioAllocations,
 }

@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@nextui-org/react"
 import React, { useCallback } from "react"
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6"
 
 function TransactionsTable({ className = "" }) {
   const columns = [
@@ -16,6 +17,7 @@ function TransactionsTable({ className = "" }) {
     { key: "type", name: "Type" },
     { key: "amount", name: "Order amount" },
     { key: "status", name: "Status" },
+    { key: "statement", name: "P&L" },
   ]
   const transactions = [
     {
@@ -26,6 +28,7 @@ function TransactionsTable({ className = "" }) {
       amount: "100",
       quantity: 3,
       status: "completed",
+      statement: 0,
     },
     {
       symbol: "MSFT",
@@ -35,6 +38,7 @@ function TransactionsTable({ className = "" }) {
       amount: "100",
       quantity: 3,
       status: "completed",
+      statement: 9.6,
     },
     {
       symbol: "NVDA",
@@ -44,6 +48,7 @@ function TransactionsTable({ className = "" }) {
       amount: "300",
       quantity: 3,
       status: "active",
+      statement: -5,
     },
     {
       symbol: "GOOG",
@@ -53,6 +58,7 @@ function TransactionsTable({ className = "" }) {
       amount: "450",
       quantity: 3,
       status: "completed",
+      statement: 2.4,
     },
   ]
 
@@ -71,15 +77,17 @@ function TransactionsTable({ className = "" }) {
       case "date":
         return transaction.date.toLocaleDateString()
       case "type":
-        return transaction.type == "buy" ? (
+        let font_color =
+          transaction.type == "buy" ? "text-green-500" : "text-red-500"
+        return (
           <div>
-            <p className="font-semibold text-green-500">BUY</p>
+            <p className={`font-semibold ${font_color}`}>
+              {transaction.type.toUpperCase()}
+            </p>
             <p className="font-semibold text-tiny text-default-400">
               {transaction.quantity}
             </p>
           </div>
-        ) : (
-          <p className="text-red-500 font-semibold">SELL</p>
         )
       case "amount":
         return "$" + transaction.amount
@@ -93,29 +101,40 @@ function TransactionsTable({ className = "" }) {
             {transaction.status}
           </Chip>
         )
+      case "statement":
+        return (
+          <div className="inline-flex space-x-2 items-center">
+            {transaction.statement > 0 ? (
+              <FaArrowTrendUp color="green" />
+            ) : (
+              <FaArrowTrendDown color="red" />
+            )}
+            <p>{transaction.statement}</p>
+          </div>
+        )
     }
   })
 
   return (
-    <Table
-      isStripeds
-      selectionMode="multiple"
-      aria-label="transactions"
-      className={`p-3 w-fit ${className}`}
-    >
-      <TableHeader columns={columns}>
-        {(column) => <TableColumn key={column.key}>{column.name}</TableColumn>}
-      </TableHeader>
-      <TableBody items={transactions}>
-        {(transaction) => (
-          <TableRow key={transaction.symbol}>
-            {(columnKey) => (
-              <TableCell>{renderCell(transaction, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <div className={`m-3 ${className}`}>
+      <p className="text-2xl font-bold mb-4">Trading activity</p>
+      <Table selectionMode="multiple" aria-label="transactions">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.name}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={transactions}>
+          {(transaction) => (
+            <TableRow key={transaction.symbol}>
+              {(columnKey) => (
+                <TableCell>{renderCell(transaction, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   )
 }
 
