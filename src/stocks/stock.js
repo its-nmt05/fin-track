@@ -1,12 +1,12 @@
 import config from "../config/config"
 
 export class Stock {
-    async getData({ stockId, interval = "1d", range = "1mo" }) {
+    async getData({ symbol, interval = "1d", range = "1mo" }) {
         if (range == "1d") interval = "5m"
         try {
             const proxyUrl = "https://cors-anywhere.herokuapp.com/"
             const res = await fetch(
-                `${proxyUrl}https://query1.finance.yahoo.com/v8/finance/chart/${stockId}?interval=${interval}&range=${range}`
+                `${proxyUrl}https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=${interval}&range=${range}`
             )
             const data = await res.json()
             const meta = data?.chart.result[0].meta

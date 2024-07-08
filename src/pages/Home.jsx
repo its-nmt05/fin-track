@@ -1,7 +1,6 @@
 import { InfoCard, StockDetails, StockGraph } from "../components"
 import React from "react"
 import stock from "../stocks/stock"
-import { data } from "../stocks/dummy-data"
 
 function Home() {
   const companies = [
@@ -62,7 +61,6 @@ function Home() {
       <StockGraph
         className="mx-[20%] my-5"
         stockInfo={stockInfo}
-        stockData={data.quote[0].high}
         symbol="NVDA"
       />
       <StockDetails className="w-fit ml-[20%]" />

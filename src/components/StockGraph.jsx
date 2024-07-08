@@ -24,7 +24,7 @@ function StockGraph({
     const abortController = new AbortController()
     const signal = abortController.signal
     stock
-      .getData({ symbol })
+      .getData({ symbol, range: timeOption })
       .then((data) => !signal.aborted && setStockData(data))
       .catch((e) => !signal.aborted && console.log(e))
     return () => {
