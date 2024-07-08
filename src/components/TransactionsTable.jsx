@@ -1,5 +1,8 @@
 import {
+  Button,
   Chip,
+  Dropdown,
+  DropdownTrigger,
   Table,
   TableBody,
   TableCell,
@@ -8,7 +11,7 @@ import {
   TableRow,
 } from "@nextui-org/react"
 import React, { useCallback } from "react"
-import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6"
+import { FaAngleDown, FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6"
 
 function TransactionsTable({ className = "" }) {
   const columns = [
@@ -117,7 +120,17 @@ function TransactionsTable({ className = "" }) {
 
   return (
     <div className={`m-3 ${className}`}>
-      <p className="text-2xl font-bold mb-4">Trading activity</p>
+      <div className="w-full inline-flex items-baseline justify-between mb-4">
+        <p className="text-2xl font-bold">Transaction history</p>
+        <Dropdown>
+          <DropdownTrigger>
+            <Button className="bg-gray-100" variant="bordered" size="sm">
+              <p>Sort by: date</p>
+              <FaAngleDown />
+            </Button>
+          </DropdownTrigger>
+        </Dropdown>
+      </div>
       <Table selectionMode="multiple" aria-label="transactions">
         <TableHeader columns={columns}>
           {(column) => (
