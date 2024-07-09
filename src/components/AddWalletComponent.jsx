@@ -1,34 +1,36 @@
 import {
   Button,
-  Dropdown,
-  DropdownTrigger,
   Input,
   Modal,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   Radio,
   RadioGroup,
   Spinner,
   useDisclosure,
 } from "@nextui-org/react"
-import React, { useState } from "react"
-import { useForm } from "react-hook-form"
+import React, { useEffect, useState } from "react"
+import { Controller, useForm } from "react-hook-form"
 import { MdAdd } from "react-icons/md"
 import databaseService from "../supabase/database"
 import { useSelector } from "react-redux"
-import ColorSelector from "./ColorSelector"
 
 function AddWalletComponent() {
   const [loading, setLoading] = useState(false)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-  const { register, handleSubmit } = useForm("")
+  const { register, control, handleSubmit, reset } = useForm("")
   const user = useSelector((state) => state.user)
 
+  const colors = [
+    { color: "bg-red-100", name: "Red" },
+    { color: "bg-green-100", name: "Green" },
+    { color: "bg-purple-100", name: "Purple" },
+    { color: "bg-gray-100", name: "Gray" },
+    { color: "bg-blue-100", name: "Blue" },
+  ]
+
   const createWallet = async (walletData) => {
-    console.log(walletData)
-    setLoading(true)
     databaseService
       .createWallet({ ...walletData, user_id: user.id })
       .finally(() => {
@@ -36,6 +38,12 @@ function AddWalletComponent() {
         onClose()
       })
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      reset() // reset the form with 500ms delay
+    }, 500)
+  }, [isOpen])
 
   return (
     <>
@@ -54,16 +62,30 @@ function AddWalletComponent() {
       >
         <ModalContent>
           {!loading ? (
-            (onClose) => (
+            () => (
               <>
                 <ModalHeader>Add a new wallet</ModalHeader>
                 <ModalBody>
                   <form onSubmit={handleSubmit(createWallet)}>
                     <div className="mb-10">
                       <p className="font-semibold ml-2 mb-1">Choose color</p>
-                      <ColorSelector />
+                      <Controller
+                        defaultValue={colors[0].color}
+                        name="color"
+                        control={control}
+                        render={({ field }) => (
+                          <RadioGroup
+                            defaultValue={colors[0].color}
+                            orientation="horizontal"
+                            {...field}
+                          >
+                            {colors.map((color) => (
+                              <Radio value={color.color}>{color.name}</Radio>
+                            ))}
+                          </RadioGroup>
+                        )}
+                      />
                     </div>
-
                     <Input
                       autoFocus
                       type="name"
