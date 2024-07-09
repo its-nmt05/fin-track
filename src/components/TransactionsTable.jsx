@@ -124,7 +124,7 @@ function TransactionsTable({ className = "" }) {
         <p className="text-2xl font-bold">Transaction history</p>
         <Dropdown>
           <DropdownTrigger>
-            <Button className="bg-gray-100" variant="bordered" size="sm">
+            <Button variant="bordered" size="sm">
               <p>Sort by: date</p>
               <FaAngleDown />
             </Button>

@@ -8,6 +8,8 @@ import StockDetails from "./StockDetails"
 import TransactionsTable from "./TransactionsTable"
 import PortfolioAllocations from "./PortfolioAllocations"
 import TradingActivity from "./TradingActivity"
+import AddWalletComponent from "./AddWalletComponent"
+import ColorSelector from "./ColorSelector"
 
 export {
     Header,
@@ -20,4 +22,6 @@ export {
     TransactionsTable,
     PortfolioAllocations,
     TradingActivity,
+    AddWalletComponent,
+    ColorSelector,
 }

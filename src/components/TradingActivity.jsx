@@ -26,7 +26,7 @@ function TradingActivity({ className = "" }) {
           <div className="space-x-2">
             <Dropdown>
               <DropdownTrigger>
-                <Button className="bg-gray-100" variant="bordered" size="sm">
+                <Button variant="bordered" size="sm">
                   2022
                   <FaAngleDown />
                 </Button>
@@ -34,7 +34,7 @@ function TradingActivity({ className = "" }) {
             </Dropdown>
             <Dropdown>
               <DropdownTrigger>
-                <Button className="bg-gray-100" variant="bordered" size="sm">
+                <Button variant="bordered" size="sm">
                   Monthly
                   <FaAngleDown />
                 </Button>
