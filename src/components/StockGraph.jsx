@@ -20,6 +20,8 @@ function StockGraph({
   const [timeOption, setTimeOption] = useState(timeOptions[0].id)
   const [stockData, setStockData] = useState({})
 
+  stock.quote({ symbol: "AAPL" }).then((data) => console.log(data))
+
   useEffect(() => {
     const abortController = new AbortController()
     const signal = abortController.signal

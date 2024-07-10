@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import { PieChart } from "@mui/x-charts/PieChart"
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react"
 import { FaArrowTrendUp, FaEllipsis } from "react-icons/fa6"
 
 function PortfolioAllocations({ className = "" }) {
+  const [loading, setLoading] = useState(true)
+
   return (
     <Card className={`m-3 w-fit p-2 ${className}`}>
       <CardHeader>

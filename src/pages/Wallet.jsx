@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import databaseService from "../supabase/database"
-import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react"
+import {
+  Spinner,
+} from "@nextui-org/react"
 import { AddWalletComponent } from "../components"
+import WalletComponent from "../components/WalletComponent"
 
 function Wallet() {
   const user = useSelector((state) => state.user)
@@ -19,20 +22,16 @@ function Wallet() {
   }, [])
 
   return !loading ? (
-    <div className="w-full inline-flex justify-between p-4">
-      <div>
+    <div className="m-4 space-y-4">
+      <div className="w-full inline-flex justify-between">
+        <p className="text-2xl font-bold">Your wallets</p>
+        <AddWalletComponent />
+      </div>
+      <div className="inline-flex space-x-4">
         {wallets.map((wallet) => (
-          <Card
-            isPressable
-            key={wallet.name}
-            className={`w-fit mb-4 ${wallet.color}`}
-          >
-            <CardHeader>{wallet.name}</CardHeader>
-            <CardBody>{wallet.balance}</CardBody>
-          </Card>
+          <WalletComponent wallet={wallet}/>
         ))}
       </div>
-      <AddWalletComponent />
     </div>
   ) : (
     <div className="flex min-h-screen justify-center items-center">

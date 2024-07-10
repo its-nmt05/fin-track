@@ -41,7 +41,7 @@ function AddWalletComponent() {
 
   useEffect(() => {
     setTimeout(() => {
-      reset() // reset the form with 500ms delay
+      reset() // reset the form with a 500ms delay
     }, 500)
   }, [isOpen])
 
