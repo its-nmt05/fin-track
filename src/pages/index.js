@@ -7,7 +7,6 @@ import Invest from "./Invest"
 import Login from "./Login"
 import Signup from "./Signup"
 import NotFound from "./NotFound"
-import WalletComponent from "../components/WalletComponent"
 
 export {
     GetStarted,
@@ -19,5 +18,4 @@ export {
     Login,
     Signup,
     NotFound,
-    WalletComponent,
 }

@@ -9,7 +9,7 @@ export class DatabaseService {
         )
     }
 
-    async getWallets({ user_id }) {
+    async getWallet({ user_id }) {
         try {
             return await this.client
                 .from("wallet")
@@ -20,11 +20,12 @@ export class DatabaseService {
         }
     }
 
-    async createWallet({ name, color, balance, user_id }) {
+    async walletTransact({ id, amount }) {
         try {
-            await this.client
-                .from("wallet")
-                .insert({ name, color, balance, user_id })
+            return await this.client.rpc("add_wallet_transaction", {
+                id,
+                amount,
+            })
         } catch (error) {
             console.log(error)
         }
