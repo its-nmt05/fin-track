@@ -15,6 +15,7 @@ export class DatabaseService {
                 .from("wallet")
                 .select()
                 .eq("user_id", user_id)
+                .single()
         } catch (error) {
             console.log(error)
         }

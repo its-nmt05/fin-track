@@ -10,6 +10,7 @@ import PortfolioAllocations from "./PortfolioAllocations"
 import TradingActivity from "./TradingActivity"
 import TransactionsHistory from "./TransactionsHistory"
 import AddMoneyComponent from "./AddMoneyComponent"
+import WalletTransactions from "./WalletTransactions"
 
 export {
     Header,
@@ -24,4 +25,5 @@ export {
     TradingActivity,
     TransactionsHistory,
     AddMoneyComponent,
+    WalletTransactions
 }
