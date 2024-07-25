@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react"
 import React, { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { IoAddOutline } from "react-icons/io5"
 import { useSelector } from "react-redux"
 import databaseService from "../supabase/database"
@@ -18,10 +18,16 @@ import Lottie from "react-lottie"
 
 function AddMoneyComponent() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-  const { register, reset, handleSubmit } = useForm()
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    control,
+  } = useForm()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState()
   const user = useSelector((state) => state.user)
 
   const defaultOptions = {
@@ -34,27 +40,40 @@ function AddMoneyComponent() {
   }
 
   const moneyButtons = [
-    { id: 1, value: "100" },
-    { id: 2, value: "500" },
-    { id: 3, value: "1000" },
+    { id: 1, value: 100 },
+    { id: 2, value: 500 },
+    { id: 3, value: 1000 },
   ]
+
+  // flush out old values and reset the form with a delay
+  // on modal state change
+  useEffect(() => {
+    setLoading(false)
+    setError(null)
+    setTimeout(() => {
+      reset()
+    }, 500)
+  }, [isOpen])
 
   const addMoney = async ({ amount }) => {
     setLoading(true)
     databaseService
       .walletTransact({ id: user.id, amount })
-      .then(({ error }) => setError(error?.message))
-      .finally(() => {
-        setLoading(false)
-        setMessage(true)
-
-        // hide the message, reset the form and dismiss the modal
-        // after 3 sec
-        setTimeout(() => {
-          setMessage(false)
-          reset()
-          onClose()
-        }, 3000)
+      .then(({ error }) => {
+        setError(error?.message)
+        if (!error) {
+          setLoading(false)
+          setMessage(true)
+          // hide the message, reset the form and dismiss the modal
+          // after 3 sec
+          setTimeout(() => {
+            setMessage(false)
+            reset()
+            onClose()
+          }, 3000)
+        } else {
+          setLoading(false)
+        }
       })
   }
 
@@ -87,21 +106,40 @@ function AddMoneyComponent() {
               </ModalHeader>
               <ModalBody>
                 <form onSubmit={handleSubmit(addMoney)}>
-                  <Input
-                    isDisabled={loading}
-                    autoFocus
-                    type="number"
-                    min={0}
-                    radius="sm"
-                    placeholder="Enter amount"
-                    label="Amount"
-                    labelPlacement="outside"
-                    startContent={<p>$</p>}
-                    classNames={{
-                      label: "font-semibold ml-2",
-                      inputWrapper: "mb-4",
+                  <Controller
+                    defaultValue={null}
+                    control={control}
+                    name="amount"
+                    rules={{
+                      required: { value: true, message: "Amount is required" },
+                      min: {
+                        value: 1,
+                        message: "Amount must be greater than $1",
+                      },
+                      max: {
+                        value: 1000,
+                        message: "Amount must be less than $1000",
+                      },
                     }}
-                    {...register("amount", { required: true })}
+                    render={({ field: { onChange, value, ref } }) => (
+                      <Input
+                        isDisabled={loading}
+                        autoFocus
+                        type="number"
+                        radius="sm"
+                        placeholder="Enter amount"
+                        label="Amount"
+                        labelPlacement="outside"
+                        startContent={<p>$</p>}
+                        classNames={{
+                          label: "font-semibold ml-2",
+                          inputWrapper: "mb-4",
+                        }}
+                        onChange={onChange}
+                        value={value}
+                        ref={ref}
+                      />
+                    )}
                   />
                   <div className="space-x-4 mb-4">
                     {moneyButtons.map(({ id, value }) => (
@@ -111,6 +149,7 @@ function AddMoneyComponent() {
                         size="sm"
                         color="primary"
                         variant="flat"
+                        onPress={() => setValue("amount", value)}
                       >
                         <p className="font-medium">$ {value}</p>
                       </Button>
@@ -126,6 +165,11 @@ function AddMoneyComponent() {
                     </Button>
                   </div>
                 </form>
+                {errors.amount && (
+                  <p className="text-small text-red-500 text-center">
+                    {errors.amount.message}
+                  </p>
+                )}
                 {error && (
                   <p className="text-small text-red-500 text-center">{error}</p>
                 )}

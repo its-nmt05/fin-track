@@ -9,7 +9,26 @@ export class DatabaseService {
         )
     }
 
-    async getWallet({ user_id }) {
+    async getWallet({ user_id, onPayload }) {
+        // subscribe to wallet changes
+        try {
+            this.client
+                .channel("schema-db-changes")
+                .on(
+                    "postgres_changes",
+                    {
+                        event: "*",
+                        schema: "public",
+                        table: "wallet",
+                        filter: `user_id=eq.${user_id}`,
+                    },
+                    (payload) => onPayload(payload)
+                )
+                .subscribe()
+        } catch (error) {
+            console.log(error)
+        }
+
         try {
             return await this.client
                 .from("wallet")

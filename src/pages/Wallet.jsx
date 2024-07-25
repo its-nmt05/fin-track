@@ -16,9 +16,16 @@ function Wallet() {
 
   useEffect(() => {
     databaseService
-      .getWallet({ user_id: user.id })
-      .then(({ data }) => setData(data))
-      .finally(() => setLoading(false))
+      .getWallet({
+        user_id: user.id,
+        onPayload: (payload) => setData(payload.new),
+      })
+      .then(({ data, error }) => {
+        setData(data)
+        if (!error) {
+          setLoading(false)
+        }
+      })
   }, [])
 
   return !loading ? (
