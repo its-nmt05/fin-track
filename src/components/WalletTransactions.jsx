@@ -1,5 +1,6 @@
 import {
   Chip,
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -7,9 +8,19 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react"
-import React, { useCallback } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 
 function WalletTransactions({ transactions = [], className = "" }) {
+  const [page, setPage] = useState(1)
+  const rowsPerPage = 10
+  const pages = Math.ceil(transactions.length / rowsPerPage)
+
+  const items = useMemo(() => {
+    const start = (page - 1) * rowsPerPage
+    const end = start + rowsPerPage
+    return transactions.slice(start, end)
+  }, [page, transactions])
+
   const columns = [
     { key: "number", name: "SL No." },
     { key: "id", name: "Transaction Id" },
@@ -47,11 +58,23 @@ function WalletTransactions({ transactions = [], className = "" }) {
       selectionMode="multiple"
       aria-label="wallet-transactions"
       className={`${className}`}
+      bottomContent={
+        <div className="flex w-full justify-center">
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            page={page}
+            total={pages}
+            onChange={setPage}
+          />
+        </div>
+      }
     >
       <TableHeader columns={columns}>
         {(column) => <TableColumn key={column.key}>{column.name}</TableColumn>}
       </TableHeader>
-      <TableBody items={transactions} emptyContent="No transactions">
+      <TableBody items={items} emptyContent="No transactions">
         {(transaction) => (
           <TableRow key={transaction.id}>
             {(columnKey) => (

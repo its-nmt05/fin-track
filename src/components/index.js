@@ -8,7 +8,6 @@ import StockDetails from "./StockDetails"
 import TransactionsTable from "./TransactionsTable"
 import PortfolioAllocations from "./PortfolioAllocations"
 import TradingActivity from "./TradingActivity"
-import TransactionsHistory from "./TransactionsHistory"
 import AddMoneyComponent from "./AddMoneyComponent"
 import WalletTransactions from "./WalletTransactions"
 
@@ -23,7 +22,6 @@ export {
     TransactionsTable,
     PortfolioAllocations,
     TradingActivity,
-    TransactionsHistory,
     AddMoneyComponent,
-    WalletTransactions
+    WalletTransactions,
 }

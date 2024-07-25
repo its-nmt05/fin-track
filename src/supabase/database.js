@@ -22,7 +22,7 @@ export class DatabaseService {
                         table: "wallet",
                         filter: `user_id=eq.${user_id}`,
                     },
-                    (payload) => onPayload(payload)
+                    (payload) => onPayload(payload.new)
                 )
                 .subscribe()
         } catch (error) {
@@ -40,10 +40,10 @@ export class DatabaseService {
         }
     }
 
-    async walletTransact({ id, amount }) {
+    async walletTransact({ uid, amount }) {
         try {
             return await this.client.rpc("add_wallet_transaction", {
-                id,
+                uid,
                 amount,
             })
         } catch (error) {

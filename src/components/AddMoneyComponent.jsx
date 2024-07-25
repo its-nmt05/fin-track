@@ -58,7 +58,7 @@ function AddMoneyComponent() {
   const addMoney = async ({ amount }) => {
     setLoading(true)
     databaseService
-      .walletTransact({ id: user.id, amount })
+      .walletTransact({ uid: user.id, amount })
       .then(({ error }) => {
         setError(error?.message)
         if (!error) {
@@ -138,6 +138,8 @@ function AddMoneyComponent() {
                         onChange={onChange}
                         value={value}
                         ref={ref}
+                        min={1}
+                        max={1000}
                       />
                     )}
                   />
