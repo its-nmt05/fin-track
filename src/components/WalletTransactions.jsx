@@ -48,7 +48,7 @@ function WalletTransactions({ transactions = [], className = "" }) {
           </Chip>
         )
       case "amount":
-        return <p>${transaction.amount}</p>
+        return <p>${Math.abs(transaction.amount)}</p>
     }
   })
 

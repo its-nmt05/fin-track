@@ -9,7 +9,9 @@ import TransactionsTable from "./TransactionsTable"
 import PortfolioAllocations from "./PortfolioAllocations"
 import TradingActivity from "./TradingActivity"
 import AddMoneyComponent from "./AddMoneyComponent"
+import WithdrawMoneyComponent from "./WithdrawMoneyComponent"
 import WalletTransactions from "./WalletTransactions"
+import Container from "./container/Container"
 
 export {
     Header,
@@ -23,5 +25,7 @@ export {
     PortfolioAllocations,
     TradingActivity,
     AddMoneyComponent,
+    WithdrawMoneyComponent,
     WalletTransactions,
+    Container,
 }

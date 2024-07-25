@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import databaseService from "../supabase/database"
-import { Button, Card, CardBody, Spinner } from "@nextui-org/react"
-import { AddMoneyComponent, WalletTransactions } from "../components"
+import { Card, CardBody, Spinner } from "@nextui-org/react"
+import {
+  AddMoneyComponent,
+  WalletTransactions,
+  WithdrawMoneyComponent,
+} from "../components"
 import {
   CartesianGrid,
   Line,
@@ -10,7 +14,6 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts"
-import { FaAnglesDown } from "react-icons/fa6"
 
 function Wallet() {
   const user = useSelector((state) => state.user)
@@ -61,21 +64,7 @@ function Wallet() {
               </p>
             </CardBody>
           </Card>
-          <Card className="p-2">
-            <CardBody className="space-y-5">
-              <div>
-                <p className="text-xl font-medium">Withdraw money</p>
-                <p className="text-small text-default-500">
-                  This is for demonstration purposes only 🪧
-                  <br /> You can only withdraw upto your available balance.
-                </p>
-              </div>
-              <Button className="bg-black text-white">
-                <FaAnglesDown />
-                <p>Withdraw</p>
-              </Button>
-            </CardBody>
-          </Card>
+          <WithdrawMoneyComponent balance={data?.balance || 0} />
         </div>
         <Card className="basis-2/3">
           <CardBody>

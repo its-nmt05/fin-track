@@ -1,5 +1,7 @@
 import {
   Button,
+  Card,
+  CardBody,
   Input,
   Modal,
   ModalBody,
@@ -10,14 +12,14 @@ import {
 } from "@nextui-org/react"
 import React, { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { IoAddOutline } from "react-icons/io5"
-import { useSelector } from "react-redux"
-import databaseService from "../supabase/database"
-import animationData from "../static/lotties/done.json"
+import { FaAnglesDown } from "react-icons/fa6"
 import Lottie from "react-lottie"
+import { useSelector } from "react-redux"
+import animationData from "../static/lotties/done.json"
+import databaseService from "../supabase/database"
 
-function AddMoneyComponent() {
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+function WithdrawMoneyComponent({ balance }) {
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const {
     reset,
     handleSubmit,
@@ -25,7 +27,7 @@ function AddMoneyComponent() {
     setValue,
     control,
   } = useForm()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState(false)
   const [error, setError] = useState()
   const user = useSelector((state) => state.user)
@@ -55,8 +57,9 @@ function AddMoneyComponent() {
     }, 500)
   }, [isOpen])
 
-  const addMoney = async ({ amount }) => {
+  const withdraw = async ({ amount }) => {
     setLoading(true)
+    amount = -amount // reverse sign for withdraw
     databaseService
       .walletTransact({ uid: user.id, amount })
       .then(({ error }) => {
@@ -79,10 +82,21 @@ function AddMoneyComponent() {
 
   return (
     <>
-      <Button className="bg-black text-white" onPress={onOpen}>
-        <IoAddOutline size={18} />
-        <p>Add money</p>
-      </Button>
+      <Card className="p-2">
+        <CardBody className="space-y-5">
+          <div>
+            <p className="text-xl font-medium">Withdraw money</p>
+            <p className="text-small text-default-500">
+              This is for demonstration purposes only 🪧
+              <br /> You can only withdraw upto your available balance.
+            </p>
+          </div>
+          <Button className="bg-black text-white" onPress={onOpen}>
+            <FaAnglesDown />
+            <p>Withdraw</p>
+          </Button>
+        </CardBody>
+      </Card>
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -97,7 +111,7 @@ function AddMoneyComponent() {
             <>
               <ModalHeader>
                 <div>
-                  <p>Add money 💸</p>
+                  <p>Withdraw money 💸</p>
                   <p className="text-small font-normal text-default-500">
                     This is not real and only meant for demonstration purposes
                     only
@@ -105,7 +119,7 @@ function AddMoneyComponent() {
                 </div>
               </ModalHeader>
               <ModalBody>
-                <form onSubmit={handleSubmit(addMoney)}>
+                <form onSubmit={handleSubmit(withdraw)}>
                   <Controller
                     defaultValue={null}
                     control={control}
@@ -117,8 +131,8 @@ function AddMoneyComponent() {
                         message: "Amount must be greater than $1",
                       },
                       max: {
-                        value: 1000,
-                        message: "Amount must be less than $1000",
+                        value: balance,
+                        message: "Amount must be less than balance",
                       },
                     }}
                     render={({ field: { onChange, value, ref } }) => (
@@ -144,10 +158,10 @@ function AddMoneyComponent() {
                   <div className="space-x-4 mb-4">
                     {moneyButtons.map(({ id, value }) => (
                       <Button
-                        isDisabled={loading}
+                        isDisabled={loading || value > balance}
                         key={id}
                         size="sm"
-                        color="primary"
+                        color="danger"
                         variant="flat"
                         onPress={() => setValue("amount", value)}
                       >
@@ -161,7 +175,11 @@ function AddMoneyComponent() {
                       type="submit"
                       className="bg-black text-white"
                     >
-                      {!loading ? "Add" : <Spinner color="white" size="sm" />}
+                      {!loading ? (
+                        "Withdraw"
+                      ) : (
+                        <Spinner color="white" size="sm" />
+                      )}
                     </Button>
                   </div>
                 </form>
@@ -181,7 +199,7 @@ function AddMoneyComponent() {
               <p className="text-center font-medium text-lg">
                 Congratulations! 🎉🎉
                 <br />
-                Your money has been successfully added
+                Your have successfully withdrawn the money
               </p>
             </div>
           )}
@@ -191,4 +209,4 @@ function AddMoneyComponent() {
   )
 }
 
-export default AddMoneyComponent
+export default WithdrawMoneyComponent
