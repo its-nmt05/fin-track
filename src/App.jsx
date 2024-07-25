@@ -16,6 +16,8 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import authService from "./supabase/auth"
 import { clearUser, setUser } from "./store/authSlice"
+import { setStocks } from "./store/stockSlice"
+import databaseService from "./supabase/database"
 
 function App() {
   const navigate = useNavigate()
@@ -31,6 +33,11 @@ function App() {
         dispatch(clearUser())
       }
       setLoading(false)
+    })
+
+    // load all stocks and add to the store
+    databaseService.getStocks().then(({ data }) => {
+      dispatch(setStocks(data))
     })
   }, [])
 

@@ -7,7 +7,6 @@ function Home() {
       name: "Apple Inc",
       symbol: "AAPL",
       current_price: "$193.60",
-      change: { value: "0.55%", increase: false },
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi_F5mBDcXHBlUDkSiJD9-ZmnKHIjG9h-nhQ&s",
     },
@@ -15,7 +14,6 @@ function Home() {
       name: "Alphabet Inc Class C",
       symbol: "GOOG",
       current_price: "$141.49",
-      change: { value: "0.76%", increase: true },
       image:
         "https://steelbluemedia.com/wp-content/uploads/2019/06/new-google-favicon-512.png",
     },
@@ -23,7 +21,6 @@ function Home() {
       name: "Microsoft Corporation",
       symbol: "MSFT",
       current_price: "$374.58",
-      change: { value: "0.28%", increase: false },
       image:
         "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
     },
@@ -31,7 +28,6 @@ function Home() {
       name: "NVIDIA Corp",
       symbol: "NVDA",
       current_price: "$130.90",
-      change: { value: "0.01%", increase: true },
       image: "https://logowik.com/content/uploads/images/599_nvidia.jpg",
     },
   ]
@@ -48,14 +44,15 @@ function Home() {
 
   return (
     <>
-      {/* <div className="flex space-x-2 mx-2 my-2">
+      <div className="flex space-x-2 mx-2 my-2">
         {companies.map((company) => (
           <InfoCard
             key={23}
             companyInfo={companies[0]}
-            // className="min-w-[19rem]"
+            className="min-w-[19rem]"
           />
-        ))} */}
+        ))}
+      </div>
       {/* <StockGraph
         className="mx-[20%] my-5"
         stockInfo={stockInfo}

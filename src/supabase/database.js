@@ -53,6 +53,7 @@ export class DatabaseService {
 
     async getStocks() {
         try {
+            console.log("hey")
             return await this.client.from("stocks").select()
         } catch (error) {
             console.log(error)

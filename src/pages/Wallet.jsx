@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import databaseService from "../supabase/database"
-import { Card, CardBody, Spinner } from "@nextui-org/react"
+import { Card, CardBody, Progress, Spinner } from "@nextui-org/react"
 import {
   AddMoneyComponent,
   WalletTransactions,
@@ -17,7 +17,7 @@ import {
 import { USDFormat } from "../utils/helper"
 
 function Wallet() {
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.auth.user)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -44,11 +44,18 @@ function Wallet() {
       <div className="w-full flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 pb-5">
         <div className="basis-1/3 flex flex-col justify-between space-y-5">
           <Card className="p-2">
-            <CardBody className="space-y-6">
+            <CardBody className="space-y-8">
               <p className="text-default-600">Available balance 💵💵</p>
-              <p className="text-4xl font-medium">
-                {USDFormat(data?.balance || 0)}
-              </p>
+              <div className="space-y-2">
+                <Progress
+                  size="sm"
+                  label="Total transactions"
+                  value={data?.transactions.length || 0}
+                />
+                <p className="text-4xl font-medium">
+                  {USDFormat(data?.balance || 0)}
+                </p>
+              </div>
             </CardBody>
           </Card>
           <WithdrawMoneyComponent balance={data?.balance || 0} />
