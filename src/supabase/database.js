@@ -50,6 +50,18 @@ export class DatabaseService {
             console.log(error)
         }
     }
+
+    async getStocks() {
+        try {
+            return await this.client.from("stocks").select()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async getStockData({ symbol }) {
+        return `Stock data is: ${symbol}`
+    }
 }
 
 const databaseService = new DatabaseService()

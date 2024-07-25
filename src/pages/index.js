@@ -7,6 +7,7 @@ import Invest from "./Invest"
 import Login from "./Login"
 import Signup from "./Signup"
 import NotFound from "./NotFound"
+import StockDetails from "./StockDetails"
 
 export {
     GetStarted,
@@ -18,4 +19,5 @@ export {
     Login,
     Signup,
     NotFound,
+    StockDetails,
 }

@@ -14,16 +14,12 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts"
+import { USDFormat } from "../utils/helper"
 
 function Wallet() {
   const user = useSelector((state) => state.user)
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
-
-  let currencyFormatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  })
 
   useEffect(() => {
     databaseService
@@ -39,28 +35,19 @@ function Wallet() {
       })
   }, [])
 
-  const dat = [
-    { name: "a", value: 12 },
-    { name: "b", value: 12 },
-    { name: "c", value: 12 },
-    { name: "d", value: 12 },
-    { name: "e", value: 12 },
-    { name: "f", value: 120 },
-  ]
-
   return !loading ? (
     <div className="mx-8 my-4 space-y-4">
       <div className="flex w-full justify-between">
         <p className="text-3xl font-bold">Your wallet</p>
         <AddMoneyComponent />
       </div>
-      <div className="w-full flex space-x-6 pb-5">
+      <div className="w-full flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 pb-5">
         <div className="basis-1/3 flex flex-col justify-between space-y-5">
           <Card className="p-2">
-            <CardBody className="space-y-5">
+            <CardBody className="space-y-6">
               <p className="text-default-600">Available balance 💵💵</p>
               <p className="text-4xl font-medium">
-                {currencyFormatter.format(data?.balance || 0)}
+                {USDFormat(data?.balance || 0)}
               </p>
             </CardBody>
           </Card>

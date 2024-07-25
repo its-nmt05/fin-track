@@ -10,6 +10,7 @@ import {
   Login,
   Signup,
   NotFound,
+  StockDetails,
 } from "./pages"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
@@ -91,6 +92,14 @@ function App() {
           element={
             <AuthLayout>
               <Signup />
+            </AuthLayout>
+          }
+        />
+        <Route
+          path="stock/:symbol"
+          element={
+            <AuthLayout authReq>
+              <StockDetails />
             </AuthLayout>
           }
         />
