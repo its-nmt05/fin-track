@@ -12,6 +12,8 @@ import WithdrawMoneyComponent from "./WithdrawMoneyComponent"
 import WalletTransactions from "./WalletTransactions"
 import Container from "./container/Container"
 import StockDisclaimerComponent from "./StockDisclaimerComponent"
+import StockDetailsComponent from "./StockDetailsComponent"
+import BuySellShareComponent from "./BuySellShareComponent"
 
 export {
     Header,
@@ -27,5 +29,7 @@ export {
     WithdrawMoneyComponent,
     WalletTransactions,
     Container,
-    StockDisclaimerComponent
+    StockDisclaimerComponent,
+    StockDetailsComponent,
+    BuySellShareComponent,
 }

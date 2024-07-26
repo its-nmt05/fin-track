@@ -53,11 +53,11 @@ function Home() {
           />
         ))}
       </div> */}
-      <StockGraph
+      {/* <StockGraph
         className="mx-[20%] my-5"
         stockInfo={stockInfo}
         symbol="META"
-      />
+      /> */}
     </>
   )
 }

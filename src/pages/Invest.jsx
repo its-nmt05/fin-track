@@ -11,7 +11,7 @@ function Invest() {
         <p className="text-3xl font-bold">All stocks</p>
         <StockDisclaimerComponent />
       </div>
-      <div className="gap-4 grid grid-cols-2 sm:grid-cols-4">
+      <div className="gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {stocks?.map((stock) => (
           <InfoCard companyInfo={stock} />
         ))}

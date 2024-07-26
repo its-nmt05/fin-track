@@ -85,6 +85,14 @@ function App() {
               </AuthLayout>
             }
           />
+          <Route
+            path="stock/:symbol"
+            element={
+              <AuthLayout authReq>
+                <StockDetails />
+              </AuthLayout>
+            }
+          />
         </Route>
         <Route
           path="/login"
@@ -99,14 +107,6 @@ function App() {
           element={
             <AuthLayout>
               <Signup />
-            </AuthLayout>
-          }
-        />
-        <Route
-          path="stock/:symbol"
-          element={
-            <AuthLayout authReq>
-              <StockDetails />
             </AuthLayout>
           }
         />

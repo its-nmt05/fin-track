@@ -60,7 +60,15 @@ export class DatabaseService {
     }
 
     async getStockData({ symbol }) {
-        return `Stock data is: ${symbol}`
+        try {
+            return await this.client
+                .from("stock_data")
+                .select()
+                .eq("symbol", symbol)
+                .maybeSingle()
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 

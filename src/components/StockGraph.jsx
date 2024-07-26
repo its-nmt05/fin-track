@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react"
-import { LineChart } from "@mui/x-charts/LineChart"
 import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from "@nextui-org/react"
 import { FaArrowUp } from "react-icons/fa6"
 import stock from "../stocks/stock"
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  YAxis,
+} from "recharts"
 
 function StockGraph({
   className = "",
-  symbol,
-  stockInfo: { name, img, platform, ticker, industries, currentPrice, change },
+  stockInfo: { image, name, symbol, industry, prices },
 }) {
   const timeOptions = [
     { id: "1d", label: "1D" },
@@ -20,21 +26,21 @@ function StockGraph({
   const [timeOption, setTimeOption] = useState(timeOptions[0].id)
   const [stockData, setStockData] = useState({})
 
-  stock.quote({ symbol: "AAPL" }).then((data) => console.log(data))
+  // stock.quote({ symbol: "AAPL" }).then((data) => console.log(data))
 
-  useEffect(() => {
-    const abortController = new AbortController()
-    const signal = abortController.signal
-    stock
-      .getData({ symbol, range: timeOption })
-      .then((data) => {
-        !signal.aborted && setStockData(data)
-      })
-      .catch((e) => !signal.aborted && console.log(e))
-    return () => {
-      abortController.abort()
-    }
-  }, [timeOption])
+  // useEffect(() => {
+  //   const abortController = new AbortController()
+  //   const signal = abortController.signal
+  //   stock
+  //     .getData({ symbol, range: timeOption })
+  //     .then((data) => {
+  //       !signal.aborted && setStockData(data)
+  //     })
+  //     .catch((e) => !signal.aborted && console.log(e))
+  //   return () => {
+  //     abortController.abort()
+  //   }
+  // }, [timeOption])
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -42,22 +48,22 @@ function StockGraph({
         <CardBody>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-6">
-              <img className="max-w-[80px]" src={img} />
+              <img className="max-w-[80px]" src={image} />
               <div>
                 <div className="mb-4">
                   <p className="text-2xl font-semibold">{name}</p>
                   <p className="text-gray-500 font-semibold">
-                    {platform} : <strong>{ticker}</strong>
+                    {"platform"} : <strong>{symbol}</strong>
                   </p>
                 </div>
                 <p className="text-gray-500">
-                  Industries: {industries.join(", ")}
+                  Industries: {industry?.join(", ")}
                 </p>
               </div>
             </div>
             <div className="text-end space-y-2">
               <p className="text-3xl font-bold text-blue-500">
-                ${stockData.regularMarketDayHigh}
+                {/* ${stockData.regularMarketDayHigh} */}
               </p>
               <div className="flex items-center justify-end space-x-1">
                 <Chip
@@ -67,9 +73,9 @@ function StockGraph({
                   size="lg"
                   className="py-4 px-1 text-sm"
                 >
-                  {change.percent}
+                  {"10%"}
                 </Chip>
-                <p className="text-green-500 text-md">+{change.price}</p>
+                <p className="text-green-500 text-md">{"$10"}</p>
               </div>
             </div>
           </div>
@@ -88,30 +94,19 @@ function StockGraph({
           </Tabs>
         </CardHeader>
         <CardBody className="inline-flex items-center justify-center">
-          {stockData?.indicators && (
-            <LineChart
-              grid={{ horizontal: true }}
-              series={[
-                {
-                  data: stockData?.indicators.open,
-                  showMark: false,
-                },
-              ]}
-              width={650}
-              height={300}
-              bottomAxis={{ disableTicks: true }}
-              leftAxis={{
-                disableLine: true,
-                disableTicks: true,
-              }}
-              xAxis={[
-                {
-                  data: stockData.timestamp,
-                  scaleType: "time",
-                },
-              ]}
-            />
-          )}
+          <ResponsiveContainer width="100%" aspect={2.2}>
+            <LineChart data={prices}>
+              <YAxis type="number" domain={[90, "auto"]} />
+              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Line
+                dataKey="open"
+                type="monotone"
+                dot={false}
+                // stroke={change < 0 ? "crimson" : "limegreen"}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </CardBody>
       </Card>
     </div>
