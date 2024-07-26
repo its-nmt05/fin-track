@@ -62,10 +62,10 @@ function Wallet() {
         </div>
         <Card className="basis-2/3">
           <CardBody>
-            <ResponsiveContainer width="100%" aspect={2.5}>
+            <ResponsiveContainer width="100%" aspect={2.3}>
               <LineChart
                 data={data?.transactions}
-                margin={{ left: 20, right: 20, top: 20, bottom: 20 }}
+                margin={{ left: 5, right: 5, top: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <Tooltip />

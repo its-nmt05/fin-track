@@ -30,7 +30,7 @@ function WithdrawMoneyComponent({ balance }) {
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState(false)
   const [error, setError] = useState()
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.auth.user)
 
   const defaultOptions = {
     loop: true,

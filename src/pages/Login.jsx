@@ -15,7 +15,6 @@ function Login() {
 
   const login = async (userData) => {
     const { data, error } = await authService.login(userData)
-    console.log(data)
     if (data.user) {
       dispatch(setUser(data))
       navigate("/")

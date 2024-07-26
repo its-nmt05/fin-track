@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Navbar,
   NavbarBrand,
@@ -11,11 +11,12 @@ import {
   Avatar,
   DropdownMenu,
   DropdownItem,
+  NavbarMenuToggle,
 } from "@nextui-org/react"
 
 import { useLocation, useNavigate } from "react-router-dom"
 import { CiSearch } from "react-icons/ci"
-import { Logo } from "../icons"
+import Logo from "../../static/icons/Logo"
 import { useDispatch, useSelector } from "react-redux"
 import authService from "../../supabase/auth"
 import { clearUser } from "../../store/authSlice"
@@ -32,7 +33,8 @@ export default function Header() {
   const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.auth.user)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const logout = async () => {
     const { error } = await authService.signout()
@@ -46,14 +48,18 @@ export default function Header() {
   }
 
   return (
-    <Navbar isBordered maxWidth="full">
+    <Navbar isBordered maxWidth="full" onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
         <NavbarBrand size={20}>
           <Logo />
           <p className="font-bold text-inherit">FinTrack</p>
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent>
+      <NavbarContent className="hidden sm:flex gap-4">
         {navItems.map((item) => (
           <NavbarItem
             color="foreground"
