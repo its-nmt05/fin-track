@@ -1,26 +1,18 @@
 import React, { useState } from "react"
 import { Button, Input, Link } from "@nextui-org/react"
 import { useForm } from "react-hook-form"
-import authService from "../supabase/auth"
-import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { setUser } from "../store/authSlice"
+import useAuth from "../hooks/useAuth"
 
 function Signup() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const { signup } = useAuth()
 
   const [error, setError] = useState(null)
-  const { register, handleSubmit } = useForm("")
+  const { register, handleSubmit } = useForm()
 
-  const signup = async (userData) => {
-    const { data, error } = await authService.signup(userData)
-    if (data.user) {
-      dispatch(setUser(data))
-      navigate("/")
-    }
-
-    setError(error?.message)
+  const signupUser = async (userData) => {
+    signup(userData).then(({ error }) => {
+      setError(error?.message)
+    })
   }
 
   return (
@@ -37,7 +29,7 @@ function Signup() {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6 mb-2" onSubmit={handleSubmit(signup)}>
+          <form className="space-y-6 mb-2" onSubmit={handleSubmit(signupUser)}>
             <Input
               isRequired
               label="Name"

@@ -11,10 +11,10 @@ import {
 import React, { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { IoAddOutline } from "react-icons/io5"
-import { useSelector } from "react-redux"
 import databaseService from "../supabase/database"
 import animationData from "../static/lotties/done.json"
 import Lottie from "react-lottie"
+import useAuth from "../hooks/useAuth"
 
 function AddMoneyComponent() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
@@ -28,7 +28,7 @@ function AddMoneyComponent() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(false)
   const [error, setError] = useState()
-  const user = useSelector((state) => state.auth.user)
+  const { user } = useAuth()
 
   const defaultOptions = {
     loop: true,

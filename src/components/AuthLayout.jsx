@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
 import { Spinner } from "@nextui-org/react"
+import useAuth from "../hooks/useAuth"
 
 function AuthLayout({ children, authReq = false }) {
   const navigate = useNavigate()
   const [loader, setLoader] = useState(true)
-  const authStatus = useSelector((state) => state.auth.status)
+  const { status: authStatus } = useAuth()
 
   useEffect(() => {
     if (!authStatus && authReq) {
@@ -14,7 +14,6 @@ function AuthLayout({ children, authReq = false }) {
     } else if (!authReq && authStatus != authReq) {
       navigate("/")
     }
-
     setLoader(false)
   }, [authStatus, authReq, navigate])
 

@@ -14,9 +14,9 @@ import React, { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { FaAnglesDown } from "react-icons/fa6"
 import Lottie from "react-lottie"
-import { useSelector } from "react-redux"
 import animationData from "../static/lotties/done.json"
 import databaseService from "../supabase/database"
+import useAuth from "../hooks/useAuth"
 
 function WithdrawMoneyComponent({ balance }) {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
@@ -30,7 +30,7 @@ function WithdrawMoneyComponent({ balance }) {
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState(false)
   const [error, setError] = useState()
-  const user = useSelector((state) => state.auth.user)
+  const { user } = useAuth()
 
   const defaultOptions = {
     loop: true,

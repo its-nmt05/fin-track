@@ -10,10 +10,11 @@ import {
   Tooltip,
   YAxis,
 } from "recharts"
+import { USDFormat } from "../utils/helper"
 
 function StockGraph({
   className = "",
-  stockInfo: { image, name, symbol, industry, prices },
+  stockData: { image, name, symbol, industry, prices, current_price },
 }) {
   const timeOptions = [
     { id: "1d", label: "1D" },
@@ -57,13 +58,13 @@ function StockGraph({
                   </p>
                 </div>
                 <p className="text-gray-500">
-                  Industries: {industry?.join(", ")}
+                  Industries: {industry.join(", ")}
                 </p>
               </div>
             </div>
             <div className="text-end space-y-2">
               <p className="text-3xl font-bold text-blue-500">
-                {/* ${stockData.regularMarketDayHigh} */}
+                {USDFormat(current_price)}
               </p>
               <div className="flex items-center justify-end space-x-1">
                 <Chip
@@ -89,6 +90,8 @@ function StockGraph({
             items={timeOptions}
             selectedKey={timeOption}
             onSelectionChange={setTimeOption}
+            radius="full"
+            color="primary"
           >
             {(item) => <Tab title={item.label} key={item.id} />}
           </Tabs>

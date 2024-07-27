@@ -15,9 +15,10 @@ import {
   Tooltip,
 } from "recharts"
 import { USDFormat } from "../utils/helper"
+import useAuth from "../hooks/useAuth"
 
 function Wallet() {
-  const user = useSelector((state) => state.auth.user)
+  const { user } = useAuth()
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
 

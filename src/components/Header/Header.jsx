@@ -20,6 +20,7 @@ import Logo from "../../static/icons/Logo"
 import { useDispatch, useSelector } from "react-redux"
 import authService from "../../supabase/auth"
 import { clearUser } from "../../store/authSlice"
+import useAuth from "../../hooks/useAuth"
 
 export default function Header() {
   const navItems = [
@@ -33,19 +34,8 @@ export default function Header() {
   const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.auth.user)
+  const { user, logout } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  const logout = async () => {
-    const { error } = await authService.signout()
-
-    if (error) {
-      console.log(error)
-    } else {
-      dispatch(clearUser())
-      navigate("/login")
-    }
-  }
 
   return (
     <Navbar isBordered maxWidth="full" onMenuOpenChange={setIsMenuOpen}>
@@ -103,7 +93,6 @@ export default function Header() {
               switch (key) {
                 case "logout":
                   logout()
-                  break
               }
             }}
           >

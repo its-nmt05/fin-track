@@ -70,6 +70,19 @@ export class DatabaseService {
             console.log(error)
         }
     }
+
+    async stockTransact({ uid, _symbol, operation, quantity }) {
+        try {
+            return await this.client.rpc("stock_transaction", {
+                uid,
+                _symbol,
+                operation,
+                quantity,
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 const databaseService = new DatabaseService()
