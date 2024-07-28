@@ -12,26 +12,26 @@ import {
 function StockDetails() {
   const { symbol } = useParams()
   const [stockData, setStockData] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
-  // useEffect(() => {
-  //   databaseService.getStockData({ symbol }).then(({ data, error }) => {
-  //     if (!error) {
-  //       setLoading(false)
-  //       setStockData(data)
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    databaseService.getStockData({ symbol }).then(({ data, error }) => {
+      if (!error) {
+        setLoading(false)
+        setStockData(data)
+      }
+    })
+  }, [])
 
   return !loading ? (
-    !stockData ? (
+    stockData ? (
       <div className="w-full flex sm:flex-row flex-col py-4 px-8 sm:space-x-6 space-y-4 sm:space-y-0">
         <div className="w-full basis-3/4 h-fit">
-          {/* <StockGraph stockData={stockData} /> */}
-          <p>hey</p>
+          <StockGraph stockData={stockData} />
+          {/* <p>hey</p> */}
         </div>
         <div className="basis-1/4 flex sm:flex-col flex-row sm:space-y-4 space-y-0 sm:space-x-0 space-x-4">
-          {/* <StockDetailsComponent price_data={stockData.prices[0]} /> */}
+          <StockDetailsComponent price_data={stockData.prices[0]} />
           <BuySellShareComponent />
         </div>
       </div>

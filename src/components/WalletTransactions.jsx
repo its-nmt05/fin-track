@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@nextui-org/react"
 import React, { useCallback, useMemo, useState } from "react"
+import { capitalize, dateFormat, numFormat } from "../utils/helper"
 
 function WalletTransactions({ transactions = [], className = "" }) {
   const [page, setPage] = useState(1)
@@ -30,25 +31,26 @@ function WalletTransactions({ transactions = [], className = "" }) {
   ]
 
   const renderCell = useCallback((transaction, columnKey) => {
+    const { amount, type, time } = transaction
     switch (columnKey) {
       case "number":
-        return (transactions.indexOf(transaction) + 1).toString().padStart(2, 0)
+        return <p>{numFormat(transactions.indexOf(transaction) + 1)}</p>
       case "id":
         return <p>{transaction.id}</p>
       case "time":
-        return <p>{new Date(transaction.time).toLocaleString()}</p>
+        return <p>{dateFormat(time)}</p>
       case "type":
         return (
           <Chip
             size="sm"
             variant="flat"
-            color={transaction.type == "deposit" ? "success" : "danger"}
+            color={type == "deposit" ? "success" : "danger"}
           >
-            {transaction.type[0].toUpperCase() + transaction.type.slice(1)}
+            {capitalize(type)}
           </Chip>
         )
       case "amount":
-        return <p>${Math.abs(transaction.amount)}</p>
+        return <p>${Math.abs(amount)}</p>
     }
   })
 

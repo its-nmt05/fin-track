@@ -83,6 +83,18 @@ export class DatabaseService {
             console.log(error)
         }
     }
+
+    async getPortfolio({ user_id }) {
+        try {
+            return await this.client
+                .from("portfolio")
+                .select()
+                .eq("user_id", user_id)
+                .maybeSingle()
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 const databaseService = new DatabaseService()

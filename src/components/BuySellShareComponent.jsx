@@ -15,8 +15,8 @@ import {
   Tabs,
   useDisclosure,
 } from "@nextui-org/react"
-import React, { useState } from "react"
-import { USDFormat } from "../utils/helper"
+import React, { useEffect, useState } from "react"
+import { capitalize, USDFormat } from "../utils/helper"
 import databaseService from "../supabase/database"
 import useAuth from "../hooks/useAuth"
 import animationData from "../static/lotties/loading.json"
@@ -29,13 +29,15 @@ function BuySellShareComponent({ current_price = 100 }) {
     { key: "sell", title: "Sell" },
   ]
 
+  const { user } = useAuth()
+  const [shares, setShares] = useState(1)
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [currentOperation, setCurrentOperation] = useState(operations[0].key)
-  const [shares, setShares] = useState(1)
-  const { user } = useAuth()
+
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
+  const [isValid, setIsValid] = useState(true)
 
   const defaultOptions = {
     loop: true,
@@ -46,9 +48,9 @@ function BuySellShareComponent({ current_price = 100 }) {
     },
   }
 
-  const doc = () => {
-    setLoading(true)
+  const transact = () => {
     onOpen()
+    setLoading(true)
     databaseService
       .stockTransact({
         uid: user.id,
@@ -59,10 +61,21 @@ function BuySellShareComponent({ current_price = 100 }) {
       .then(({ data, error }) => {
         setError(error)
         setMessage(data)
-        console.log(data)
         setLoading(false)
       })
   }
+
+  // reset and flush out old values on modal state changes
+  useEffect(() => {
+    setError(null)
+    setMessage(null)
+  }, [isOpen])
+
+  // verify vaildity of share quantity
+  useEffect(() => {
+    const quantity = Number(shares)
+    setIsValid(Number.isInteger(quantity) && quantity > 0)
+  }, [shares])
 
   return (
     <>
@@ -120,7 +133,8 @@ function BuySellShareComponent({ current_price = 100 }) {
             className="w-full"
             radius="full"
             color="primary"
-            onPress={doc}
+            onPress={transact}
+            isDisabled={!isValid}
           >
             {currentOperation.toUpperCase()} NOW
           </Button>
@@ -150,7 +164,7 @@ function BuySellShareComponent({ current_price = 100 }) {
               </div>
             ) : error ? (
               <div className="w-full space-y-1">
-                <p className="text-2xl text-center">Transaction failed ❌</p>
+                <p className="text-2xl text-center">Transaction failed 🚫</p>
                 <p className="text-small text-center font-normal text-default-500">
                   Something went wrong with your transaction.
                   <br /> Don't worry, your funds are safe. Please try again.
@@ -162,8 +176,8 @@ function BuySellShareComponent({ current_price = 100 }) {
                   Transaction Successful ✅
                 </p>
                 <p className="text-small text-center font-normal text-default-500">
-                  Your stock purchase/sale was successful. You can review the
-                  details in your portfolio.
+                  Your stock {currentOperation == "buy" ? "purchase" : "sale"}{" "}
+                  was successful. You can review the details in your portfolio.
                 </p>
               </div>
             )}
@@ -178,14 +192,12 @@ function BuySellShareComponent({ current_price = 100 }) {
             ) : (
               message && (
                 <div className="px-2">
-                  {Object.keys(message.transaction).map((key) => (
+                  {Object.entries(message.transaction).map(([key, value]) => (
                     <div className="flex items-baseline">
                       <p className="font-bold">
-                        {key[0].toUpperCase().concat(key.slice(1))}: &nbsp;
+                        {capitalize(key)}: &nbsp;
                       </p>
-                      <p className="text-default-600 text-small">
-                        {message.transaction[key]}
-                      </p>
+                      <p className="text-default-600 text-small">{value}</p>
                     </div>
                   ))}
                 </div>

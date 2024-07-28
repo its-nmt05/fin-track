@@ -1,8 +1,6 @@
 import {
-  Button,
   Chip,
-  Dropdown,
-  DropdownTrigger,
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -10,144 +8,112 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react"
-import React, { useCallback } from "react"
-import { FaAngleDown, FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6"
+import React, { useCallback, useMemo, useState } from "react"
+import { capitalize, dateFormat, numFormat, USDFormat } from "../utils/helper"
+import { MdDone } from "react-icons/md"
+import { RxCross2 } from "react-icons/rx"
 
-function TransactionsTable({ className = "" }) {
+function TransactionsTable({ className = "", transactions = [] }) {
+  const [page, setPage] = useState(1)
+  const rowsPerPage = 10
+  const pages = Math.ceil(transactions.length / rowsPerPage)
+
+  const items = useMemo(() => {
+    const start = (page - 1) * rowsPerPage
+    const end = start + rowsPerPage
+    return transactions.slice(start, end)
+  }, [page, transactions])
+
   const columns = [
+    { key: "number", name: "SL No." },
+    { key: "id", name: "Transaction id" },
     { key: "symbol", name: "Symbol" },
-    { key: "date", name: "Date" },
-    { key: "type", name: "Type" },
+    { key: "quantity", name: "Quantity" },
     { key: "amount", name: "Order amount" },
+    { key: "operation", name: "Operation" },
     { key: "status", name: "Status" },
-    { key: "statement", name: "P&L" },
-  ]
-  const transactions = [
-    {
-      symbol: "AAPL",
-      name: "Apple Inc.",
-      date: new Date(),
-      type: "buy",
-      amount: "100",
-      quantity: 3,
-      status: "completed",
-      statement: 0,
-    },
-    {
-      symbol: "MSFT",
-      name: "Microsoft Corporation",
-      date: new Date(),
-      type: "buy",
-      amount: "100",
-      quantity: 3,
-      status: "completed",
-      statement: 9.6,
-    },
-    {
-      symbol: "NVDA",
-      name: "NVDIA LTD.",
-      date: new Date(),
-      type: "sell",
-      amount: "300",
-      quantity: 3,
-      status: "active",
-      statement: -5,
-    },
-    {
-      symbol: "GOOG",
-      name: "Alphabet LLC.",
-      date: new Date(),
-      type: "buy",
-      amount: "450",
-      quantity: 3,
-      status: "completed",
-      statement: 2.4,
-    },
+    { key: "time", name: "Time" },
   ]
 
   // function used for rendering each cell in the table provided a transaction and column key
   const renderCell = useCallback((transaction, columnKey) => {
+    const { id, symbol, quantity, amount, operation, status, time } =
+      transaction
+    console.log(transaction)
     switch (columnKey) {
+      case "number":
+        return <p>{numFormat(transactions.indexOf(transaction) + 1)}</p>
+      case "id":
+        return <p>{id}</p>
       case "symbol":
         return (
-          <div>
-            <p>{transaction.symbol}</p>
-            <p className="font-semibold text-tiny text-default-400">
-              {transaction.name}
-            </p>
-          </div>
+          <Chip size="sm" variant="flat">
+            {symbol}
+          </Chip>
         )
-      case "date":
-        return transaction.date.toLocaleDateString()
-      case "type":
-        let font_color =
-          transaction.type == "buy" ? "text-green-500" : "text-red-500"
-        return (
-          <div>
-            <p className={`font-semibold ${font_color}`}>
-              {transaction.type.toUpperCase()}
-            </p>
-            <p className="font-semibold text-tiny text-default-400">
-              {transaction.quantity}
-            </p>
-          </div>
-        )
+      case "quantity":
+        return <p>{numFormat(quantity)}</p>
       case "amount":
-        return "$" + transaction.amount
-      case "status":
+        return <p>{USDFormat(amount)}</p>
+      case "operation":
         return (
           <Chip
             size="sm"
             variant="flat"
-            color={transaction.status == "completed" ? "success" : "secondary"}
+            color={operation == "buy" ? "success" : "danger"}
           >
-            {transaction.status}
+            {capitalize(operation)}
           </Chip>
         )
-      case "statement":
+      case "status":
         return (
-          <div className="inline-flex space-x-2 items-center">
-            {transaction.statement > 0 ? (
-              <FaArrowTrendUp color="green" />
-            ) : (
-              <FaArrowTrendDown color="red" />
-            )}
-            <p>{transaction.statement}</p>
-          </div>
+          <Chip
+            size="sm"
+            // radius="sm"
+            variant="flat"
+            startContent={status == "success" ? <MdDone /> : <RxCross2 />}
+            color={status == "success" ? "success" : "danger"}
+          >
+            {capitalize(status)}
+          </Chip>
         )
+      case "time":
+        return <p>{dateFormat(time)}</p>
     }
   })
 
   return (
-    <div className={`m-3 ${className}`}>
-      <div className="w-full inline-flex items-baseline justify-between mb-4">
-        <p className="text-2xl font-bold">Transaction history</p>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button variant="bordered" size="sm">
-              <p>Sort by: date</p>
-              <FaAngleDown />
-            </Button>
-          </DropdownTrigger>
-        </Dropdown>
-      </div>
-      <Table selectionMode="multiple" aria-label="transactions">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.name}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody items={transactions}>
-          {(transaction) => (
-            <TableRow key={transaction.symbol}>
-              {(columnKey) => (
-                <TableCell>{renderCell(transaction, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+    <Table
+      isStriped
+      selectionMode="multiple"
+      aria-label="wallet-transactions"
+      className={`${className}`}
+      bottomContent={
+        <div className="flex w-full justify-center">
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            page={page}
+            total={pages}
+            onChange={setPage}
+          />
+        </div>
+      }
+    >
+      <TableHeader columns={columns}>
+        {(column) => <TableColumn key={column.key}>{column.name}</TableColumn>}
+      </TableHeader>
+      <TableBody items={items} emptyContent="No transactions">
+        {(transaction) => (
+          <TableRow key={transaction.id}>
+            {(columnKey) => (
+              <TableCell>{renderCell(transaction, columnKey)}</TableCell>
+            )}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   )
 }
 
