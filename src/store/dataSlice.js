@@ -4,8 +4,8 @@ const initialState = {
     stocks: [],
 }
 
-const stockSlice = createSlice({
-    name: "stocks",
+const dataSlice = createSlice({
+    name: "data",
     initialState,
     reducers: {
         setStocks: (state, action) => {
@@ -14,6 +14,6 @@ const stockSlice = createSlice({
     },
 })
 
-export const { setStocks } = stockSlice.actions
+export const { setStocks } = dataSlice.actions
 
-export default stockSlice.reducer
+export default dataSlice.reducer

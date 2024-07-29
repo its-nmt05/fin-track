@@ -9,30 +9,11 @@ export class DatabaseService {
         )
     }
 
-    async getWallet({ user_id, onPayload }) {
-        // subscribe to wallet changes
-        try {
-            this.client
-                .channel("schema-db-changes")
-                .on(
-                    "postgres_changes",
-                    {
-                        event: "*",
-                        schema: "public",
-                        table: "wallet",
-                        filter: `user_id=eq.${user_id}`,
-                    },
-                    (payload) => onPayload(payload.new)
-                )
-                .subscribe()
-        } catch (error) {
-            console.log(error)
-        }
-
+    async getWallet({ user_id }) {
         try {
             return await this.client
                 .from("wallet")
-                .select()
+                .select("*, wallet_transaction(*)")
                 .eq("user_id", user_id)
                 .single()
         } catch (error) {
@@ -40,11 +21,12 @@ export class DatabaseService {
         }
     }
 
-    async walletTransact({ uid, amount }) {
+    async walletTransact({ wallet_id, amount, type }) {
         try {
-            return await this.client.rpc("add_wallet_transaction", {
-                uid,
+            return await this.client.rpc("create_wallet_transaction", {
+                wallet_id,
                 amount,
+                type,
             })
         } catch (error) {
             console.log(error)
@@ -88,9 +70,9 @@ export class DatabaseService {
         try {
             return await this.client
                 .from("portfolio")
-                .select()
+                .select("*, portfolio_transaction(*)")
                 .eq("user_id", user_id)
-                .maybeSingle()
+                .single()
         } catch (error) {
             console.log(error)
         }

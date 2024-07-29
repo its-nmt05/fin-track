@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import databaseService from "../supabase/database"
 import { Card, CardBody, Progress, Spinner } from "@nextui-org/react"
 import {
@@ -26,9 +25,9 @@ function Wallet() {
     databaseService
       .getWallet({
         user_id: user.id,
-        onPayload: (payload) => setData(payload),
       })
       .then(({ data, error }) => {
+        console.log(data);
         setData(data)
         if (!error) {
           setLoading(false)
@@ -37,10 +36,10 @@ function Wallet() {
   }, [])
 
   return !loading ? (
-    <div className="mx-8 my-4 space-y-4">
+    <div className="space-y-4">
       <div className="flex w-full justify-between">
         <p className="text-3xl font-bold">Your wallet</p>
-        <AddMoneyComponent />
+        <AddMoneyComponent wallet_id={data.id} />
       </div>
       <div className="w-full flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 pb-5">
         <div className="basis-1/3 flex flex-col justify-between space-y-5">
@@ -51,21 +50,21 @@ function Wallet() {
                 <Progress
                   size="sm"
                   label="Total transactions"
-                  value={data?.transactions.length || 0}
+                  value={data.wallet_transaction}
                 />
                 <p className="text-4xl font-medium">
-                  {USDFormat(data?.balance || 0)}
+                  {USDFormat(data.balance)}
                 </p>
               </div>
             </CardBody>
           </Card>
-          <WithdrawMoneyComponent balance={data?.balance || 0} />
+          <WithdrawMoneyComponent balance={data.balance} wallet_id={data.id} />
         </div>
         <Card className="basis-2/3">
           <CardBody>
             <ResponsiveContainer width="100%" aspect={2.3}>
               <LineChart
-                data={data?.transactions}
+                data={data.wallet_transaction}
                 margin={{ left: 5, right: 5, top: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -77,7 +76,7 @@ function Wallet() {
         </Card>
       </div>
       <p className="text-3xl font-bold">Transaction history</p>
-      <WalletTransactions transactions={data?.transactions} />
+      <WalletTransactions transactions={data.wallet_transaction} />
     </div>
   ) : (
     <div className="flex min-h-screen justify-center items-center">

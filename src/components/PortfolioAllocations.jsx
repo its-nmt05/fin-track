@@ -7,7 +7,7 @@ function PortfolioAllocations({ className = "" }) {
   const [loading, setLoading] = useState(true)
 
   return (
-    <Card className={`m-3 w-fit p-2 ${className}`}>
+    <Card className={`w-fit p-2 ${className}`}>
       <CardHeader>
         <div className="w-full inline-flex items-center justify-between">
           <p className="font-medium text-xl">Portfolio allocations</p>

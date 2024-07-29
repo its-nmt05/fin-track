@@ -29,7 +29,7 @@ function TransactionsTable({ className = "", transactions = [] }) {
     { key: "id", name: "Transaction id" },
     { key: "symbol", name: "Symbol" },
     { key: "quantity", name: "Quantity" },
-    { key: "amount", name: "Order amount" },
+    { key: "price", name: "Price" },
     { key: "operation", name: "Operation" },
     { key: "status", name: "Status" },
     { key: "time", name: "Time" },
@@ -37,7 +37,7 @@ function TransactionsTable({ className = "", transactions = [] }) {
 
   // function used for rendering each cell in the table provided a transaction and column key
   const renderCell = useCallback((transaction, columnKey) => {
-    const { id, symbol, quantity, amount, operation, status, time } =
+    const { id, symbol, quantity, price, operation, status, time } =
       transaction
     console.log(transaction)
     switch (columnKey) {
@@ -53,8 +53,8 @@ function TransactionsTable({ className = "", transactions = [] }) {
         )
       case "quantity":
         return <p>{numFormat(quantity)}</p>
-      case "amount":
-        return <p>{USDFormat(amount)}</p>
+      case "price":
+        return <p>{USDFormat(price)}</p>
       case "operation":
         return (
           <Chip

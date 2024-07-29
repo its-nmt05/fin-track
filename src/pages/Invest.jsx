@@ -3,10 +3,10 @@ import { InfoCard, StockDisclaimerComponent } from "../components"
 import { useSelector } from "react-redux"
 
 function Invest() {
-  const stocks = useSelector((state) => state.stock.stocks)
+  const stocks = useSelector((state) => state.data.stocks)
 
   return (
-    <div className="mx-8 my-4 space-y-4">
+    <div className="space-y-4">
       <div className="flex flex-row items-center space-x-1">
         <p className="text-3xl font-bold">All stocks</p>
         <StockDisclaimerComponent />

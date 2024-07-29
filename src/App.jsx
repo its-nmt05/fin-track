@@ -16,7 +16,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import authService from "./supabase/auth"
 import { clearUser, setUser } from "./store/authSlice"
-import { setStocks } from "./store/stockSlice"
+import { setStocks } from "./store/dataSlice"
 import databaseService from "./supabase/database"
 
 function App() {

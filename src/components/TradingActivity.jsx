@@ -14,7 +14,7 @@ import { FaAngleDown } from "react-icons/fa6"
 
 function TradingActivity({ className = "" }) {
   return (
-    <Card className={`m-3 w-fit p-2 ${className}`}>
+    <Card className={`w-fit p-2 ${className}`}>
       <CardHeader>
         <div className="w-full inline-flex items-center justify-between">
           <div>
