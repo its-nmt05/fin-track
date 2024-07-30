@@ -37,9 +37,7 @@ function TransactionsTable({ className = "", transactions = [] }) {
 
   // function used for rendering each cell in the table provided a transaction and column key
   const renderCell = useCallback((transaction, columnKey) => {
-    const { id, symbol, quantity, price, operation, status, time } =
-      transaction
-    console.log(transaction)
+    const { id, symbol, quantity, price, operation, status, time } = transaction
     switch (columnKey) {
       case "number":
         return <p>{numFormat(transactions.indexOf(transaction) + 1)}</p>

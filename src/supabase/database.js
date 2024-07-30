@@ -70,7 +70,7 @@ export class DatabaseService {
         try {
             return await this.client
                 .from("portfolio")
-                .select("*, portfolio_transaction(*)")
+                .select("*, portfolio_transaction(*), portfolio_stocks(*)")
                 .eq("user_id", user_id)
                 .single()
         } catch (error) {

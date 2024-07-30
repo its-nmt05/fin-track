@@ -14,6 +14,8 @@ import WalletTransactions from "./WalletTransactions"
 import StockDisclaimerComponent from "./StockDisclaimerComponent"
 import StockDetailsComponent from "./StockDetailsComponent"
 import BuySellShareComponent from "./BuySellShareComponent"
+import PortfolioStockCard from "./PortfolioStockCard"
+import PortfolioStockList from "./PortfolioStockList"
 
 export {
     Header,
@@ -32,4 +34,6 @@ export {
     StockDisclaimerComponent,
     StockDetailsComponent,
     BuySellShareComponent,
+    PortfolioStockCard,
+    PortfolioStockList,
 }

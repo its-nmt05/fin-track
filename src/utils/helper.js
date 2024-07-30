@@ -1,6 +1,12 @@
 let USDFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
+    maximumFractionDigits: 2,
+})
+
+let numFormatter = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 3,
 })
 
 function USDFormat(amount) {
@@ -20,4 +26,8 @@ function numFormat(num) {
     return num.toString().padStart(2, 0)
 }
 
-export { USDFormat, capitalize, dateFormat, numFormat }
+function fractionFormat(num) {
+    return numFormatter.format(num)
+}
+
+export { USDFormat, capitalize, dateFormat, numFormat, fractionFormat }
