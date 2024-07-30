@@ -50,7 +50,7 @@ function Wallet() {
                 <Progress
                   size="sm"
                   label="Total transactions"
-                  value={data.wallet_transaction}
+                  value={data.wallet_transaction.length}
                 />
                 <p className="text-4xl font-medium">
                   {USDFormat(data.balance)}

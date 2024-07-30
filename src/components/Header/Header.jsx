@@ -24,11 +24,11 @@ import useAuth from "../../hooks/useAuth"
 
 export default function Header() {
   const navItems = [
-    { name: "Get started", route: "/get-started", active: true },
-    { name: "Home", route: "/", active: true },
-    { name: "Portfolio", route: "/portfolio", active: true },
-    { name: "Invest", route: "/invest", active: true },
-    { name: "Wallet", route: "/wallet", active: true },
+    { name: "Get started", route: "/get-started" },
+    { name: "Home", route: "/" },
+    { name: "Portfolio", route: "/portfolio" },
+    { name: "Invest", route: "/invest" },
+    { name: "Wallet", route: "/wallet" },
   ]
 
   const location = useLocation()

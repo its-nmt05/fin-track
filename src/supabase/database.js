@@ -53,13 +53,13 @@ export class DatabaseService {
         }
     }
 
-    async stockTransact({ uid, _symbol, operation, quantity }) {
+    async stockTransact({ uid, _symbol, operation, _quantity }) {
         try {
             return await this.client.rpc("stock_transaction", {
                 uid,
                 _symbol,
                 operation,
-                quantity,
+                _quantity,
             })
         } catch (error) {
             console.log(error)

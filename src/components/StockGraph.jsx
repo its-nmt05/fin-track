@@ -25,26 +25,9 @@ function StockGraph({
   ]
 
   const [timeOption, setTimeOption] = useState(timeOptions[0].id)
-  const [stockData, setStockData] = useState({})
-
-  // stock.quote({ symbol: "AAPL" }).then((data) => console.log(data))
-
-  // useEffect(() => {
-  //   const abortController = new AbortController()
-  //   const signal = abortController.signal
-  //   stock
-  //     .getData({ symbol, range: timeOption })
-  //     .then((data) => {
-  //       !signal.aborted && setStockData(data)
-  //     })
-  //     .catch((e) => !signal.aborted && console.log(e))
-  //   return () => {
-  //     abortController.abort()
-  //   }
-  // }, [timeOption])
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-5 ${className}`}>
       <Card className="px-4 py-2">
         <CardBody>
           <div className="flex justify-between items-center">

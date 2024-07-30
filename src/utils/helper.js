@@ -13,7 +13,7 @@ function capitalize(string) {
 }
 
 function dateFormat(dateString) {
-    return "12th Sep, 2005"
+    return new Date(dateString).toLocaleString("en-US")
 }
 
 function numFormat(num) {

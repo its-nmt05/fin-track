@@ -30,13 +30,14 @@ function BuySellShareComponent({ current_price = 100 }) {
   ]
 
   const { user } = useAuth()
-  const [shares, setShares] = useState(1)
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
+
+  const [shares, setShares] = useState(1)
   const [currentOperation, setCurrentOperation] = useState(operations[0].key)
 
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
+  const [error, setError] = useState(null)
   const [isValid, setIsValid] = useState(true)
 
   const defaultOptions = {
@@ -56,7 +57,7 @@ function BuySellShareComponent({ current_price = 100 }) {
         uid: user.id,
         _symbol: "QTRX",
         operation: currentOperation,
-        quantity: shares,
+        _quantity: shares,
       })
       .then(({ data, error }) => {
         setError(error)
@@ -104,7 +105,6 @@ function BuySellShareComponent({ current_price = 100 }) {
               className="max-w-[40%]"
               value={shares}
               onValueChange={setShares}
-              endContent={shares == 1 ? "share" : "shares"}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -192,11 +192,9 @@ function BuySellShareComponent({ current_price = 100 }) {
             ) : (
               message && (
                 <div className="px-2">
-                  {Object.entries(message.transaction).map(([key, value]) => (
+                  {Object.entries(message).map(([key, value]) => (
                     <div className="flex items-baseline">
-                      <p className="font-bold">
-                        {capitalize(key)}: &nbsp;
-                      </p>
+                      <p className="font-bold">{capitalize(key)}: &nbsp;</p>
                       <p className="text-default-600 text-small">{value}</p>
                     </div>
                   ))}
