@@ -110,7 +110,7 @@ function StockDetailsComponent({
           <ModalHeader>
             <div className="flex flex-col w-full items-center">
               <p className="font-medium text-xl">Stock performance</p>
-              <p className="text-tiny font-normal text-default-600">
+              <p className="text-sm font-normal text-default-600">
                 Learn what do these stock market terms even mean
               </p>
             </div>

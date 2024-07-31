@@ -42,12 +42,12 @@ function InfoCard({
                 <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
                   <stop
                     offset="5%"
-                    stopColor={change < 0 ? "red" : "green"}
+                    stopColor={change > 0 ? "green" : "red"}
                     stopOpacity={0.2}
                   />
                   <stop
                     offset="95%"
-                    stopColor={change < 0 ? "crimson" : "limegreen"}
+                    stopColor={change > 0 ? "limegreen" : "crimson"}
                     stopOpacity={0}
                   />
                 </linearGradient>
@@ -55,7 +55,7 @@ function InfoCard({
               <Area
                 dataKey="amount"
                 type="monotone"
-                stroke={change < 0 ? "crimson" : "limegreen"}
+                stroke={change > 0 ? "limegreen" : "crimson"}
                 fill="url(#gradient)"
               />
             </AreaChart>
@@ -64,10 +64,10 @@ function InfoCard({
             <p className="text-xl font-semibold">{USDFormat(current_price)}</p>
             <div className="inline-flex items-center space-x-2">
               <p>{fractionFormat(change)}%</p>
-              {change < 0 ? (
-                <FaCircleArrowDown size={20} color="crimson" />
-              ) : (
+              {change > 0 ? (
                 <FaCircleArrowUp size={20} color="limegreen" />
+              ) : (
+                <FaCircleArrowDown size={20} color="crimson" />
               )}
             </div>
           </div>

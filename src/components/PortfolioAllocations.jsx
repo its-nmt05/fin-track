@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react"
 import { FaArrowTrendDown, FaArrowTrendUp, FaEllipsis } from "react-icons/fa6"
-import { fractionFormat, USDFormat } from "../utils/helper"
+import { capitalize, fractionFormat, USDFormat } from "../utils/helper"
 import {
   Cell,
   Legend,
@@ -18,6 +18,19 @@ function PortfolioAllocations({
   // calculate the % returns
   const p_return = (total - invested) / invested
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]
+
+  const CustomTooltip = ({ payload }) => {
+    if (payload?.length) {
+      const data = payload[0]
+      return (
+        <div className="bg-black bg-opacity-70 shadow-xl rounded-full px-3 py-1">
+          <p className="text-sm text-default-200">
+            {data.name} &#x2022; {data.value}
+          </p>
+        </div>
+      )
+    }
+  }
 
   return (
     <Card className={`w-fit p-2 ${className}`}>
@@ -38,33 +51,39 @@ function PortfolioAllocations({
           >
             <div className="inline-flex items-center space-x-2">
               {p_return > 0 ? <FaArrowTrendUp /> : <FaArrowTrendDown />}
-              <p>{fractionFormat(p_return)}%</p>
+              <p>{fractionFormat(p_return || 0)}%</p>
             </div>
           </Chip>
         </div>
-        <ResponsiveContainer width="100%" aspect={1.5}>
-          <PieChart>
-            <Pie
-              data={portfolio_stocks}
-              dataKey="quantity"
-              nameKey="symbol"
-              innerRadius={50}
-              outerRadius={100}
-              legendType="circle"
-            >
-              {portfolio_stocks.map((_, index) => (
-                <Cell key={1} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend
-              legendType="circle"
-              layout="vertical"
-              align="right"
-              verticalAlign="middle"
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        {portfolio_stocks.length == 0 ? (
+          <div className="w-full text-center py-[20%]">
+            <p className="text-default-600">Invest in some stocks first</p>
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" aspect={1.5}>
+            <PieChart>
+              <Pie
+                data={portfolio_stocks}
+                dataKey="quantity"
+                nameKey="symbol"
+                innerRadius={50}
+                outerRadius={100}
+                legendType="circle"
+              >
+                {portfolio_stocks.map((_, index) => (
+                  <Cell key={1} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip content={CustomTooltip} />
+              <Legend
+                legendType="circle"
+                layout="vertical"
+                align="right"
+                verticalAlign="middle"
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        )}
       </CardBody>
     </Card>
   )
