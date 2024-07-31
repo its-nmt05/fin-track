@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from "@nextui-org/react"
 import { FaArrowUp } from "react-icons/fa6"
 import stock from "../stocks/stock"
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   YAxis,
@@ -23,8 +23,20 @@ function StockGraph({
     { id: "1y", label: "1Y" },
     { id: "max", label: "All" },
   ]
-
   const [timeOption, setTimeOption] = useState(timeOptions[0].id)
+
+  const CustomTooltip = ({ payload }) => {
+    if (payload?.length) {
+      const data = payload[0].payload
+      return (
+        <div className="bg-black bg-opacity-70 shadow-xl rounded-full px-3 py-1">
+          <p className="text-sm text-default-200">
+            {USDFormat(data.close)} &#x2022; {data.date}
+          </p>
+        </div>
+      )
+    }
+  }
 
   return (
     <div className={`space-y-5 ${className}`}>
@@ -56,9 +68,7 @@ function StockGraph({
                   color="success"
                   size="lg"
                   className="py-4 px-1 text-sm"
-                >
-                  {"10%"}
-                </Chip>
+                ></Chip>
                 <p className="text-green-500 text-md">{"$10"}</p>
               </div>
             </div>
@@ -81,17 +91,23 @@ function StockGraph({
         </CardHeader>
         <CardBody className="inline-flex items-center justify-center">
           <ResponsiveContainer width="100%" aspect={2.2}>
-            <LineChart data={prices}>
-              <YAxis type="number" domain={[90, "auto"]} />
-              <Tooltip />
-              <CartesianGrid strokeDasharray="3 3" />
-              <Line
-                dataKey="open"
+            <AreaChart data={prices}>
+              <defs>
+                <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#16a253" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="green" stopOpacity={0.05} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <Tooltip content={CustomTooltip} />
+              <Area
+                dataKey="close"
                 type="monotone"
                 dot={false}
-                // stroke={change < 0 ? "crimson" : "limegreen"}
+                fill="url(#gradient)"
+                stroke="#16a253"
               />
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
         </CardBody>
       </Card>

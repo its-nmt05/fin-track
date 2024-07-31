@@ -18,11 +18,7 @@ import { RiSlowDownLine, RiStockLine } from "react-icons/ri"
 import { IoMdInformationCircleOutline } from "react-icons/io"
 
 function StockDetailsComponent({
-  open = 10,
-  close = 10,
-  low = 10,
-  high = 10,
-  volume = 10,
+  stockData: { open, close, low, high, volume },
 }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 
@@ -117,7 +113,7 @@ function StockDetailsComponent({
           </ModalHeader>
           <ModalBody>
             {content.map((para) => (
-              <div>
+              <div key={para.title}>
                 <div className="inline-flex items-center space-x-1">
                   {para.icon}
                   <p className="font-medium">{para.title}</p>

@@ -1,6 +1,6 @@
 import React from "react"
 import { Outlet } from "react-router-dom"
-import { Header, Footer, Container } from "./"
+import { Header, Container } from "./"
 
 function Layout() {
   return (
@@ -9,7 +9,6 @@ function Layout() {
       <Container>
         <Outlet />
       </Container>
-      <Footer />
     </>
   )
 }

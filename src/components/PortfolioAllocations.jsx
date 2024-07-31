@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react"
-import { FaArrowTrendDown, FaArrowTrendUp, FaEllipsis } from "react-icons/fa6"
-import { capitalize, fractionFormat, USDFormat } from "../utils/helper"
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6"
+import { fractionFormat, USDFormat } from "../utils/helper"
 import {
   Cell,
   Legend,
@@ -33,16 +33,13 @@ function PortfolioAllocations({
   }
 
   return (
-    <Card className={`w-fit p-2 ${className}`}>
+    <Card className={`p-2 ${className}`}>
       <CardHeader>
-        <div className="w-full inline-flex items-center justify-between">
-          <p className="font-medium text-xl">Portfolio allocations</p>
-          <FaEllipsis />
-        </div>
+        <p className="font-medium text-xl">Portfolio allocations</p>
       </CardHeader>
       <CardBody>
         <p className="text-tiny font-bold text-default-500">TOTAL</p>
-        <div className="inline-flex space-x-2 items-center mb-4">
+        <div className="inline-flex space-x-2 items-center">
           <p className="text-2xl font-bold">{USDFormat(total)}</p>
           <Chip
             radius="sm"
@@ -64,6 +61,7 @@ function PortfolioAllocations({
             <PieChart>
               <Pie
                 data={portfolio_stocks}
+                cx="40%"
                 dataKey="quantity"
                 nameKey="symbol"
                 innerRadius={50}

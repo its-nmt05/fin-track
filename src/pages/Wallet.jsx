@@ -7,15 +7,6 @@ import {
   WalletTransactions,
   WithdrawMoneyComponent,
 } from "../components"
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts"
 import { USDFormat } from "../utils/helper"
 import useAuth from "../hooks/useAuth"
 
@@ -30,7 +21,6 @@ function Wallet() {
         user_id: user.id,
       })
       .then(({ data, error }) => {
-        console.log(data)
         setData(data)
         if (!error) {
           setLoading(false)
@@ -63,7 +53,7 @@ function Wallet() {
           </Card>
           <WithdrawMoneyComponent balance={data.balance} wallet_id={data.id} />
         </div>
-        <WalletChart data={data.wallet_transaction}/>
+        <WalletChart data={data.wallet_transaction} />
       </div>
       <p className="text-3xl font-bold">Transaction history</p>
       <WalletTransactions transactions={data.wallet_transaction} />

@@ -23,7 +23,7 @@ function AddMoneyComponent({ wallet_id }) {
     formState: { errors },
     setValue,
     control,
-  } = useForm()
+  } = useForm({ defaultValues: { amount: "" } })
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(false)
   const [error, setError] = useState()

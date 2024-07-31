@@ -1,5 +1,5 @@
-import { Card, CardBody, CardHeader } from "@nextui-org/react"
 import React from "react"
+import { Card, CardBody, CardHeader } from "@nextui-org/react"
 import { Area, AreaChart, ResponsiveContainer } from "recharts"
 import { fractionFormat, USDFormat } from "../utils/helper"
 import { FaCircleArrowDown, FaCircleArrowUp } from "react-icons/fa6"

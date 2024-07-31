@@ -12,34 +12,31 @@ import {
   DropdownMenu,
   DropdownItem,
   NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
 } from "@nextui-org/react"
 
 import { useLocation, useNavigate } from "react-router-dom"
 import { CiSearch } from "react-icons/ci"
 import Logo from "../../static/icons/Logo"
-import { useDispatch, useSelector } from "react-redux"
-import authService from "../../supabase/auth"
-import { clearUser } from "../../store/authSlice"
 import useAuth from "../../hooks/useAuth"
 
 export default function Header() {
   const navItems = [
-    { name: "Get started", route: "/get-started" },
     { name: "Home", route: "/" },
     { name: "Portfolio", route: "/portfolio" },
     { name: "Invest", route: "/invest" },
     { name: "Wallet", route: "/wallet" },
   ]
 
-  const location = useLocation()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const location = useLocation()
   const { user, logout } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <Navbar isBordered maxWidth="full" onMenuOpenChange={setIsMenuOpen}>
-      <NavbarContent>
+    <Navbar isBordered onMenuOpenChange={setIsMenuOpen} maxWidth="full">
+      <NavbarContent className="flex items-center gap-2">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
@@ -49,7 +46,7 @@ export default function Header() {
           <p className="font-bold text-inherit">FinTrack</p>
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-4">
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
         {navItems.map((item) => (
           <NavbarItem
             color="foreground"
@@ -62,7 +59,7 @@ export default function Header() {
           </NavbarItem>
         ))}
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent as="div" justify="end">
         <Input
           classNames={{
             base: "max-w-full sm:max-w-[16rem] h-10",
@@ -91,8 +88,12 @@ export default function Header() {
             variant="flat"
             onAction={(key) => {
               switch (key) {
+                case "started":
+                  navigate("/get-started")
+                  break
                 case "logout":
                   logout()
+                  break
               }
             }}
           >
@@ -102,6 +103,7 @@ export default function Header() {
                 {user?.email}
               </p>
             </DropdownItem>
+            <DropdownItem key="started">Get started</DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem key="help">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="danger">
@@ -110,6 +112,20 @@ export default function Header() {
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
+      <NavbarMenu>
+        {navItems.map((item) => (
+          <NavbarMenuItem key={item.name}>
+            <NavbarItem
+              color="foreground"
+              isActive={item.route == location.pathname}
+            >
+              <Link color="foreground" href={item.route}>
+                {item.name}
+              </Link>
+            </NavbarItem>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   )
 }

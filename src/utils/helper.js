@@ -30,4 +30,17 @@ function fractionFormat(num) {
     return numFormatter.format(num)
 }
 
-export { USDFormat, capitalize, dateFormat, numFormat, fractionFormat }
+function sort(array, { property, limit, asc = true }) {
+    const copy = array.slice() // create a soft copy of the array
+    return copy
+        .sort((a, b) => {
+            if (asc) {
+                return a[property] > b[property] ? 1 : -1
+            } else {
+                return a[property] < b[property] ? 1 : -1
+            }
+        })
+        .slice(0, limit)
+}
+
+export { USDFormat, capitalize, dateFormat, numFormat, fractionFormat, sort }

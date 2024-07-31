@@ -9,7 +9,6 @@ function InfoCard({
   stockData: { symbol, name, current_price, change, image, prices },
   className = "",
 }) {
-  if (symbol == "CRDT") console.log(change)
   const navigate = useNavigate()
   prices = prices.map((value) => ({ amount: value }))
   image =
@@ -36,7 +35,7 @@ function InfoCard({
           <ResponsiveContainer width="50%" aspect={2}>
             <AreaChart
               data={prices}
-              margin={{ left: 0, right: 0, top: 2, bottom: 0 }}
+              margin={{ top: 2 }}
             >
               <defs>
                 <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">

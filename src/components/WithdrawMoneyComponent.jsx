@@ -25,7 +25,7 @@ function WithdrawMoneyComponent({ balance, wallet_id }) {
     formState: { errors },
     setValue,
     control,
-  } = useForm()
+  } = useForm({ defaultValues: { amount: "" } })
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState(false)
   const [error, setError] = useState()

@@ -1,5 +1,4 @@
 import Header from "./Header/Header"
-import Footer from "./Footer/Footer"
 import Container from "./container/Container"
 import Layout from "./Layout"
 import InfoCard from "./InfoCard"
@@ -20,7 +19,6 @@ import WalletChart from "./WalletChart"
 
 export {
     Header,
-    Footer,
     Layout,
     InfoCard,
     StockGraph,

@@ -8,15 +8,17 @@ import {
   StockDetailsComponent,
   StockGraph,
 } from "../components"
+import x from "../stocks/dummy-data"
 
 function StockDetails() {
   const { symbol } = useParams()
-  const [stockData, setStockData] = useState(null)
+  const [stockData, setStockData] = useState(x)
   const [loading, setLoading] = useState(false)
 
   // useEffect(() => {
   //   databaseService.getStockData({ symbol }).then(({ data, error }) => {
   //     if (!error) {
+  //       console.log(data)
   //       setLoading(false)
   //       setStockData(data)
   //     }
@@ -24,13 +26,13 @@ function StockDetails() {
   // }, [])
 
   return !loading ? (
-    !stockData ? (
+    stockData ? (
       <div className="w-full flex lg:flex-row flex-col lg:space-x-6 space-y-4 lg:space-y-0">
         <div className="basis-3/4 w-full  h-fit">
-          {/* <StockGraph stockData={stockData} /> */}
+          <StockGraph stockData={stockData} />
         </div>
         <div className="basis-1/4 flex lg:flex-col flex-row lg:space-y-6 space-x-4 lg:space-x-0">
-          <StockDetailsComponent />
+          <StockDetailsComponent stockData={stockData.prices[0]} />
           <BuySellShareComponent />
         </div>
       </div>

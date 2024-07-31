@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 
 function Invest() {
   const stocks = useSelector((state) => state.data.stocks)
+
   return (
     <div className="space-y-4">
       <div className="flex flex-row items-center space-x-1">

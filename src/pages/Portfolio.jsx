@@ -7,7 +7,7 @@ import {
 } from "../components"
 import databaseService from "../supabase/database"
 import useAuth from "../hooks/useAuth"
-import { Link, Spinner } from "@nextui-org/react"
+import { Spinner } from "@nextui-org/react"
 import image from "../static/images/no_data.svg"
 
 function Portfolio() {
@@ -28,8 +28,6 @@ function Portfolio() {
       }
     })
   }, [])
-
-  console.log(data)
 
   return !loading ? (
     <div className="space-y-6">
