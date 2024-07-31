@@ -2,45 +2,6 @@ import { InfoCard, StockGraph } from "../components"
 import React from "react"
 
 function Home() {
-  const companies = [
-    {
-      name: "Apple Inc",
-      symbol: "AAPL",
-      current_price: "$193.60",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi_F5mBDcXHBlUDkSiJD9-ZmnKHIjG9h-nhQ&s",
-    },
-    {
-      name: "Alphabet Inc Class C",
-      symbol: "GOOG",
-      current_price: "$141.49",
-      image:
-        "https://steelbluemedia.com/wp-content/uploads/2019/06/new-google-favicon-512.png",
-    },
-    {
-      name: "Microsoft Corporation",
-      symbol: "MSFT",
-      current_price: "$374.58",
-      image:
-        "https://static.vecteezy.com/system/resources/previews/027/127/473/non_2x/microsoft-logo-microsoft-icon-transparent-free-png.png",
-    },
-    {
-      name: "NVIDIA Corp",
-      symbol: "NVDA",
-      current_price: "$130.90",
-      image: "https://logowik.com/content/uploads/images/599_nvidia.jpg",
-    },
-  ]
-
-  const stockInfo = {
-    name: "Meta Platform, Inc.",
-    img: "https://1000logos.net/wp-content/uploads/2021/10/logo-Meta.png",
-    platform: "NASDAQ",
-    symbol: "FB",
-    industries: ["Social Media", "Internet"],
-    current_price: "$305.66",
-    change: { percent: "1.84%", price: "5.51" },
-  }
 
   return (
     <>

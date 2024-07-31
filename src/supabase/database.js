@@ -66,6 +66,16 @@ export class DatabaseService {
         }
     }
 
+    async getPortfolioData({ uid }) {
+        try {
+            return this.client.rpc("get_portfolio", {
+                uid,
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async getPortfolio({ user_id }) {
         try {
             return await this.client

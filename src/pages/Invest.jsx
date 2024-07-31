@@ -4,7 +4,6 @@ import { useSelector } from "react-redux"
 
 function Invest() {
   const stocks = useSelector((state) => state.data.stocks)
-
   return (
     <div className="space-y-4">
       <div className="flex flex-row items-center space-x-1">
@@ -12,8 +11,8 @@ function Invest() {
         <StockDisclaimerComponent />
       </div>
       <div className="gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {stocks?.map((stock) => (
-          <InfoCard companyInfo={stock} />
+        {stocks.map((stock) => (
+          <InfoCard key={stock.id} stockData={stock} />
         ))}
       </div>
     </div>

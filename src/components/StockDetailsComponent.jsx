@@ -1,5 +1,4 @@
 import React from "react"
-import StockGraph from "./StockGraph"
 import { Card, CardBody, CardHeader } from "@nextui-org/react"
 import { USDFormat } from "../utils/helper"
 

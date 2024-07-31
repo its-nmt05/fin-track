@@ -1,10 +1,23 @@
-import React, { useState } from "react"
-import { PieChart } from "@mui/x-charts/PieChart"
+import React from "react"
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react"
-import { FaArrowTrendUp, FaEllipsis } from "react-icons/fa6"
+import { FaArrowTrendDown, FaArrowTrendUp, FaEllipsis } from "react-icons/fa6"
+import { fractionFormat, USDFormat } from "../utils/helper"
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts"
 
-function PortfolioAllocations({ className = "" }) {
-  const [loading, setLoading] = useState(true)
+function PortfolioAllocations({
+  className = "",
+  data: { total, invested, portfolio_stocks },
+}) {
+  // calculate the % returns
+  const p_return = (total - invested) / invested
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]
 
   return (
     <Card className={`w-fit p-2 ${className}`}>
@@ -15,31 +28,43 @@ function PortfolioAllocations({ className = "" }) {
         </div>
       </CardHeader>
       <CardBody>
-        <p className="text-tiny font-bold text-default-500">BAL</p>
+        <p className="text-tiny font-bold text-default-500">TOTAL</p>
         <div className="inline-flex space-x-2 items-center mb-4">
-          <p className="text-2xl font-bold">$26,369.82</p>
-          <Chip radius="sm" variant="flat" color="success">
+          <p className="text-2xl font-bold">{USDFormat(total)}</p>
+          <Chip
+            radius="sm"
+            variant="flat"
+            color={p_return > 0 ? "success" : "danger"}
+          >
             <div className="inline-flex items-center space-x-2">
-              <FaArrowTrendUp />
-              <p>1.2%</p>
+              {p_return > 0 ? <FaArrowTrendUp /> : <FaArrowTrendDown />}
+              <p>{fractionFormat(p_return)}%</p>
             </div>
           </Chip>
         </div>
-        <PieChart
-          series={[
-            {
-              innerRadius: 50,
-              data: [
-                { id: 0, value: 100, label: "Apple Inc." },
-                { id: 1, value: 150, label: "Microsoft " },
-                { id: 2, value: 200, label: "Alphabet" },
-                { id: 3, value: 300, label: "Meta" },
-              ],
-            },
-          ]}
-          width={350}
-          height={200}
-        />
+        <ResponsiveContainer width="90%" aspect={1.5}>
+          <PieChart>
+            <Pie
+              data={portfolio_stocks}
+              dataKey="quantity"
+              nameKey="symbol"
+              innerRadius={50}
+              outerRadius={100}
+              legendType="circle"
+            >
+              {portfolio_stocks.map((_, index) => (
+                <Cell key={1} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend
+              legendType="circle"
+              layout="vertical"
+              align="right"
+              verticalAlign="middle"
+            />
+          </PieChart>
+        </ResponsiveContainer>
       </CardBody>
     </Card>
   )

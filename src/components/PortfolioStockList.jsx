@@ -16,8 +16,11 @@ function PortfolioStockList({ portfolio_stocks = [] }) {
           ...portfolio_stock,
           ...stocks.find((stock) => stock.symbol == portfolio_stock.symbol),
         }
-        console.log(merged)
-        return <PortfolioStockCard stock={merged} />
+        return (
+          <li key={merged.id}>
+            <PortfolioStockCard stock={merged} />
+          </li>
+        )
       })}
     </ul>
   )
