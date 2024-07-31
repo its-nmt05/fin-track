@@ -28,7 +28,9 @@ function Portfolio() {
       }
     })
   }, [])
+
   console.log(data)
+
   return !loading ? (
     <div className="space-y-6">
       <div className="space-y-4">
@@ -44,7 +46,7 @@ function Portfolio() {
       </div>
       <div className="space-y-4">
         <p className="text-3xl font-bold">Your portfolio</p>
-        <div className="flex lg:flex-row flex-col lg:space-x-6">
+        <div className="flex lg:flex-row flex-col lg:space-x-6 lg:space-y-0 space-y-6">
           <PortfolioAllocations className="basis-1/3" data={data} />
           <TradingActivity className="basis-2/3" />
         </div>

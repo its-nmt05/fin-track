@@ -42,7 +42,7 @@ function PortfolioAllocations({
             </div>
           </Chip>
         </div>
-        <ResponsiveContainer width="90%" aspect={1.5}>
+        <ResponsiveContainer width="100%" aspect={1.5}>
           <PieChart>
             <Pie
               data={portfolio_stocks}
