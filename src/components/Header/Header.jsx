@@ -91,6 +91,9 @@ export default function Header() {
                 case "started":
                   navigate("/get-started")
                   break
+                case "settings":
+                  navigate("/settings")
+                  break
                 case "logout":
                   logout()
                   break

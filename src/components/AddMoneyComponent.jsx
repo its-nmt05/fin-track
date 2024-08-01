@@ -23,7 +23,7 @@ function AddMoneyComponent({ wallet_id }) {
     formState: { errors },
     setValue,
     control,
-  } = useForm({ defaultValues: { amount: "" } })
+  } = useForm()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(false)
   const [error, setError] = useState()
@@ -105,7 +105,7 @@ function AddMoneyComponent({ wallet_id }) {
               <ModalBody>
                 <form onSubmit={handleSubmit(addMoney)}>
                   <Controller
-                    defaultValue={null}
+                    defaultValue={""}
                     control={control}
                     name="amount"
                     rules={{

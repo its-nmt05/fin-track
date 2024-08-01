@@ -10,7 +10,7 @@ import {
 } from "../components"
 import x from "../stocks/dummy-data"
 
-function StockDetails() {
+function Stock() {
   const { symbol } = useParams()
   const [stockData, setStockData] = useState(x)
   const [loading, setLoading] = useState(false)
@@ -51,4 +51,4 @@ function StockDetails() {
   )
 }
 
-export default StockDetails
+export default Stock

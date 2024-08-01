@@ -25,7 +25,7 @@ function WithdrawMoneyComponent({ balance, wallet_id }) {
     formState: { errors },
     setValue,
     control,
-  } = useForm({ defaultValues: { amount: "" } })
+  } = useForm()
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState(false)
   const [error, setError] = useState()
@@ -118,7 +118,7 @@ function WithdrawMoneyComponent({ balance, wallet_id }) {
               <ModalBody>
                 <form onSubmit={handleSubmit(withdraw)}>
                   <Controller
-                    defaultValue={null}
+                    defaultValue={""}
                     control={control}
                     name="amount"
                     rules={{

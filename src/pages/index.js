@@ -2,22 +2,22 @@ import GetStarted from "./GetStarted"
 import Home from "./Home"
 import Portfolio from "./Portfolio"
 import Wallet from "./Wallet"
-import Account from "./Account"
+import Settings from "./Settings"
 import Invest from "./Invest"
 import Login from "./Login"
 import Signup from "./Signup"
 import NotFound from "./NotFound"
-import StockDetails from "./StockDetails"
+import Stock from "./Stock"
 
 export {
     GetStarted,
     Home,
     Portfolio,
     Wallet,
-    Account,
+    Settings,
     Invest,
     Login,
     Signup,
     NotFound,
-    StockDetails,
+    Stock,
 }
