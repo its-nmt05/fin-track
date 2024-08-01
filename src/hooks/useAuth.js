@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import authService from "../supabase/auth"
-import { clearUser, setUser } from "../store/authSlice"
+import { clearUser, setUser } from "../store/slice/authSlice"
 
 const useAuth = () => {
     const dispatch = useDispatch()

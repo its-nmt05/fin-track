@@ -34,7 +34,7 @@ function InfoCard({
       <CardBody>
         <div className="w-full flex flex-row justify-between">
           <StockChart change={change} data={prices} aspect={2} />
-          <div className="flex flex-col justify-end items-end space-y-1">
+          <div className="flex flex-col justify-end items-end lg:space-y-1">
             <p className="text-xl font-semibold">{USDFormat(current_price)}</p>
             <div className="inline-flex items-center space-x-1">
               <p>{fractionFormat(change)}%</p>

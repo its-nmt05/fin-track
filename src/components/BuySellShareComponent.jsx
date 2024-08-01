@@ -194,7 +194,7 @@ function BuySellShareComponent({ current_price = 100 }) {
               message && (
                 <div className="px-2">
                   {Object.entries(message).map(([key, value]) => (
-                    <div className="flex items-baseline">
+                    <div key={key} className="flex items-baseline">
                       <p className="font-bold">{capitalize(key)}: &nbsp;</p>
                       <p className="text-default-600 text-small">{value}</p>
                     </div>

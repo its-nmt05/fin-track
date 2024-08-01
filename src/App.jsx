@@ -16,8 +16,10 @@ import {
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import authService from "./supabase/auth"
-import { clearUser, setUser } from "./store/authSlice"
-import { setStocks } from "./store/dataSlice"
+import { clearUser, setUser } from "./store/slice/authSlice"
+import { fetchStocks } from "./store/slice/stockSlice"
+import { fetchPortfolio } from "./store/slice/portfolioSlice"
+import { fetchWallet, onWalletUpdate } from "./store/slice/walletSlice"
 import databaseService from "./supabase/database"
 
 function App() {
@@ -28,7 +30,13 @@ function App() {
   useEffect(() => {
     authService.getUser().then((data) => {
       if (data?.user) {
+        // fetch all user data
+        const user_id = data.user.id
         dispatch(setUser(data))
+        dispatch(fetchStocks())
+        dispatch(fetchPortfolio(user_id))
+        dispatch(fetchWallet(user_id))
+        dispatch(onWalletUpdate(user_id))
       } else {
         navigate("/login")
         dispatch(clearUser())
@@ -36,10 +44,9 @@ function App() {
       setLoading(false)
     })
 
-    // load all stocks and add to the store
-    databaseService.getStocks().then(({ data }) => {
-      dispatch(setStocks(data))
-    })
+    return () => {
+      databaseService.unsubscribeAll()  // unsub all realtime listeners
+    }
   }, [])
 
   return !loading ? (

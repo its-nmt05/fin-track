@@ -31,7 +31,7 @@ function fractionFormat(num) {
 }
 
 function sort(array, { property, limit, asc = true }) {
-    const copy = array.slice() // create a soft copy of the array
+    const copy = array ? array.slice() : [] // create a soft copy of the array
     return copy
         .sort((a, b) => {
             if (asc) {

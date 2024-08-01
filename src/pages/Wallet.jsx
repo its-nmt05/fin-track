@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import databaseService from "../supabase/database"
+import React from "react"
 import { Card, CardBody, Progress, Spinner } from "@nextui-org/react"
 import {
   AddMoneyComponent,
@@ -8,31 +7,17 @@ import {
   WithdrawMoneyComponent,
 } from "../components"
 import { USDFormat } from "../utils/helper"
-import useAuth from "../hooks/useAuth"
+import { useWallet } from "../store/slice/walletSlice"
 
 function Wallet() {
-  const { user } = useAuth()
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const { isLoading, data } = useWallet()
+  const { id, wallet_transaction, balance } = { ...data }
 
-  useEffect(() => {
-    databaseService
-      .getWallet({
-        user_id: user.id,
-      })
-      .then(({ data, error }) => {
-        setData(data)
-        if (!error) {
-          setLoading(false)
-        }
-      })
-  }, [])
-
-  return !loading ? (
+  return !isLoading ? (
     <div className="space-y-4">
       <div className="flex w-full justify-between">
         <p className="text-3xl font-bold">Your wallet</p>
-        <AddMoneyComponent wallet_id={data.id} />
+        <AddMoneyComponent wallet_id={id} />
       </div>
       <div className="w-full flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 pb-5">
         <div className="basis-1/3 flex flex-col justify-between space-y-5">
@@ -43,20 +28,18 @@ function Wallet() {
                 <Progress
                   size="sm"
                   label="Total transactions"
-                  value={data.wallet_transaction.length}
+                  value={wallet_transaction.length}
                 />
-                <p className="text-4xl font-medium">
-                  {USDFormat(data.balance)}
-                </p>
+                <p className="text-4xl font-medium">{USDFormat(balance)}</p>
               </div>
             </CardBody>
           </Card>
-          <WithdrawMoneyComponent balance={data.balance} wallet_id={data.id} />
+          <WithdrawMoneyComponent balance={balance} wallet_id={id} />
         </div>
-        <WalletChart data={data.wallet_transaction} />
+        <WalletChart data={wallet_transaction} />
       </div>
       <p className="text-3xl font-bold">Transaction history</p>
-      <WalletTransactions transactions={data.wallet_transaction} />
+      <WalletTransactions transactions={wallet_transaction} />
     </div>
   ) : (
     <div className="flex min-h-screen justify-center items-center">

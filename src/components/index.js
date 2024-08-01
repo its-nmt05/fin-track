@@ -17,6 +17,7 @@ import PortfolioStockCard from "./PortfolioStockCard"
 import PortfolioStockList from "./PortfolioStockList"
 import WalletChart from "./WalletChart"
 import StockChart from "./StockChart"
+import SortedStockList from "./SortedStockList"
 
 export {
     Header,
@@ -37,5 +38,6 @@ export {
     PortfolioStockCard,
     PortfolioStockList,
     WalletChart,
-    StockChart
+    StockChart,
+    SortedStockList,
 }
