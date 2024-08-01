@@ -47,13 +47,8 @@ function PortfolioStockCard({
 
   return (
     <>
-      <Card
-        isHoverable
-        isPressable
-        className="min-w-[14rem] p-1"
-        onPress={onOpen}
-      >
-        <CardHeader className="pb-0 justify-between">
+      <Card isHoverable isPressable className="p-1" onPress={onOpen}>
+        <CardHeader className="pb-0 space-x-2 sm:space-x-0 justify-between">
           <div className="flex space-x-2">
             <img
               className="rounded-full max-w-[28px] max-h-[28px]"
@@ -71,7 +66,7 @@ function PortfolioStockCard({
             <p className="font-medium">{USDFormat(invested)}</p>
           </div>
           <div className="inline-flex justify-between">
-            <p className="text-default-600">Total Return</p>
+            <p className="text-default-600 line-clamp-1">Total Return</p>
             <div className="flex items-center space-x-1">
               <p
                 className={`font-medium ${

@@ -1,5 +1,5 @@
 import React from "react"
-import InfoCard from "./InfoCard"
+import { InfoCard } from "./"
 import { sort } from "../utils/helper"
 
 function SortedStockList({ data, property, limit = 4, asc = true }) {

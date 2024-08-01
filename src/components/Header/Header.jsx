@@ -5,7 +5,6 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
-  Input,
   Dropdown,
   DropdownTrigger,
   Avatar,
@@ -17,7 +16,6 @@ import {
 } from "@nextui-org/react"
 
 import { useLocation } from "react-router-dom"
-import { CiSearch } from "react-icons/ci"
 import Logo from "../../static/icons/Logo"
 import useAuth from "../../hooks/useAuth"
 
@@ -59,19 +57,6 @@ export default function Header() {
         ))}
       </NavbarContent>
       <NavbarContent as="div" justify="end">
-        <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[16rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper:
-              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-          }}
-          placeholder="Type to search..."
-          size="sm"
-          startContent={<CiSearch />}
-          type="search"
-        />
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar

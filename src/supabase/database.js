@@ -84,6 +84,22 @@ export class DatabaseService {
             .subscribe()
     }
 
+    async portfolioUpdate({ portfolio_id, onUpdate }) {
+        this.client
+            .channel("portfolio")
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table: "wallet",
+                    filter: `portfolio_id=eq.${portfolio_id}`,
+                },
+                () => onUpdate()
+            )
+            .subscribe()
+    }
+
     async unsubscribeAll() {
         await this.client.removeAllChannels()
     }

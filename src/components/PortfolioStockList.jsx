@@ -1,7 +1,6 @@
 import React from "react"
-import PortfolioStockCard from "./PortfolioStockCard"
+import { PortfolioStockCard } from "./"
 import image from "../static/images/no_data.svg"
-import { useStocks } from "../store/slice/stockSlice"
 
 function PortfolioStockList({ portfolio_stocks = [] }) {
   return portfolio_stocks.length == 0 ? (
@@ -10,7 +9,7 @@ function PortfolioStockList({ portfolio_stocks = [] }) {
       <p className="text-xl font-bold">You have no stocks</p>
     </div>
   ) : (
-    <div className="flex flex-row space-x-4">
+    <div className="gap-4 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3">
       {portfolio_stocks.map(([symbol, stock]) => {
         return <PortfolioStockCard key={symbol} stock={stock} />
       })}
