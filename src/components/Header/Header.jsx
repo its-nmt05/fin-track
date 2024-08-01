@@ -16,7 +16,7 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/react"
 
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { CiSearch } from "react-icons/ci"
 import Logo from "../../static/icons/Logo"
 import useAuth from "../../hooks/useAuth"
@@ -29,7 +29,6 @@ export default function Header() {
     { name: "Wallet", route: "/wallet" },
   ]
 
-  const navigate = useNavigate()
   const location = useLocation()
   const { user, logout } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -88,15 +87,8 @@ export default function Header() {
             variant="flat"
             onAction={(key) => {
               switch (key) {
-                case "started":
-                  navigate("/get-started")
-                  break
-                case "settings":
-                  navigate("/settings")
-                  break
                 case "logout":
                   logout()
-                  break
               }
             }}
           >
@@ -106,8 +98,12 @@ export default function Header() {
                 {user?.email}
               </p>
             </DropdownItem>
-            <DropdownItem key="started">Get started</DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
+            <DropdownItem key="started" href="get-started">
+              Get started
+            </DropdownItem>
+            <DropdownItem key="settings" href="settings">
+              My Settings
+            </DropdownItem>
             <DropdownItem key="help">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="danger">
               Logout

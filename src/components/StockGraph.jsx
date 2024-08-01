@@ -8,7 +8,6 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
-  YAxis,
 } from "recharts"
 import { USDFormat } from "../utils/helper"
 

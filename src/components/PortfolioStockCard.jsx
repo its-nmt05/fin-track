@@ -1,8 +1,8 @@
 import React from "react"
 import { Card, CardBody, CardHeader } from "@nextui-org/react"
-import { Area, AreaChart, ResponsiveContainer } from "recharts"
 import { fractionFormat, USDFormat } from "../utils/helper"
 import { FaCircleArrowDown, FaCircleArrowUp } from "react-icons/fa6"
+import {StockChart} from "./"
 
 function PortfolioStockCard({
   stock: { symbol, image, quantity, price, current_price, prices = [], change },
@@ -22,29 +22,7 @@ function PortfolioStockCard({
             <p className="text-lg font-bold">{symbol}</p>
           </div>
         </div>
-        <ResponsiveContainer width="50%" aspect={1.8}>
-          <AreaChart
-            data={prices}
-            margin={{ left: 5, right: 0, top: 5, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="green" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="limegreen" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="red" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="crimson" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <Area
-              dataKey="amount"
-              type="monotone"
-              stroke={change > 0 ? "#16a253" : "crimson"}
-              fill={change > 0 ? "url(#green)" : "url(#red)"}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <StockChart data={prices} change={change} aspect={1.8} />
       </CardHeader>
       <CardBody className="space-y-1">
         <div className="inline-flex justify-between">

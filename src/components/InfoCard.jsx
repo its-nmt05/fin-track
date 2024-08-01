@@ -1,9 +1,9 @@
 import React from "react"
 import { Card, CardBody, CardHeader } from "@nextui-org/react"
-import { FaEllipsis, FaCircleArrowDown, FaCircleArrowUp } from "react-icons/fa6"
+import { FaCircleArrowDown, FaCircleArrowUp, FaEllipsis } from "react-icons/fa6"
 import { fractionFormat, USDFormat } from "../utils/helper"
 import { useNavigate } from "react-router-dom"
-import { Area, AreaChart, ResponsiveContainer } from "recharts"
+import { StockChart } from "./"
 
 function InfoCard({
   stockData: { symbol, name, current_price, change, image, prices },
@@ -13,6 +13,7 @@ function InfoCard({
   prices = prices.map((value) => ({ amount: value }))
   image =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi_F5mBDcXHBlUDkSiJD9-ZmnKHIjG9h-nhQ&s"
+
   return (
     <Card
       isPressable
@@ -32,29 +33,10 @@ function InfoCard({
       </CardHeader>
       <CardBody>
         <div className="w-full flex flex-row justify-between">
-          <ResponsiveContainer width="50%" aspect={2}>
-            <AreaChart data={prices} margin={{ top: 2 }}>
-              <defs>
-                <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="green" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="limegreen" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="red" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="crimson" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <Area
-                dataKey="amount"
-                type="monotone"
-                stroke={change > 0 ? "limegreen" : "crimson"}
-                fill={change > 0 ? "url(#green)" : "url(#red)"}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+          <StockChart change={change} data={prices} aspect={2} />
           <div className="flex flex-col justify-end items-end space-y-1">
             <p className="text-xl font-semibold">{USDFormat(current_price)}</p>
-            <div className="inline-flex items-center space-x-2">
+            <div className="inline-flex items-center space-x-1">
               <p>{fractionFormat(change)}%</p>
               {change > 0 ? (
                 <FaCircleArrowUp size={20} color="limegreen" />

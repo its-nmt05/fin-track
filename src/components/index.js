@@ -16,6 +16,7 @@ import BuySellShareComponent from "./BuySellShareComponent"
 import PortfolioStockCard from "./PortfolioStockCard"
 import PortfolioStockList from "./PortfolioStockList"
 import WalletChart from "./WalletChart"
+import StockChart from "./StockChart"
 
 export {
     Header,
@@ -35,5 +36,6 @@ export {
     BuySellShareComponent,
     PortfolioStockCard,
     PortfolioStockList,
-    WalletChart
+    WalletChart,
+    StockChart
 }

@@ -128,11 +128,12 @@ function BuySellShareComponent({ current_price = 100 }) {
             </p>
           </div>
         </CardBody>
-        <CardFooter className="px-6">
+        <CardFooter>
           <Button
-            className="w-full"
+            className={`w-full text-white ${
+              currentOperation == "buy" ? "bg-green-500" : "bg-red-500"
+            }`}
             radius="full"
-            color="primary"
             onPress={transact}
             isDisabled={!isValid}
           >
