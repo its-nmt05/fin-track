@@ -1,3 +1,5 @@
+import { useStocks } from "../store/slice/stockSlice"
+
 let USDFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -56,6 +58,31 @@ function greet() {
     return message
 }
 
+// filter portfolio stocks
+function filterStocks(stocks = []) {
+    const { data } = useStocks() // get stocks from store
+    const filtered = stocks.reduce((acc, stock) => {
+        const { symbol, price, quantity } = stock
+        if (!(symbol in acc)) {
+            acc[symbol] = {
+                orders: [],
+                invested: 0,
+                total_quantity: 0,
+                avg: 0,
+                ...data.find((stock) => symbol == stock.symbol),
+            }
+        }
+        acc[symbol].orders.push(stock)
+        acc[symbol].invested += price * quantity
+        acc[symbol].total_quantity += quantity
+        acc[symbol].average_price =
+            acc[symbol].invested / acc[symbol].total_quantity
+        return acc
+    }, {})
+
+    return Object.entries(filtered)
+}
+
 export {
     USDFormat,
     capitalize,
@@ -64,4 +91,5 @@ export {
     fractionFormat,
     sort,
     greet,
+    filterStocks,
 }

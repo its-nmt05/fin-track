@@ -1,12 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import databaseService from "../../supabase/database"
+import { useSelector } from "react-redux"
 
-export const fetchPortfolio = createAsyncThunk("fetchPortfolio", async (user_id) => {
-    return await databaseService.getPortfolio({ user_id })
-})
+export const fetchPortfolio = createAsyncThunk(
+    "fetchPortfolio",
+    async (user_id) => {
+        return await databaseService.getPortfolio({ user_id })
+    }
+)
 
 const initialState = {
-    data: null,
+    data: [],
     isLoading: false,
     isError: false,
 }
@@ -29,3 +33,7 @@ const portfolioSlice = createSlice({
 })
 
 export default portfolioSlice.reducer
+
+export const usePortfolio = () => {
+    return useSelector((state) => state.portfolio)
+}

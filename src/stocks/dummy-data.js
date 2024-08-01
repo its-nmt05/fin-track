@@ -1,3 +1,30 @@
+const y = [
+    {
+        id: "6d08ff76-9c55-4e2a-b242-40a4181e1b6b",
+        time: "2024-08-01T16:05:36.306687",
+        price: 146.54,
+        symbol: "QTRX",
+        quantity: 1,
+        portfolio_id: "4fb49892-98cb-440c-9069-b5ec9af9b101",
+    },
+    {
+        id: "dea19c6d-9497-476d-a06e-e4062d7e97fa",
+        time: "2024-08-01T16:15:33.666127",
+        price: 145,
+        symbol: "QTRX",
+        quantity: 1,
+        portfolio_id: "4fb49892-98cb-440c-9069-b5ec9af9b101",
+    },
+    {
+        id: "c3a55653-0ad7-4c67-bef1-871aec166e11",
+        time: "2024-08-01T16:18:35.643346",
+        price: 100,
+        symbol: "CRYX",
+        quantity: 1,
+        portfolio_id: "4fb49892-98cb-440c-9069-b5ec9af9b101",
+    },
+]
+
 const x = {
     id: 2,
     created_at: "2024-07-26T15:28:39.971651+00:00",

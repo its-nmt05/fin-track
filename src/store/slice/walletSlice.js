@@ -7,7 +7,7 @@ export const fetchWallet = createAsyncThunk("fetchWallet", async (user_id) => {
 })
 
 const initialState = {
-    data: null,
+    data: [],
     isLoading: false,
     isError: false,
 }

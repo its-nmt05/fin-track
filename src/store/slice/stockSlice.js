@@ -7,7 +7,7 @@ export const fetchStocks = createAsyncThunk("fetchStocks", async () => {
 })
 
 const initialState = {
-    data: null,
+    data: [],
     isLoading: false,
     isError: false,
 }

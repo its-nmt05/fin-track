@@ -7,7 +7,6 @@ import { Spinner } from "@nextui-org/react"
 
 function Home() {
   const { user } = useAuth()
-  // console.log(user);
   const name = user?.user_metadata?.name
   const { isLoading, data } = useStocks()
 
