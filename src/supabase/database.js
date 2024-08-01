@@ -87,6 +87,14 @@ export class DatabaseService {
             console.log(error)
         }
     }
+
+    async resetAccount({ uid }) {
+        try {
+            return this.client.rpc("reset_account", {
+                uid,
+            })
+        } catch (error) {}
+    }
 }
 
 const databaseService = new DatabaseService()

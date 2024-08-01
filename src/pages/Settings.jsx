@@ -13,17 +13,19 @@ import {
 } from "@nextui-org/react"
 import React from "react"
 import useAuth from "../hooks/useAuth"
-import { MdDarkMode, MdLightMode } from "react-icons/md"
-import { HiDeviceMobile } from "react-icons/hi"
+import { MdDarkMode, MdLightMode, MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
+import { HiDeviceMobile, HiOutlineDeviceMobile } from "react-icons/hi"
+import databaseService from "../supabase/database"
+import { HiOutlineDevicePhoneMobile } from "react-icons/hi2"
 
 function Settings() {
   const { user } = useAuth()
   const name = user?.user_metadata?.name
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full md:max-w-[85%] lg:max-w-[75%] space-y-6">
+      <div className="w-full md:max-w-[80%] lg:max-w-[65%] space-y-6">
         <div>
-          <p className="text-2xl font-bold">Account details</p>
+          <p className="text-3xl font-bold">Account details</p>
           <p className="text-small text-default-600">
             Manage your FinTrack profile
           </p>
@@ -36,7 +38,7 @@ function Settings() {
             </div>
           </CardHeader>
           <CardBody>
-            <div className="flex flex-row items-center gap-4 mb-4">
+            <div className="flex flex-row items-center space-x-4 mb-4">
               <Avatar
                 size="md"
                 isBordered
@@ -74,7 +76,7 @@ function Settings() {
             </div>
           </CardHeader>
           <CardBody>
-            <div className="flex flex-row space-x-6">
+            <div className="flex flex-row space-x-4">
               <Input
                 radius="sm"
                 type="password"
@@ -117,20 +119,24 @@ function Settings() {
                     </Button>
                   </DropdownTrigger>
                   <DropdownMenu aria-label="theme-menu">
-                    <DropdownItem startContent={<MdLightMode size={18} />}>
+                    <DropdownItem startContent={<MdOutlineLightMode size={18} />}>
                       Light mode
                     </DropdownItem>
-                    <DropdownItem startContent={<MdDarkMode size={18} />}>
+                    <DropdownItem startContent={<MdOutlineDarkMode size={18} />}>
                       Dark mode
                     </DropdownItem>
-                    <DropdownItem startContent={<HiDeviceMobile size={18} />}>
+                    <DropdownItem startContent={<HiOutlineDevicePhoneMobile size={18} />}>
                       Device settings
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </div>
 
-              <Button color="danger" variant="flat">
+              <Button
+                color="danger"
+                variant="flat"
+                onPress={() => databaseService.resetAccount({ uid: user.id })}
+              >
                 Reset account
               </Button>
             </div>

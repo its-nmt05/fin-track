@@ -33,29 +33,22 @@ function InfoCard({
       <CardBody>
         <div className="w-full flex flex-row justify-between">
           <ResponsiveContainer width="50%" aspect={2}>
-            <AreaChart
-              data={prices}
-              margin={{ top: 2 }}
-            >
+            <AreaChart data={prices} margin={{ top: 2 }}>
               <defs>
-                <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="5%"
-                    stopColor={change > 0 ? "green" : "red"}
-                    stopOpacity={0.2}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor={change > 0 ? "limegreen" : "crimson"}
-                    stopOpacity={0}
-                  />
+                <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="green" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="limegreen" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="red" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="crimson" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <Area
                 dataKey="amount"
                 type="monotone"
                 stroke={change > 0 ? "limegreen" : "crimson"}
-                fill="url(#gradient)"
+                fill={change > 0 ? "url(#green)" : "url(#red)"}
               />
             </AreaChart>
           </ResponsiveContainer>
