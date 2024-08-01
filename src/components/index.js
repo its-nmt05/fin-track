@@ -18,6 +18,7 @@ import PortfolioStockList from "./PortfolioStockList"
 import WalletChart from "./WalletChart"
 import StockChart from "./StockChart"
 import SortedStockList from "./SortedStockList"
+import AvailableBalance from "./AvailableBalance"
 
 export {
     Header,
@@ -40,4 +41,5 @@ export {
     WalletChart,
     StockChart,
     SortedStockList,
+    AvailableBalance,
 }

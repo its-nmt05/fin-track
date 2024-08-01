@@ -1,12 +1,12 @@
 import React from "react"
-import { Card, CardBody, Progress, Spinner } from "@nextui-org/react"
+import { Spinner } from "@nextui-org/react"
 import {
   AddMoneyComponent,
+  AvailableBalance,
   WalletChart,
   WalletTransactions,
   WithdrawMoneyComponent,
 } from "../components"
-import { USDFormat } from "../utils/helper"
 import { useWallet } from "../store/slice/walletSlice"
 
 function Wallet() {
@@ -21,19 +21,10 @@ function Wallet() {
       </div>
       <div className="w-full flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 pb-5">
         <div className="basis-1/3 flex flex-col justify-between space-y-5">
-          <Card className="p-2">
-            <CardBody className="space-y-8">
-              <p className="text-default-600">Available balance 💵💵</p>
-              <div className="space-y-2">
-                <Progress
-                  size="sm"
-                  label="Total transactions"
-                  value={wallet_transaction.length}
-                />
-                <p className="text-4xl font-medium">{USDFormat(balance)}</p>
-              </div>
-            </CardBody>
-          </Card>
+          <AvailableBalance
+            balance={balance}
+            transactions={wallet_transaction.length}
+          />
           <WithdrawMoneyComponent balance={balance} wallet_id={id} />
         </div>
         <WalletChart data={wallet_transaction} />

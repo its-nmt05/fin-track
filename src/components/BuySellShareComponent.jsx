@@ -23,7 +23,7 @@ import animationData from "../static/lotties/loading.json"
 import image from "../static/images/failed.svg"
 import Lottie from "react-lottie"
 
-function BuySellShareComponent({ current_price = 100, balance }) {
+function BuySellShareComponent({ current_price = 80, balance }) {
   const operations = [
     { key: "buy", title: "Buy" },
     { key: "sell", title: "Sell" },
@@ -33,12 +33,12 @@ function BuySellShareComponent({ current_price = 100, balance }) {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
 
   const [shares, setShares] = useState(1)
-  const [currentOperation, setCurrentOperation] = useState(operations[0].key)
+  const [operation, setOperation] = useState(operations[0].key)
+  const [isValid, setIsValid] = useState(true)
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(null)
-  const [isValid, setIsValid] = useState(true)
 
   const defaultOptions = {
     loop: true,
@@ -56,7 +56,7 @@ function BuySellShareComponent({ current_price = 100, balance }) {
       .stockTransact({
         uid: user.id,
         _symbol: "QTRX",
-        operation: currentOperation,
+        operation: operation,
         _quantity: shares,
       })
       .then(({ data, error }) => {
@@ -76,19 +76,18 @@ function BuySellShareComponent({ current_price = 100, balance }) {
   useEffect(() => {
     const quantity = Number(shares)
     const balanceIsEnough = balance >= quantity * current_price
-    setIsValid(Number.isInteger(quantity) && quantity > 0 && balanceIsEnough)
-  }, [shares])
+    const isSell = operation == "sell"
+    setIsValid(
+      Number.isInteger(quantity) && quantity > 0 && (balanceIsEnough || isSell)
+    )
+  }, [shares, balance, current_price, operation])
 
   return (
     <>
       <Card className="w-full p-2">
         <CardHeader className="flex justify-between">
           <p className="text-xl font-medium">Order</p>
-          <Tabs
-            radius="full"
-            color="primary"
-            onSelectionChange={setCurrentOperation}
-          >
+          <Tabs radius="full" color="primary" onSelectionChange={setOperation}>
             {operations.map((op) => (
               <Tab key={op.key} title={op.title} />
             ))}
@@ -122,7 +121,7 @@ function BuySellShareComponent({ current_price = 100, balance }) {
           <Divider />
           <div className="flex items-center justify-between">
             <p className="font-medium">
-              Total {currentOperation == "buy" ? "Investment" : "Profit"}
+              Total {operation == "buy" ? "Investment" : "Profit"}
             </p>
             <p className="text-lg font-medium text-blue-500">
               {USDFormat(shares * current_price)}
@@ -132,13 +131,13 @@ function BuySellShareComponent({ current_price = 100, balance }) {
         <CardFooter>
           <Button
             className={`w-full text-white ${
-              currentOperation == "buy" ? "bg-green-500" : "bg-red-500"
+              operation == "buy" ? "bg-green-500" : "bg-red-500"
             }`}
             radius="full"
             onPress={transact}
             isDisabled={!isValid}
           >
-            {currentOperation.toUpperCase()} NOW
+            {operation.toUpperCase()} NOW
           </Button>
         </CardFooter>
       </Card>
@@ -178,8 +177,8 @@ function BuySellShareComponent({ current_price = 100, balance }) {
                   Transaction Successful ✅
                 </p>
                 <p className="text-small text-center font-normal text-default-500">
-                  Your stock {currentOperation == "buy" ? "purchase" : "sale"}{" "}
-                  was successful. You can review the details in your portfolio.
+                  Your stock {operation == "buy" ? "purchase" : "sale"} was
+                  successful. You can review the details in your portfolio.
                 </p>
               </div>
             )}

@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import databaseService from "../supabase/database"
-import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react"
+import { Spinner } from "@nextui-org/react"
 import image from "../static/images/no_data.svg"
 import {
+  AvailableBalance,
   BuySellShareComponent,
   StockDetailsComponent,
   StockGraph,
 } from "../components"
 import x from "../stocks/dummy-data"
-import { USDFormat } from "../utils/helper"
 import { useWallet } from "../store/slice/walletSlice"
+import { useStocks } from "../store/slice/stockSlice"
 
 function Stock() {
   const { symbol } = useParams()
-  const {
-    data: { balance },
-  } = useWallet()
+  const { data: walletData } = useWallet()
+  const { data: stocks } = useStocks()
+
+  // get required info about wallet and stock
+  const { balance, wallet_transaction } = { ...walletData }
+  const { current_price } = {
+    ...stocks.find((stock) => stock.symbol == symbol),
+  }
+
   const [stockData, setStockData] = useState(x)
   const [loading, setLoading] = useState(false)
 
@@ -37,12 +43,16 @@ function Stock() {
           <StockGraph stockData={stockData} />
         </div>
         <div className="basis-1/4 flex lg:flex-col flex-row lg:space-y-6 space-x-4 lg:space-x-0">
-          <Card className="w-full p-1">
-            <CardHeader>Current balance</CardHeader>
-            <CardBody>{USDFormat(balance)}</CardBody>
-          </Card>
+          <AvailableBalance
+            balance={balance}
+            transactions={wallet_transaction?.length}
+            className="w-full h-fit"
+          />
           <StockDetailsComponent stockData={stockData.prices[0]} />
-          <BuySellShareComponent balance={balance} />
+          <BuySellShareComponent
+            balance={balance}
+            current_price={current_price}
+          />
         </div>
       </div>
     ) : (

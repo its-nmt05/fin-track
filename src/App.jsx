@@ -102,7 +102,6 @@ function App() {
   ) : (
     <div className="flex min-h-screen justify-center items-center">
       <Spinner size="lg" />
-      <p>hey</p>
     </div>
   )
 }
