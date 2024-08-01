@@ -1,5 +1,5 @@
 import { NextUIProvider, Spinner } from "@nextui-org/react"
-import { useNavigate, Route, Routes } from "react-router-dom"
+import { Route, Routes, useNavigate } from "react-router-dom"
 import { Layout, AuthLayout } from "./components"
 import {
   GetStarted,
@@ -13,43 +13,13 @@ import {
   Settings,
   Stock,
 } from "./pages"
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import authService from "./supabase/auth"
-import { clearUser, setUser } from "./store/slice/authSlice"
-import { fetchStocks } from "./store/slice/stockSlice"
-import { fetchPortfolio } from "./store/slice/portfolioSlice"
-import { fetchWallet, onWalletUpdate } from "./store/slice/walletSlice"
-import databaseService from "./supabase/database"
+import useFetchUserData from "./hooks/useFetchUserData"
 
 function App() {
+  const isLoading = useFetchUserData()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    authService.getUser().then((data) => {
-      if (data?.user) {
-        // fetch all user data
-        const user_id = data.user.id
-        dispatch(setUser(data))
-        dispatch(fetchStocks())
-        dispatch(fetchPortfolio(user_id))
-        dispatch(fetchWallet(user_id))
-        dispatch(onWalletUpdate(user_id))
-      } else {
-        navigate("/login")
-        dispatch(clearUser())
-      }
-      setLoading(false)
-    })
-
-    return () => {
-      databaseService.unsubscribeAll()  // unsub all realtime listeners
-    }
-  }, [])
-
-  return !loading ? (
+  return !isLoading ? (
     <NextUIProvider navigate={navigate}>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -132,6 +102,7 @@ function App() {
   ) : (
     <div className="flex min-h-screen justify-center items-center">
       <Spinner size="lg" />
+      <p>hey</p>
     </div>
   )
 }

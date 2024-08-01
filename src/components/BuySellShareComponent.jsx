@@ -23,7 +23,7 @@ import animationData from "../static/lotties/loading.json"
 import image from "../static/images/failed.svg"
 import Lottie from "react-lottie"
 
-function BuySellShareComponent({ current_price = 100 }) {
+function BuySellShareComponent({ current_price = 100, balance }) {
   const operations = [
     { key: "buy", title: "Buy" },
     { key: "sell", title: "Sell" },
@@ -75,7 +75,8 @@ function BuySellShareComponent({ current_price = 100 }) {
   // verify vaildity of share quantity
   useEffect(() => {
     const quantity = Number(shares)
-    setIsValid(Number.isInteger(quantity) && quantity > 0)
+    const balanceIsEnough = balance >= quantity * current_price
+    setIsValid(Number.isInteger(quantity) && quantity > 0 && balanceIsEnough)
   }, [shares])
 
   return (

@@ -38,7 +38,7 @@ export const usePortfolio = () => {
     return useSelector((state) => state.portfolio)
 }
 
-export const onPortfolioUpdate = (user_id) => (dispatch) => {
+export const onPortfolioUpdate = (portfolio_id, user_id) => (dispatch) => {
     databaseService.portfolioUpdate({
         portfolio_id,
         onUpdate: () => dispatch(fetchPortfolio(user_id)),

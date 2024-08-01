@@ -92,7 +92,7 @@ export class DatabaseService {
                 {
                     event: "*",
                     schema: "public",
-                    table: "wallet",
+                    table: "portfolio_stocks",
                     filter: `portfolio_id=eq.${portfolio_id}`,
                 },
                 () => onUpdate()
