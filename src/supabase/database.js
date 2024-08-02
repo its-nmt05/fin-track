@@ -22,13 +22,21 @@ export class DatabaseService {
             .throwOnError()
     }
 
+    // fetch portfolio data and portfolio transactions
     async getPortfolio({ user_id }) {
-        return await this.client
-            .from("portfolio")
-            .select("*, portfolio_transaction(*), portfolio_stocks(*)")
-            .eq("user_id", user_id)
-            .single()
-            .throwOnError()
+        return await Promise.all([
+            this.client
+                .from("portfolio_data")
+                .select()
+                .eq("user_id", user_id)
+                .throwOnError(),
+            this.client
+                .from("portfolio")
+                .select("*, portfolio_transaction(*)")
+                .eq("user_id", user_id)
+                .single()
+                .throwOnError(),
+        ])
     }
 
     async walletTransact({ wallet_id, amount, type }) {
@@ -53,12 +61,6 @@ export class DatabaseService {
             _symbol,
             operation,
             _quantity,
-        })
-    }
-
-    async getPortfolioData({ uid }) {
-        return this.client.rpc("get_portfolio", {
-            uid,
         })
     }
 
@@ -92,8 +94,7 @@ export class DatabaseService {
                 {
                     event: "*",
                     schema: "public",
-                    table: "portfolio_stocks",
-                    filter: `portfolio_id=eq.${portfolio_id}`,
+                    table: "portfolio_data",
                 },
                 () => onUpdate()
             )

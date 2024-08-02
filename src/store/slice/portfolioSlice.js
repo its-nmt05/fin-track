@@ -24,7 +24,11 @@ const portfolioSlice = createSlice({
         })
         builder.addCase(fetchPortfolio.fulfilled, (state, action) => {
             state.isLoading = false
-            state.data = action.payload.data
+
+            // send the data (stocks, transactions)  to the store
+            const data = action.payload[0].data
+            data["transactions"] = action.payload[1].data.portfolio_transaction
+            state.data = data
         })
         builder.addCase(fetchPortfolio.rejected, (state) => {
             state.isError = true

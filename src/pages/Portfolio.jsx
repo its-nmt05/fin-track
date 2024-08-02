@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react"
+import React from "react"
 import {
   PortfolioStockList,
   TradingActivity,
@@ -10,9 +10,9 @@ import { filterStocks } from "../utils/helper"
 
 function Portfolio() {
   const { data, isLoading } = usePortfolio()
-  const { portfolio_transaction, portfolio_stocks } = data
-  const filteredStocks = filterStocks(portfolio_stocks)
-  
+  const { transactions } = data
+  const filteredStocks = filterStocks(data)
+
   return !isLoading ? (
     <div className="space-y-6">
       <div className="space-y-4">
@@ -28,7 +28,7 @@ function Portfolio() {
       </div>
       <div className="space-y-4">
         <p className="text-3xl font-bold">Transaction history</p>
-        <TransactionsTable transactions={portfolio_transaction} />
+        <TransactionsTable transactions={transactions} />
       </div>
     </div>
   ) : (

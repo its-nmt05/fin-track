@@ -10,9 +10,9 @@ function PortfolioStockList({ portfolio_stocks = [] }) {
     </div>
   ) : (
     <div className="gap-4 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3">
-      {portfolio_stocks.map(([symbol, stock]) => {
-        return <PortfolioStockCard key={symbol} stock={stock} />
-      })}
+      {portfolio_stocks.map((stock) => (
+        <PortfolioStockCard key={stock.id} stock={stock} />
+      ))}
     </div>
   )
 }

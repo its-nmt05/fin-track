@@ -15,10 +15,10 @@ import { useStocks } from "../store/slice/stockSlice"
 function Stock() {
   const { symbol } = useParams()
   const { data: walletData } = useWallet()
-  const { data: stocks } = useStocks()
+  const { balance, wallet_transaction } = walletData // get required info about wallet
 
-  // get required info about wallet and stock
-  const { balance, wallet_transaction } = { ...walletData }
+  // get required info about stock
+  const { data: stocks } = useStocks()
   const { current_price } = {
     ...stocks.find((stock) => stock.symbol == symbol),
   }
