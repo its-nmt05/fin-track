@@ -55,6 +55,14 @@ export class DatabaseService {
             .maybeSingle()
     }
 
+    async getStockPrices({ symbol, range }) {
+        return await this.client
+            .from("stock_prices")
+            .select()
+            .eq("symbol", symbol)
+            .gt("time", range)
+    }
+
     async stockTransact({ uid, _symbol, operation, _quantity }) {
         return await this.client.rpc("stock_transaction", {
             uid,

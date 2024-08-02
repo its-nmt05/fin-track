@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from "@nextui-org/react"
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6"
 import {
@@ -8,30 +8,42 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts"
-import { USDFormat } from "../utils/helper"
+import { dateFormat, getDaysAgo, USDFormat } from "../utils/helper"
+import databaseService from "../supabase/database"
 
 function StockGraph({
   className = "",
-  stockData: { image, name, symbol, industries, prices, current_price, change },
+  stockData: { image, name, symbol, industries, current_price, change },
 }) {
   const timeOptions = [
-    { id: "1d", label: "1D" },
-    { id: "7d", label: "7D" },
-    { id: "1mo", label: "1M" },
-    { id: "1y", label: "1Y" },
-    { id: "max", label: "All" },
+    { label: "7D", time: 7 },
+    { label: "1M", time: 30 },
+    { label: "6M", time: 180 },
+    { label: "1Y", time: 365 },
+    { label: "All", time: null },
   ]
-  const [timeOption, setTimeOption] = useState(timeOptions[0].id)
-  console.log(prices)
+  const [timeOption, setTimeOption] = useState(timeOptions[0].time)
+  const [prices, setPrices] = useState([])
 
-  prices = prices.map((value) => ({ amount: value }))
+  useEffect(() => {
+    databaseService
+      .getStockPrices({
+        symbol,
+        range: getDaysAgo(timeOption),
+      })
+      .then(({ data }) => {
+        setPrices(data)
+      })
+  }, [timeOption])
 
   const CustomTooltip = ({ payload }) => {
     if (payload?.length) {
       const data = payload[0].payload
       return (
         <div className="backdrop-blur-sm bg-black bg-opacity-50 shadow-xl rounded-full px-3 py-1">
-          <p className="text-sm text-default-200">{USDFormat(data.amount)}</p>
+          <p className="text-sm text-default-200">
+            {USDFormat(data.close)} &#x2022; {dateFormat(data.time, false)}
+          </p>
         </div>
       )
     }
@@ -81,12 +93,12 @@ function StockGraph({
           <Tabs
             aria-label="Date options"
             items={timeOptions}
-            selectedKey={timeOption}
+            selectedKey={timeOption.time}
             onSelectionChange={setTimeOption}
             radius="full"
             color="primary"
           >
-            {(item) => <Tab title={item.label} key={item.id} />}
+            {(item) => <Tab title={item.label} key={item.time} />}
           </Tabs>
         </CardHeader>
         <CardBody className="inline-flex items-center justify-center">
@@ -105,7 +117,7 @@ function StockGraph({
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <Tooltip content={CustomTooltip} />
               <Area
-                dataKey="amount"
+                dataKey="close"
                 type="monotone"
                 dot={false}
                 fill={change > 0 ? "url(#green)" : "url(#red)"}

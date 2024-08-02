@@ -18,8 +18,10 @@ function capitalize(string) {
     return string[0].toUpperCase().concat(string.slice(1))
 }
 
-function dateFormat(dateString) {
-    return new Date(dateString).toLocaleString("en-US")
+function dateFormat(dateString, showTime = true) {
+    return showTime
+        ? new Date(dateString).toLocaleString("en-US")
+        : new Date(dateString).toLocaleDateString()
 }
 
 function numFormat(num) {
@@ -102,6 +104,15 @@ function filterStocks(stocks = []) {
     return { current, invested, growth, filtered }
 }
 
+function getDaysAgo(days) {
+    days = Number.parseInt(days)
+    if (days) {
+        return new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString()
+    } else {
+        return new Date(0).toISOString()
+    }
+}
+
 export {
     USDFormat,
     capitalize,
@@ -111,4 +122,5 @@ export {
     sort,
     greet,
     filterStocks,
+    getDaysAgo,
 }

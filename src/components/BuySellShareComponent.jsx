@@ -92,10 +92,13 @@ function BuySellShareComponent({
       <Card className={`p-2 ${className}`}>
         <CardHeader className="flex justify-between">
           <p className="text-xl font-medium">Order</p>
-          <Tabs radius="full" color="primary" onSelectionChange={setOperation}>
-            {operations.map((op) => (
-              <Tab key={op.key} title={op.title} />
-            ))}
+          <Tabs
+            radius="full"
+            color="primary"
+            onSelectionChange={setOperation}
+            items={operations}
+          >
+            {(item) => <Tab title={item.title} key={item.key} />}
           </Tabs>
         </CardHeader>
         <CardBody className="space-y-2">

@@ -18,7 +18,11 @@ import { RiSlowDownLine, RiStockLine } from "react-icons/ri"
 import { IoMdInformationCircleOutline } from "react-icons/io"
 
 function StockDetailsComponent({
-  stockData: { open, close, low, high, volume },
+  open = 0,
+  close = 0,
+  low = 0,
+  high = 0,
+  volume = 0,
   className = "",
 }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()

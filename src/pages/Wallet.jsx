@@ -13,7 +13,7 @@ function Wallet() {
 
   return (
     <div className="space-y-8">
-      <div className="space-y-6">
+      <div className="space-y-4">
         <div className="flex justify-between">
           <p className="text-3xl font-bold">Your wallet</p>
           <AddMoneyComponent wallet_id={id} />

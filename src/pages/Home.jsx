@@ -11,7 +11,7 @@ function Home() {
   const { isLoading, data } = useStocks()
 
   return !isLoading ? (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <p className="text-3xl font-medium">
         {greet()},
         <br /> <strong>{name}</strong>
