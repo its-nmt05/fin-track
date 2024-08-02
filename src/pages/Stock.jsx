@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useParams } from "react-router-dom"
 import { Spinner } from "@nextui-org/react"
 import image from "../static/images/no_data.svg"
@@ -38,20 +38,25 @@ function Stock() {
 
   return !loading ? (
     stockData ? (
-      <div className="w-full flex lg:flex-row flex-col lg:space-x-6 space-y-4 lg:space-y-0">
-        <div className="basis-3/4 w-full  h-fit">
-          <StockGraph stockData={stockData} />
-        </div>
-        <div className="basis-1/4 flex lg:flex-col flex-row lg:space-y-6 space-x-4 lg:space-x-0">
-          <AvailableBalance
-            balance={balance}
-            transactions={wallet_transaction?.length}
-            className="w-full h-fit"
+      <div className="flex flex-col lg:flex-row gap-4">
+        <AvailableBalance
+          balance={balance}
+          transactions={wallet_transaction?.length}
+          className="lg:w-1/4 h-fit order-3 lg:order-1"
+        />
+        <StockGraph
+          stockData={stockData}
+          className="lg:w-3/5 order-1 lg:order-2"
+        />
+        <div className="lg:w-1/4 h-fit order-2 lg:order-3 flex flex-row lg:flex-col gap-4">
+          <StockDetailsComponent
+            stockData={stockData.prices[0]}
+            className="w-full"
           />
-          <StockDetailsComponent stockData={stockData.prices[0]} />
           <BuySellShareComponent
             balance={balance}
             current_price={current_price}
+            className="w-full"
           />
         </div>
       </div>

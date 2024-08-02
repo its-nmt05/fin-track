@@ -28,7 +28,7 @@ function StockGraph({
     if (payload?.length) {
       const data = payload[0].payload
       return (
-        <div className="bg-black bg-opacity-70 shadow-xl rounded-full px-3 py-1">
+        <div className="backdrop-blur-sm bg-black bg-opacity-50 shadow-xl rounded-full px-3 py-1">
           <p className="text-sm text-default-200">
             {USDFormat(data.close)} &#x2022; {data.date}
           </p>
@@ -48,7 +48,7 @@ function StockGraph({
                 <div className="mb-4">
                   <p className="text-2xl font-semibold">{name}</p>
                   <p className="text-gray-500 font-semibold">
-                    {"platform"} : <strong>{symbol}</strong>
+                    Vertex : <strong>{symbol}</strong>
                   </p>
                 </div>
                 <p className="text-gray-500">
@@ -93,7 +93,7 @@ function StockGraph({
             <AreaChart data={prices}>
               <defs>
                 <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#16a253" stopOpacity={0.3} />
+                  <stop offset="5%" stopColor="#16A253" stopOpacity={0.3} />
                   <stop offset="95%" stopColor="green" stopOpacity={0.05} />
                 </linearGradient>
               </defs>
@@ -104,7 +104,7 @@ function StockGraph({
                 type="monotone"
                 dot={false}
                 fill="url(#gradient)"
-                stroke="#16a253"
+                stroke="#16A253"
               />
             </AreaChart>
           </ResponsiveContainer>

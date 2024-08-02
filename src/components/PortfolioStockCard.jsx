@@ -49,9 +49,9 @@ function PortfolioStockCard({
     <>
       <Card isHoverable isPressable className="p-1" onPress={onOpen}>
         <CardHeader className="pb-0 space-x-2 sm:space-x-0 justify-between">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center">
             <img
-              className="rounded-full max-w-[28px] max-h-[28px]"
+              className="rounded-full max-w-[36px]"
               src={image}
             />
             <div>

@@ -14,7 +14,7 @@ function WalletChart({ data }) {
     if (payload?.length) {
       const data = payload[0].payload
       return (
-        <div className="bg-black bg-opacity-70 shadow-xl rounded-full px-3 py-1">
+        <div className="backdrop-blur-sm bg-black bg-opacity-50 shadow-xl rounded-full px-3 py-1">
           <p className="text-sm text-default-200">
             {USDFormat(data.amount)} &#x2022; {capitalize(data.type)}
           </p>

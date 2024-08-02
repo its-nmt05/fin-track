@@ -23,7 +23,7 @@ import animationData from "../static/lotties/loading.json"
 import image from "../static/images/failed.svg"
 import Lottie from "react-lottie"
 
-function BuySellShareComponent({ current_price = 80, balance }) {
+function BuySellShareComponent({ current_price = 0, balance, className="" }) {
   const operations = [
     { key: "buy", title: "Buy" },
     { key: "sell", title: "Sell" },
@@ -84,7 +84,7 @@ function BuySellShareComponent({ current_price = 80, balance }) {
 
   return (
     <>
-      <Card className="w-full p-2">
+      <Card className={`p-2 ${className}`}>
         <CardHeader className="flex justify-between">
           <p className="text-xl font-medium">Order</p>
           <Tabs radius="full" color="primary" onSelectionChange={setOperation}>

@@ -32,8 +32,9 @@ function fractionFormat(num) {
     return numFormatter.format(num)
 }
 
-function sort(array, { property, limit, asc = true }) {
-    const copy = array ? array.slice() : [] // create a soft copy of the array
+function sort(array, { limit, property, asc = true }) {
+    if (!property) return array.slice(0, limit)
+    const copy = array.slice() // create a soft copy of the array
     return copy
         .sort((a, b) => {
             if (asc) {

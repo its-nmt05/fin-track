@@ -19,6 +19,7 @@ import { IoMdInformationCircleOutline } from "react-icons/io"
 
 function StockDetailsComponent({
   stockData: { open, close, low, high, volume },
+  className = "",
 }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 
@@ -60,7 +61,7 @@ function StockDetailsComponent({
 
   return (
     <>
-      <Card className="w-full p-2">
+      <Card className={`p-2 ${className}`}>
         <CardHeader className="space-x-1">
           <p className="text-xl font-medium">Details</p>
           <IoMdInformationCircleOutline cursor="pointer" onClick={onOpen} />
