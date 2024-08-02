@@ -23,7 +23,12 @@ import animationData from "../static/lotties/loading.json"
 import image from "../static/images/failed.svg"
 import Lottie from "react-lottie"
 
-function BuySellShareComponent({ current_price = 0, balance, className="" }) {
+function BuySellShareComponent({
+  symbol,
+  current_price = 0,
+  balance,
+  className = "",
+}) {
   const operations = [
     { key: "buy", title: "Buy" },
     { key: "sell", title: "Sell" },
@@ -55,7 +60,7 @@ function BuySellShareComponent({ current_price = 0, balance, className="" }) {
     databaseService
       .stockTransact({
         uid: user.id,
-        _symbol: "QTRX",
+        _symbol: symbol,
         operation: operation,
         _quantity: shares,
       })

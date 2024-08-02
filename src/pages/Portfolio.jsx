@@ -1,7 +1,8 @@
 import React from "react"
 import {
+  PortfolioAllocations,
   PortfolioStockList,
-  TradingActivity,
+  PortfolioGrowthChart,
   TransactionsTable,
 } from "../components"
 import { Spinner } from "@nextui-org/react"
@@ -11,19 +12,24 @@ import { filterStocks } from "../utils/helper"
 function Portfolio() {
   const { data, isLoading } = usePortfolio()
   const { transactions } = data
-  const filteredStocks = filterStocks(data)
+  const { current, invested, growth, filtered: stocks } = filterStocks(data)
 
   return !isLoading ? (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="space-y-4">
         <p className="text-3xl font-bold">Your stocks</p>
-        <PortfolioStockList portfolio_stocks={filteredStocks} />
+        <PortfolioStockList stocks={stocks} />
       </div>
       <div className="space-y-4">
         <p className="text-3xl font-bold">Your portfolio</p>
         <div className="flex lg:flex-row flex-col lg:space-x-6 lg:space-y-0 space-y-6">
-          {/* <PortfolioAllocations className="basis-1/3" data={data} /> */}
-          <TradingActivity className="basis-2/3" />
+          <PortfolioAllocations
+            className="basis-1/3"
+            current={current}
+            invested={invested}
+            stocks={stocks}
+          />
+          <PortfolioGrowthChart data={growth} className="basis-2/3" />
         </div>
       </div>
       <div className="space-y-4">

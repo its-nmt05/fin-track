@@ -1,8 +1,5 @@
 import React from "react"
-import {
-  SortedStockList,
-  StockDisclaimerComponent,
-} from "../components"
+import { SortedStockList, StockDisclaimerComponent } from "../components"
 import { useStocks } from "../store/slice/stockSlice"
 import { Spinner } from "@nextui-org/react"
 
@@ -15,7 +12,7 @@ function Invest() {
         <p className="text-3xl font-bold">All stocks</p>
         <StockDisclaimerComponent />
       </div>
-      <SortedStockList data={data} limit={100} property={null} />
+      <SortedStockList data={data} limit={100} />
     </div>
   ) : (
     <div className="flex min-h-screen justify-center items-center">

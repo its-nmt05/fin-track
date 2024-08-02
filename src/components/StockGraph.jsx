@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from "@nextui-org/react"
-import { FaArrowUp } from "react-icons/fa6"
-import stock from "../stocks/stock"
+import { FaArrowDown, FaArrowUp } from "react-icons/fa6"
 import {
   Area,
   AreaChart,
@@ -13,7 +12,7 @@ import { USDFormat } from "../utils/helper"
 
 function StockGraph({
   className = "",
-  stockData: { image, name, symbol, industry, prices, current_price },
+  stockData: { image, name, symbol, industries, prices, current_price, change },
 }) {
   const timeOptions = [
     { id: "1d", label: "1D" },
@@ -23,15 +22,16 @@ function StockGraph({
     { id: "max", label: "All" },
   ]
   const [timeOption, setTimeOption] = useState(timeOptions[0].id)
+  console.log(prices)
+
+  prices = prices.map((value) => ({ amount: value }))
 
   const CustomTooltip = ({ payload }) => {
     if (payload?.length) {
       const data = payload[0].payload
       return (
         <div className="backdrop-blur-sm bg-black bg-opacity-50 shadow-xl rounded-full px-3 py-1">
-          <p className="text-sm text-default-200">
-            {USDFormat(data.close)} &#x2022; {data.date}
-          </p>
+          <p className="text-sm text-default-200">{USDFormat(data.amount)}</p>
         </div>
       )
     }
@@ -48,11 +48,11 @@ function StockGraph({
                 <div className="mb-4">
                   <p className="text-2xl font-semibold">{name}</p>
                   <p className="text-gray-500 font-semibold">
-                    Vertex : <strong>{symbol}</strong>
+                    Platform : <strong>{symbol}</strong>
                   </p>
                 </div>
                 <p className="text-gray-500">
-                  Industries: {industry.join(", ")}
+                  Industries: {industries.join(", ")}
                 </p>
               </div>
             </div>
@@ -62,12 +62,13 @@ function StockGraph({
               </p>
               <div className="flex items-center justify-end space-x-1">
                 <Chip
-                  startContent={<FaArrowUp />}
                   variant="flat"
-                  color="success"
-                  size="lg"
+                  color={change > 0 ? "success" : "danger"}
                   className="py-4 px-1 text-sm"
-                ></Chip>
+                  startContent={change > 0 ? <FaArrowUp /> : <FaArrowDown />}
+                >
+                  {change}
+                </Chip>
                 <p className="text-green-500 text-md">{"$10"}</p>
               </div>
             </div>
@@ -92,19 +93,23 @@ function StockGraph({
           <ResponsiveContainer width="100%" aspect={2.2}>
             <AreaChart data={prices}>
               <defs>
-                <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#16A253" stopOpacity={0.3} />
                   <stop offset="95%" stopColor="green" stopOpacity={0.05} />
+                </linearGradient>
+                <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="red" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="crimson" stopOpacity={0.05} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <Tooltip content={CustomTooltip} />
               <Area
-                dataKey="close"
+                dataKey="amount"
                 type="monotone"
                 dot={false}
-                fill="url(#gradient)"
-                stroke="#16A253"
+                fill={change > 0 ? "url(#green)" : "url(#red)"}
+                stroke={change > 0 ? "#16A253" : "crimson"}
               />
             </AreaChart>
           </ResponsiveContainer>

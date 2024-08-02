@@ -6,7 +6,7 @@ import StockGraph from "./StockGraph"
 import AuthLayout from "./AuthLayout"
 import TransactionsTable from "./TransactionsTable"
 import PortfolioAllocations from "./PortfolioAllocations"
-import TradingActivity from "./TradingActivity"
+import PortfolioGrowthChart from "./PortfolioGrowthChart"
 import AddMoneyComponent from "./AddMoneyComponent"
 import WithdrawMoneyComponent from "./WithdrawMoneyComponent"
 import WalletTransactions from "./WalletTransactions"
@@ -28,7 +28,7 @@ export {
     AuthLayout,
     TransactionsTable,
     PortfolioAllocations,
-    TradingActivity,
+    PortfolioGrowthChart,
     AddMoneyComponent,
     WithdrawMoneyComponent,
     WalletTransactions,

@@ -6,7 +6,7 @@ let USDFormatter = new Intl.NumberFormat("en-US", {
 
 let numFormatter = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 3,
+    maximumFractionDigits: 2,
 })
 
 function USDFormat(amount) {
@@ -59,28 +59,47 @@ function greet() {
 
 // filter portfolio stocks
 function filterStocks(stocks = []) {
+    let current = 0
+    let invested = 0
+
     const filtered = Object.values(
         stocks.reduce((acc, stock) => {
-            const { symbol, price, quantity } = stock
+            const { symbol, current_price, price, quantity } = stock
+
             if (!(symbol in acc)) {
                 acc[symbol] = {
                     ...stock,
                     orders: [],
                     invested: 0,
-                    total_quantity: 0,
+                    quantity: 0,
                 }
             }
             acc[symbol].orders.push(stock)
             acc[symbol].invested += price * quantity
-            acc[symbol].total_quantity += quantity
+            acc[symbol].quantity += quantity
             acc[symbol].average_price =
-                acc[symbol].invested / acc[symbol].total_quantity
+                acc[symbol].invested / acc[symbol].quantity
+
+            current += current_price
+            invested += price
 
             return acc
         }, {})
     )
 
-    return filtered
+    // calculate portfolio growth
+    const growth = filtered.reduce((acc, stock) => {
+        const change = stock.prices.map((price) => price - stock.average_price)
+        if (acc.length == 0) {
+            acc = change
+        } else {
+            acc = change.map((price, index) => acc[index] + price)
+        }
+
+        return acc
+    }, [])
+
+    return { current, invested, growth, filtered }
 }
 
 export {
