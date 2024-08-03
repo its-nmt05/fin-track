@@ -8,6 +8,7 @@ function Invest() {
 
   return !isLoading ? (
     <div className="space-y-4">
+      <div></div>
       <div className="flex flex-row items-center space-x-1">
         <p className="text-3xl font-bold">All stocks</p>
         <StockDisclaimerComponent />

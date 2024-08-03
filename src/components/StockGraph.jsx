@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from "@nextui-org/react"
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Chip,
+  Tab,
+  Tabs,
+} from "@nextui-org/react"
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6"
 import {
   Area,
@@ -29,7 +36,7 @@ function StockGraph({
     databaseService
       .getStockPrices({
         symbol,
-        range: getDaysAgo(timeOption),
+        start: getDaysAgo(timeOption),
       })
       .then(({ data }) => {
         setPrices(data)
@@ -58,7 +65,7 @@ function StockGraph({
               <img className="max-w-[80px]" src={image} />
               <div>
                 <div className="mb-4">
-                  <p className="text-2xl font-semibold">{name}</p>
+                  <p className="text-2xl font-bold">{name}</p>
                   <p className="text-gray-500 font-semibold">
                     Platform : <strong>{symbol}</strong>
                   </p>
@@ -72,17 +79,14 @@ function StockGraph({
               <p className="text-3xl font-bold text-blue-500">
                 {USDFormat(current_price)}
               </p>
-              <div className="flex items-center justify-end space-x-1">
-                <Chip
-                  variant="flat"
-                  color={change > 0 ? "success" : "danger"}
-                  className="py-4 px-1 text-sm"
-                  startContent={change > 0 ? <FaArrowUp /> : <FaArrowDown />}
-                >
-                  {change}
-                </Chip>
-                <p className="text-green-500 text-md">{"$10"}</p>
-              </div>
+              <Chip
+                variant="flat"
+                color={change > 0 ? "success" : "danger"}
+                className="py-4 px-1 text-sm"
+                startContent={change > 0 ? <FaArrowUp /> : <FaArrowDown />}
+              >
+                {change}%
+              </Chip>
             </div>
           </div>
         </CardBody>

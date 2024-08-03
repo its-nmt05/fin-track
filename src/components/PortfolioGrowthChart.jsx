@@ -27,16 +27,16 @@ function PortfolioGrowthChart({ data = [], className = "" }) {
 
   return (
     <Card className={`p-2 ${className}`}>
-      <CardHeader>
+      <CardHeader className="pt-1">
         <div>
-          <p className="text-2xl font-bold">Portfolio Growth</p>
+          <p className="text-xl font-bold">Portfolio Growth</p>
           <p className="text-default-600 text-sm">
             This is the blended growth of all the stocks in your portfolio
           </p>
         </div>
       </CardHeader>
       <CardBody>
-        <ResponsiveContainer width="100%" aspect={2.3}>
+        <ResponsiveContainer width="100%" aspect={2.8}>
           <AreaChart data={data} margin={{ left: 5, right: 5, top: 5 }}>
             <defs>
               <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">

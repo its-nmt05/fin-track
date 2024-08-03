@@ -104,6 +104,7 @@ function filterStocks(stocks = []) {
     return { current, invested, growth, filtered }
 }
 
+// returns the date, specified by days in the past
 function getDaysAgo(days) {
     days = Number.parseInt(days)
     if (days) {

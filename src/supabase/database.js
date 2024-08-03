@@ -1,12 +1,8 @@
-import { createClient } from "@supabase/supabase-js"
-import config from "../config/config"
+import authService from "./auth"
 
 export class DatabaseService {
     constructor() {
-        this.client = createClient(
-            config.supabaseUrl,
-            config.supabaseProjectAPIKey
-        )
+        this.client = authService.client
     }
 
     async getStocks() {
@@ -55,12 +51,13 @@ export class DatabaseService {
             .maybeSingle()
     }
 
-    async getStockPrices({ symbol, range }) {
+    async getStockPrices({ symbol, start }) {
         return await this.client
             .from("stock_prices")
             .select()
             .eq("symbol", symbol)
-            .gt("time", range)
+            .gt("time", start)
+            .order("time", { ascending: true })
     }
 
     async stockTransact({ uid, _symbol, operation, _quantity }) {
@@ -94,7 +91,8 @@ export class DatabaseService {
             .subscribe()
     }
 
-    async portfolioUpdate({ portfolio_id, onUpdate }) {
+    async portfolioUpdate({ onUpdate }) {
+        const portfolio_id = "4fb49892-98cb-440c-9069-b5ec9af9b101"
         this.client
             .channel("portfolio")
             .on(
@@ -102,7 +100,8 @@ export class DatabaseService {
                 {
                     event: "*",
                     schema: "public",
-                    table: "portfolio_data",
+                    table: "portfolio_stocks",
+                    filter: `portfolio_id=eq.${portfolio_id}`,
                 },
                 () => onUpdate()
             )

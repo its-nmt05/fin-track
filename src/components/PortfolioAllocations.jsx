@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts"
+import { data } from "autoprefixer"
 
 function PortfolioAllocations({ className = "", current, invested, stocks }) {
   // calculate the % returns
@@ -30,7 +31,7 @@ function PortfolioAllocations({ className = "", current, invested, stocks }) {
   }
 
   return (
-    <Card className={`p-2 ${className}`}>
+    <Card className={`p-2 min-h-[300px] ${className}`}>
       <CardHeader>
         <p className="font-medium text-xl">Portfolio allocations</p>
       </CardHeader>
@@ -50,15 +51,16 @@ function PortfolioAllocations({ className = "", current, invested, stocks }) {
           </Chip>
         </div>
         {stocks.length == 0 ? (
-          <div className="w-full text-center py-[20%]">
-            <p className="text-default-600">Invest in some stocks first</p>
+          <div className="flex flex-col flex-grow items-center justify-center">
+            <p className="text-default-600 text-lg font-medium">
+              Invest in some stocks first
+            </p>
           </div>
         ) : (
           <ResponsiveContainer width="100%" aspect={1.5}>
-            <PieChart>
+            <PieChart margin={{ top: 30, bottom: 20 }}>
               <Pie
                 data={stocks}
-                cx="40%"
                 dataKey="quantity"
                 nameKey="symbol"
                 innerRadius={50}
@@ -74,6 +76,7 @@ function PortfolioAllocations({ className = "", current, invested, stocks }) {
                 layout="vertical"
                 align="right"
                 verticalAlign="middle"
+                formatter={(_, entry) => entry.payload.symbol}
               />
             </PieChart>
           </ResponsiveContainer>

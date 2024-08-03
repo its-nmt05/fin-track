@@ -202,10 +202,15 @@ function BuySellShareComponent({
               message && (
                 <div className="px-2">
                   {Object.entries(message).map(([key, value]) => (
-                    <div key={key} className="flex items-baseline">
-                      <p className="font-bold">{capitalize(key)}: &nbsp;</p>
-                      <p className="text-default-600 text-small">{value}</p>
-                    </div>
+                    <p
+                      key={key}
+                      className="text-small text-default-600 line-clamp-1"
+                    >
+                      <strong className="font-bold text-medium text-black">
+                        {capitalize(key)}:
+                      </strong>
+                      &nbsp;{value}
+                    </p>
                   ))}
                 </div>
               )
