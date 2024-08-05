@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import databaseService from "../../supabase/database"
 import { useSelector } from "react-redux"
+import { filterStocks } from "../../utils/helper"
 
 export const fetchPortfolio = createAsyncThunk(
     "fetchPortfolio",
@@ -24,9 +25,8 @@ const portfolioSlice = createSlice({
         })
         builder.addCase(fetchPortfolio.fulfilled, (state, action) => {
             state.isLoading = false
-
-            // send the data (stocks, transactions)  to the store
-            const data = action.payload[0].data
+            // send the data (stocks, transactions) to the store
+            const data = filterStocks(action.payload[0].data)
             data["transactions"] = action.payload[1].data.portfolio_transaction
             state.data = data
         })

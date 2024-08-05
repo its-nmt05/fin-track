@@ -19,6 +19,7 @@ import WalletChart from "./WalletChart"
 import StockChart from "./StockChart"
 import SortedStockList from "./SortedStockList"
 import AvailableBalance from "./AvailableBalance"
+import StockOwnerShipComponent from "./StockOwnerShipComponent"
 
 export {
     Header,
@@ -42,4 +43,5 @@ export {
     StockChart,
     SortedStockList,
     AvailableBalance,
+    StockOwnerShipComponent,
 }

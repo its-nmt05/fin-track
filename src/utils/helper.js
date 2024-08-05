@@ -82,8 +82,8 @@ function filterStocks(stocks = []) {
             acc[symbol].average_price =
                 acc[symbol].invested / acc[symbol].quantity
 
-            current += current_price
-            invested += price
+            current += current_price * quantity
+            invested += price * quantity
 
             return acc
         }, {})
@@ -101,7 +101,7 @@ function filterStocks(stocks = []) {
         return acc
     }, [])
 
-    return { current, invested, growth, filtered }
+    return { current, invested, growth, stocks: filtered }
 }
 
 // returns the date, specified by days in the past

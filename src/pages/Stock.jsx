@@ -6,28 +6,52 @@ import {
   BuySellShareComponent,
   StockDetailsComponent,
   StockGraph,
+  StockOwnerShipComponent,
 } from "../components"
 import { useWallet } from "../store/slice/walletSlice"
 import { useStocks } from "../store/slice/stockSlice"
 import image from "../static/images/no_data.svg"
+import { usePortfolio } from "../store/slice/portfolioSlice"
 
 function Stock() {
   const { symbol } = useParams()
+  let quantity = 0
+  let transactions = []
+
   const {
     data: { balance, wallet_transaction },
   } = useWallet() // get required info about wallet
 
-  const { data: stocks, isLoading } = useStocks() // get required info about stock
+  const { data: stocks, isLoading } = useStocks() // get required info about stocks
   const stockData = stocks.find((stock) => stock.symbol == symbol)
+
+  const { data } = usePortfolio() // get required info about portfolio
+  if (data.stocks) {
+    const stock = data.stocks.find((stock) => stock.symbol == symbol)
+    if (stock) {
+      quantity = stock.quantity
+    }
+  }
+
+  if (data.transactions) {
+    transactions = data.transactions.filter((stock) => stock.symbol == symbol)
+  }
 
   return !isLoading ? (
     stockData ? (
       <div className="flex flex-col lg:flex-row gap-4">
-        <AvailableBalance
-          balance={balance}
-          transactions={wallet_transaction?.length}
-          className="lg:w-1/4 h-fit order-3 lg:order-1"
-        />
+        <div className="lg:w-1/4 h-fit order-3 lg:order-1 flex flex-row lg:flex-col gap-4">
+          <AvailableBalance
+            balance={balance}
+            transactions={wallet_transaction?.length}
+            className="w-full h-fit"
+          />
+          <StockOwnerShipComponent
+            quantity={quantity}
+            transactions={transactions}
+            className="w-full max-h-[70vh]"
+          />
+        </div>
         <StockGraph
           stockData={stockData}
           className="lg:w-3/5 order-1 lg:order-2"
@@ -37,6 +61,7 @@ function Stock() {
           <BuySellShareComponent
             symbol={stockData.symbol}
             current_price={stockData.current_price}
+            quantity_owned={quantity}
             balance={balance}
             className="w-full"
           />

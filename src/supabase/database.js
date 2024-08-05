@@ -92,7 +92,7 @@ export class DatabaseService {
     }
 
     async portfolioUpdate({ onUpdate }) {
-        const portfolio_id = "4fb49892-98cb-440c-9069-b5ec9af9b101"
+        const portfolio_id = "6fb31c1b-c42e-4c43-8b00-a1edf27e218c"
         this.client
             .channel("portfolio")
             .on(

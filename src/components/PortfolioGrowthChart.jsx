@@ -40,7 +40,7 @@ function PortfolioGrowthChart({ data = [], className = "" }) {
           <AreaChart data={data} margin={{ left: 5, right: 5, top: 5 }}>
             <defs>
               <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="green" stopOpacity={0.4} />
+                <stop offset="5%" stopColor="green" stopOpacity={0.3} />
                 <stop offset="95%" stopColor="green" stopOpacity={0.05} />
               </linearGradient>
             </defs>

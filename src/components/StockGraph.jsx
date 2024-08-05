@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react"
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Chip,
-  Tab,
-  Tabs,
-} from "@nextui-org/react"
+import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from "@nextui-org/react"
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6"
 import {
   Area,

@@ -7,12 +7,11 @@ import {
 } from "../components"
 import { Spinner } from "@nextui-org/react"
 import { usePortfolio } from "../store/slice/portfolioSlice"
-import { filterStocks } from "../utils/helper"
 
 function Portfolio() {
   const { data, isLoading } = usePortfolio()
   const { transactions } = data
-  const { current, invested, growth, filtered: stocks } = filterStocks(data)
+  const { current, invested, growth, stocks } = data
 
   return !isLoading ? (
     <div className="space-y-8">

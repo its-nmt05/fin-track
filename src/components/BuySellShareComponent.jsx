@@ -27,6 +27,7 @@ function BuySellShareComponent({
   symbol,
   current_price = 0,
   balance,
+  quantity_owned = 0,
   className = "",
 }) {
   const operations = [
@@ -81,10 +82,13 @@ function BuySellShareComponent({
   useEffect(() => {
     const quantity = Number(shares)
     const balanceIsEnough = balance >= quantity * current_price
-    const isSell = operation == "sell"
-    setIsValid(
-      Number.isInteger(quantity) && quantity > 0 && (balanceIsEnough || isSell)
-    )
+    const quantityIsEnough = quantity <= quantity_owned
+
+    if (operation == "buy") {
+      setIsValid(Number.isInteger(quantity) && quantity > 0 && balanceIsEnough)
+    } else {
+      setIsValid(Number.isInteger(quantity) && quantity > 0 && quantityIsEnough)
+    }
   }, [shares, balance, current_price, operation])
 
   return (
