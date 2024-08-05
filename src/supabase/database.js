@@ -35,9 +35,9 @@ export class DatabaseService {
         ])
     }
 
-    async walletTransact({ wallet_id, amount, type }) {
+    async walletTransact({ uid, amount, type }) {
         return await this.client.rpc("create_wallet_transaction", {
-            wallet_id,
+            uid,
             amount,
             type,
         })

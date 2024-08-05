@@ -14,9 +14,11 @@ import { IoAddOutline } from "react-icons/io5"
 import databaseService from "../supabase/database"
 import animationData from "../static/lotties/done.json"
 import Lottie from "react-lottie"
+import useAuth from "../hooks/useAuth"
 
-function AddMoneyComponent({ wallet_id }) {
+function AddMoneyComponent() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const { user } = useAuth()
   const {
     reset,
     handleSubmit,
@@ -56,7 +58,7 @@ function AddMoneyComponent({ wallet_id }) {
   const addMoney = async ({ amount }) => {
     setLoading(true)
     databaseService
-      .walletTransact({ wallet_id, amount, type: "deposit" })
+      .walletTransact({ uid: user.id, amount, type: "deposit" })
       .then(({ error }) => {
         setError(error?.message)
         if (!error) {

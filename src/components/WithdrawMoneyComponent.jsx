@@ -16,9 +16,11 @@ import { FaAnglesDown } from "react-icons/fa6"
 import Lottie from "react-lottie"
 import animationData from "../static/lotties/done.json"
 import databaseService from "../supabase/database"
+import useAuth from "../hooks/useAuth"
 
-function WithdrawMoneyComponent({ balance, wallet_id }) {
+function WithdrawMoneyComponent({ balance }) {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
+  const { user } = useAuth()
   const {
     reset,
     handleSubmit,
@@ -58,7 +60,7 @@ function WithdrawMoneyComponent({ balance, wallet_id }) {
   const withdraw = async ({ amount }) => {
     setLoading(true)
     databaseService
-      .walletTransact({ wallet_id, amount, type: "withdraw" })
+      .walletTransact({ uid: user.id, amount, type: "withdraw" })
       .then(({ error }) => {
         setError(error?.message)
         if (!error) {
@@ -118,7 +120,7 @@ function WithdrawMoneyComponent({ balance, wallet_id }) {
               <ModalBody>
                 <form onSubmit={handleSubmit(withdraw)}>
                   <Controller
-                    defaultValue={""}
+                    defaultValue=""
                     control={control}
                     name="amount"
                     rules={{
