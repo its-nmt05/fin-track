@@ -25,8 +25,8 @@ function StockOwnerShipComponent({
   return (
     <>
       <Card className={`py-2 px-1 ${className}`}>
-        <CardHeader className="pb-2">
-          <div className="space-y-3">
+        <CardBody className="pb-2">
+          <div className="h-full flex flex-col justify-between gap-6">
             <p>
               You currently own <strong>{numFormat(quantity)}</strong>{" "}
               {quantity == 1 ? "quantity" : "quanities"} of this stock.
@@ -35,7 +35,7 @@ function StockOwnerShipComponent({
               View all transactions
             </Button>
           </div>
-        </CardHeader>
+        </CardBody>
       </Card>
       <Modal
         isOpen={isOpen}
@@ -51,7 +51,11 @@ function StockOwnerShipComponent({
             <p className="font-bold text-xl">Transactions</p>
           </ModalHeader>
           <ModalBody>
-            {transactions.length == 0 && <p className="text-center text-default-600 py-8">No transactions</p>}
+            {transactions.length == 0 && (
+              <p className="text-center text-default-600 py-8">
+                No transactions
+              </p>
+            )}
             {transactions.map((trans) => {
               const { id, symbol, time, quantity, price, operation } = trans
               return (
