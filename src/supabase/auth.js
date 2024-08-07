@@ -36,8 +36,20 @@ export class AuthService {
         return await this.client.auth.signOut()
     }
 
-    async getUser(onAuth) {
-        this.client.auth.onAuthStateChange(onAuth)
+    async getUser() {
+        try {
+            const {
+                data: { session },
+            } = await this.client.auth.getSession()
+            return session?.user
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // listen to auth state changes
+    onAuthChange(onAuth) {
+        return this.client.auth.onAuthStateChange(onAuth)
     }
 }
 
