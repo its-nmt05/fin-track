@@ -38,13 +38,12 @@ const useFetchUserData = () => {
             }
         })
 
-        const fetchData = async () => {
+        const fetchUser = async () => {
             const session = await authService.getUser()
             session?.user ? dispatch(setUser(session)) : dispatch(clearUser())
-            dispatchData(session)
             setIsLoading(false)
         }
-        fetchData()
+        fetchUser()
 
         return () => {
             databaseService.unsubscribeAll() // unsub all realtime listeners

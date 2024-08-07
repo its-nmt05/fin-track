@@ -1,20 +1,22 @@
 import React, { useState } from "react"
-import { Button, Input, Link } from "@nextui-org/react"
+import { Button, Input, Link, Spinner } from "@nextui-org/react"
 import { useForm } from "react-hook-form"
 import useAuth from "../hooks/useAuth"
 
 function Login() {
   const { login } = useAuth()
   const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   const { register, handleSubmit } = useForm()
 
-  const loginUser = (userData) => {
-    login(userData).then(({ error }) => {
-      setError(error?.message)
-    })
+  const loginUser = async (userData) => {
+    setIsLoading(true)
+    const { error } = await login(userData)
+    setError(error?.message)
+    setIsLoading(false)
   }
 
-  return (
+  return !isLoading ? (
     <div className="flex flex-col h-screen justify-center px-8">
       <div>
         <img
@@ -66,6 +68,10 @@ function Login() {
           </Link>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className="flex min-h-screen justify-center items-center">
+      <Spinner size="lg" />
     </div>
   )
 }
