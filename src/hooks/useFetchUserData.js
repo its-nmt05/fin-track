@@ -21,7 +21,6 @@ const useFetchUserData = () => {
             const user_id = user.id
             dataLoaded.current = true
 
-            dispatch(setUser(user))
             dispatch(fetchStocks())
             dispatch(fetchPortfolio(user_id))
             dispatch(fetchWallet(user_id))
@@ -40,9 +39,9 @@ const useFetchUserData = () => {
         })
 
         const fetchData = async () => {
-            const user = await authService.getUser()
-            user ? dispatch(setUser(user)) : dispatch(clearUser())
-            dispatchData(user)
+            const session = await authService.getUser()
+            session?.user ? dispatch(setUser(session)) : dispatch(clearUser())
+            dispatchData(session)
             setIsLoading(false)
         }
         fetchData()

@@ -41,7 +41,7 @@ export class AuthService {
             const {
                 data: { session },
             } = await this.client.auth.getSession()
-            return session?.user
+            return session
         } catch (error) {
             console.log(error)
         }
