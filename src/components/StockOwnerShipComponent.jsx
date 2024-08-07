@@ -1,4 +1,17 @@
-import { Card, CardBody, CardHeader, Chip, Divider } from "@nextui-org/react"
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Chip,
+  Divider,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react"
 import React from "react"
 import { dateFormat, numFormat, USDFormat } from "../utils/helper"
 
@@ -7,30 +20,46 @@ function StockOwnerShipComponent({
   transactions = [],
   className = "",
 }) {
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
+
   return (
-    <Card className={`py-2 px-1 ${className}`}>
-      <CardHeader className="pb-0">
-        <div>
-          You currently own <strong>{numFormat(quantity)}</strong>{" "}
-          {quantity == 1 ? "quantity" : "quanities"} of this stock.
-        </div>
-      </CardHeader>
-      <CardBody>
-        {transactions.length == 0 ? (
-          <p className="text-default-600 text-center py-8">
-            No transactions found
-          </p>
-        ) : (
-          <div>
-            <p className="font-bold text-xl mb-1">Transactions</p>
-            {transactions.map((tran) => {
-              const { id, symbol, time, quantity, price, operation } = tran
+    <>
+      <Card className={`py-2 px-1 ${className}`}>
+        <CardHeader className="pb-2">
+          <div className="space-y-3">
+            <p>
+              You currently own <strong>{numFormat(quantity)}</strong>{" "}
+              {quantity == 1 ? "quantity" : "quanities"} of this stock.
+            </p>
+            <Button className="bg-black text-white w-full" onPress={onOpen}>
+              View all transactions
+            </Button>
+          </div>
+        </CardHeader>
+      </Card>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        scrollBehavior="inside"
+        backdrop="blur"
+        placement="center"
+        className="py-3"
+        size="sm"
+      >
+        <ModalContent>
+          <ModalHeader>
+            <p className="font-bold text-xl">Transactions</p>
+          </ModalHeader>
+          <ModalBody>
+            {transactions.length == 0 && <p className="text-center text-default-600 py-8">No transactions</p>}
+            {transactions.map((trans) => {
+              const { id, symbol, time, quantity, price, operation } = trans
               return (
-                <div key={id}>
+                <div key={id} className="mx-2">
                   <p className="text-tiny">
                     <strong>{symbol}</strong> &#x2022; {dateFormat(time)}
                   </p>
-                  <p className="text-tiny text-default-600 mb-1 line-clamp-1">{id}</p>
+                  <p className="text-tiny text-default-600 mb-1">{id}</p>
                   <div className="space-x-1">
                     <Chip
                       size="sm"
@@ -53,10 +82,19 @@ function StockOwnerShipComponent({
                 </div>
               )
             })}
-          </div>
-        )}
-      </CardBody>
-    </Card>
+          </ModalBody>
+          <ModalFooter className="pb-2">
+            <Button
+              className="bg-black text-white w-full"
+              radius="sm"
+              onPress={onClose}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
 

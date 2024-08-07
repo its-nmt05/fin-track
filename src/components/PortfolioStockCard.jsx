@@ -121,7 +121,7 @@ function PortfolioStockCard({
                   <p className="text-tiny">
                     <strong>{symbol}</strong> &#x2022; {dateFormat(time)}
                   </p>
-                  <p className="text-tiny text-default-600 mb-1">{order.id}</p>
+                  <p className="text-tiny text-default-600 mb-1">{id}</p>
                   <Chip size="sm" radius="sm" color="success" variant="flat">
                     {numFormat(quantity)} &#x2022; {USDFormat(price)}
                   </Chip>
