@@ -18,21 +18,24 @@ const useFetchUserData = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await authService.getUser()
-            if (data?.user) {
-                const user_id = data.user.id
-                dispatch(setUser(data))
-                dispatch(fetchStocks())
-                dispatch(fetchPortfolio(user_id))
-                dispatch(fetchWallet(user_id))
+            await authService.getUser((_, session) => {
+                if (session?.user) {
+                    const user = session.user
+                    const user_id = user.id
 
-                // listen for realtime updates on portfolio and wallet
-                dispatch(onWalletUpdate(user_id))
-                dispatch(onPortfolioUpdate(user_id))
-            } else {
-                navigate("/login")
-                dispatch(clearUser())
-            }
+                    dispatch(setUser(user))
+                    dispatch(fetchStocks())
+                    dispatch(fetchPortfolio(user_id))
+                    dispatch(fetchWallet(user_id))
+
+                    // listen for realtime updates on portfolio and wallet
+                    dispatch(onWalletUpdate(user_id))
+                    dispatch(onPortfolioUpdate(user_id))
+                } else {
+                    navigate("/login")
+                    dispatch(clearUser())
+                }
+            })
             setIsLoading(false)
         }
         fetchData()

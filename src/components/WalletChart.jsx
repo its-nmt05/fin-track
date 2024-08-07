@@ -6,6 +6,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
+  XAxis,
 } from "recharts"
 import { capitalize, USDFormat } from "../utils/helper"
 
@@ -26,8 +27,8 @@ function WalletChart({ data }) {
   return (
     <Card className="basis-2/3">
       <CardBody>
-        <ResponsiveContainer width="100%" aspect={2.3}>
-          <AreaChart data={data} margin={{ left: 5, right: 5, top: 5 }}>
+        <ResponsiveContainer width="100%" aspect={2.25}>
+          <AreaChart data={data}>
             <defs>
               <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="green" stopOpacity={0.4} />

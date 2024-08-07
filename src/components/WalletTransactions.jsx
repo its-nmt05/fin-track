@@ -40,12 +40,17 @@ function WalletTransactions({ transactions = [], className = "" }) {
       case "time":
         return <p>{dateFormat(time)}</p>
       case "type":
+        let color
+        if (type == "buy" || type == "sell") {
+          color = "warning"
+        } else if (type == "deposit") {
+          color = "success"
+        } else {
+          color = "danger"
+        }
+
         return (
-          <Chip
-            size="sm"
-            variant="flat"
-            color={type == "deposit" ? "success" : "danger"}
-          >
+          <Chip size="sm" variant="flat" color={color}>
             {capitalize(type)}
           </Chip>
         )

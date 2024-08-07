@@ -1,6 +1,6 @@
 import React from "react"
 import { useParams } from "react-router-dom"
-import { Spinner } from "@nextui-org/react"
+import { Card, CardBody, CardHeader, Spinner } from "@nextui-org/react"
 import {
   AvailableBalance,
   BuySellShareComponent,
@@ -51,6 +51,16 @@ function Stock() {
             transactions={transactions}
             className="w-full max-h-[70vh]"
           />
+          <Card>
+            <CardHeader>Latest News</CardHeader>
+            <CardBody>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptatem beatae aut temporibus at id dolorum magnam quaerat
+                velit debitis ad?
+              </p>
+            </CardBody>
+          </Card>
         </div>
         <StockGraph
           stockData={stockData}

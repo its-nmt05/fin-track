@@ -52,7 +52,6 @@ function PortfolioGrowthChart({ data = [], className = "" }) {
               stroke="#16A253"
               fill="url(#gradient)"
             />
-            {/* <YAxis /> */}
           </AreaChart>
         </ResponsiveContainer>
       </CardBody>
