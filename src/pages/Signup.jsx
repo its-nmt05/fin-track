@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Button, Input, Link, Spinner } from "@nextui-org/react"
 import { useForm } from "react-hook-form"
 import useAuth from "../hooks/useAuth"
+import Logo from "../static/logo/Logo"
 
 function Signup() {
   const { signup } = useAuth()
@@ -19,12 +20,8 @@ function Signup() {
   return !isLoading ? (
     <div className="flex flex-col h-screen justify-center px-8">
       <div>
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <Logo className="mx-auto w-auto" size={16} />
+        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Welcome to FinTrack
         </h2>
       </div>

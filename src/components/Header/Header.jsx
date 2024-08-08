@@ -16,8 +16,8 @@ import {
 } from "@nextui-org/react"
 
 import { useLocation } from "react-router-dom"
-import Logo from "../../static/icons/Logo"
 import useAuth from "../../hooks/useAuth"
+import Logo from "../../static/logo/Logo"
 
 export default function Header() {
   const navItems = [
@@ -38,9 +38,8 @@ export default function Header() {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
-        <NavbarBrand size={20}>
-          <Logo />
-          <p className="font-bold text-inherit">FinTrack</p>
+        <NavbarBrand>
+          <Logo size={12} className="px-2 sm:px-0" />
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
