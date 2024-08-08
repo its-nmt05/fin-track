@@ -16,13 +16,9 @@ It is completely free to use for educational purposes. All stocks and currency d
 
 Go to the `Signup` page to create an account. Enter your name, email address and password. Please try to enter accurate information.
 
-![image](./assets/signup.gif)
-
 ### Logging in
 
 To log back into an existing account visit the `Login` page.
-
-![image](./assets/login.gif)
 
 ### Adding money
 
