@@ -69,10 +69,19 @@ export class DatabaseService {
         })
     }
 
+    // reset all user data
     async resetAccount({ uid }) {
         return this.client.rpc("reset_account", {
             uid,
         })
+    }
+
+    async getAppData({ section }) {
+        return this.client
+            .from("app_data")
+            .select()
+            .eq("section", section)
+            .single()
     }
 
     async walletUpdate({ user_id, onUpdate }) {
