@@ -13,10 +13,16 @@ import {
 } from "@nextui-org/react"
 import React from "react"
 import useAuth from "../hooks/useAuth"
-import { MdDarkMode, MdLightMode, MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
+import {
+  MdDarkMode,
+  MdLightMode,
+  MdOutlineDarkMode,
+  MdOutlineLightMode,
+} from "react-icons/md"
 import { HiDeviceMobile, HiOutlineDeviceMobile } from "react-icons/hi"
 import databaseService from "../supabase/database"
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2"
+import { Footer } from "../components"
 
 function Settings() {
   const { user } = useAuth()
@@ -119,13 +125,19 @@ function Settings() {
                     </Button>
                   </DropdownTrigger>
                   <DropdownMenu aria-label="theme-menu">
-                    <DropdownItem startContent={<MdOutlineLightMode size={18} />}>
+                    <DropdownItem
+                      startContent={<MdOutlineLightMode size={18} />}
+                    >
                       Light mode
                     </DropdownItem>
-                    <DropdownItem startContent={<MdOutlineDarkMode size={18} />}>
+                    <DropdownItem
+                      startContent={<MdOutlineDarkMode size={18} />}
+                    >
                       Dark mode
                     </DropdownItem>
-                    <DropdownItem startContent={<HiOutlineDevicePhoneMobile size={18} />}>
+                    <DropdownItem
+                      startContent={<HiOutlineDevicePhoneMobile size={18} />}
+                    >
                       Device settings
                     </DropdownItem>
                   </DropdownMenu>
@@ -142,6 +154,7 @@ function Settings() {
             </div>
           </CardBody>
         </Card>
+        <Footer />
       </div>
     </div>
   )

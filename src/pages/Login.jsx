@@ -28,6 +28,7 @@ function Login() {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6 mb-2" onSubmit={handleSubmit(loginUser)}>
           <Input
+            autoFocus
             isRequired
             type="email"
             label="Email"
