@@ -23,10 +23,10 @@ function GetStarted() {
     <div className="space-y-6">
       <Accordion variant="splitted">
         {contentData.map((item) => {
-          const { title, content } = item
+          const { title, content, id } = item
           return (
             <AccordionItem
-              key={title}
+              key={id}
               title={<p className="font-medium">{title}</p>}
             >
               <div className="browser-css">{parse(content)}</div>
