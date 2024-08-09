@@ -55,10 +55,10 @@ function StockGraph({
         <CardBody>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-6">
-              <img className="max-w-[80px]" src={image} />
+              <img className="lg:w-[80px] w-[60px]" src={image} />
               <div>
                 <div className="mb-4">
-                  <p className="text-2xl font-bold">{name}</p>
+                  <p className="text-2xl font-bold line-clamp-1">{name}</p>
                   <p className="text-gray-500 font-semibold">
                     Platform : <strong>{symbol}</strong>
                   </p>

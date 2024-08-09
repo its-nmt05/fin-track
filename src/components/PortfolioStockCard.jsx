@@ -42,8 +42,6 @@ function PortfolioStockCard({
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const p_return = (current_price - average_price) / average_price * 100 // calculate the % return
   prices = prices.map((value) => ({ amount: value }))
-  image =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi_F5mBDcXHBlUDkSiJD9-ZmnKHIjG9h-nhQ&s"
 
   return (
     <>
