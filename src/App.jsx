@@ -22,7 +22,7 @@ function App() {
 
   return !isLoading ? (
     <NextUIProvider navigate={navigate}>
-      <NextThemesProvider attribute="class">
+      <NextThemesProvider attribute="class" defaultTheme="light">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route
