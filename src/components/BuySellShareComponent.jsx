@@ -210,7 +210,7 @@ function BuySellShareComponent({
                       key={key}
                       className="text-small text-default-600 line-clamp-1"
                     >
-                      <strong className="font-bold text-medium text-black">
+                      <strong className="font-bold text-medium">
                         {capitalize(key)}:
                       </strong>
                       &nbsp;{value}

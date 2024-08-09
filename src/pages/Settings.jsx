@@ -11,7 +11,7 @@ import {
   DropdownTrigger,
   Input,
 } from "@nextui-org/react"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import useAuth from "../hooks/useAuth"
 import {
   MdDarkMode,
@@ -23,10 +23,24 @@ import { HiDeviceMobile, HiOutlineDeviceMobile } from "react-icons/hi"
 import databaseService from "../supabase/database"
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2"
 import { Footer } from "../components"
+import { useTheme } from "next-themes"
+import { capitalize } from "../utils/helper"
 
 function Settings() {
   const { user } = useAuth()
   const name = user?.user_metadata?.name
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [selectedKeys, setSelectedKeys] = useState(new Set([theme]))
+
+  console.log(user)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
   return (
     <div className="w-full flex justify-center">
       <div className="w-full md:max-w-[80%] lg:max-w-[65%] space-y-6">
@@ -116,34 +130,35 @@ function Settings() {
           </CardHeader>
           <CardBody>
             <div className="flex flex-row items-end space-x-6">
-              <div className="space-y-1">
-                <p className="text-sm">Theme</p>
-                <Dropdown>
-                  <DropdownTrigger>
-                    <Button color="default" variant="flat">
-                      Light mode
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="theme-menu">
-                    <DropdownItem
-                      startContent={<MdOutlineLightMode size={18} />}
-                    >
-                      Light mode
-                    </DropdownItem>
-                    <DropdownItem
-                      startContent={<MdOutlineDarkMode size={18} />}
-                    >
-                      Dark mode
-                    </DropdownItem>
-                    <DropdownItem
-                      startContent={<HiOutlineDevicePhoneMobile size={18} />}
-                    >
-                      Device settings
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </div>
-
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button color="default" variant="flat">
+                    {capitalize(theme)} Mode
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  aria-label="theme-menu"
+                  variant="flat"
+                  disallowEmptySelection
+                  selectionMode="single"
+                  selectedKeys={selectedKeys}
+                  onSelectionChange={setSelectedKeys}
+                  onAction={(key) => setTheme(key)}
+                >
+                  <DropdownItem
+                    key="light"
+                    startContent={<MdOutlineLightMode size={18} />}
+                  >
+                    Light mode
+                  </DropdownItem>
+                  <DropdownItem
+                    key="dark"
+                    startContent={<MdOutlineDarkMode size={18} />}
+                  >
+                    Dark mode
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
               <Button
                 color="danger"
                 variant="flat"

@@ -40,7 +40,7 @@ function StockGraph({
     if (payload?.length) {
       const data = payload[0].payload
       return (
-        <div className="backdrop-blur-sm bg-black bg-opacity-50 shadow-xl rounded-full px-3 py-1">
+        <div className="backdrop-blur-sm bg-black/50 dark:bg-white/50 shadow-xl rounded-full px-3 py-1">
           <p className="text-sm text-default-200">
             {USDFormat(data.close)} &#x2022; {dateFormat(data.time, false)}
           </p>

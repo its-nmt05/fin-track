@@ -84,7 +84,7 @@ export default function Header() {
             <DropdownItem key="started" href="get-started">
               Get started
             </DropdownItem>
-            <DropdownItem key="settings" href="settings" isActive>
+            <DropdownItem key="settings" href="settings">
               My Settings
             </DropdownItem>
             <DropdownItem key="help">Help & Feedback</DropdownItem>

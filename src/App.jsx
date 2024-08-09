@@ -1,4 +1,5 @@
 import { NextUIProvider, Spinner } from "@nextui-org/react"
+import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { Layout, AuthLayout } from "./components"
 import {
@@ -21,83 +22,85 @@ function App() {
 
   return !isLoading ? (
     <NextUIProvider navigate={navigate}>
-      <Routes>
-        <Route path="/" element={<Layout />}>
+      <NextThemesProvider attribute="class">
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route
+              path="/"
+              element={
+                <AuthLayout authReq>
+                  <Home />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="get-started"
+              element={
+                <AuthLayout authReq>
+                  <GetStarted />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="portfolio"
+              element={
+                <AuthLayout authReq>
+                  <Portfolio />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="invest"
+              element={
+                <AuthLayout authReq>
+                  <Invest />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="wallet"
+              element={
+                <AuthLayout authReq>
+                  <Wallet />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="stock/:symbol"
+              element={
+                <AuthLayout authReq>
+                  <Stock />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="settings"
+              element={
+                <AuthLayout authReq>
+                  <Settings />
+                </AuthLayout>
+              }
+            />
+          </Route>
           <Route
-            path="/"
+            path="/login"
             element={
-              <AuthLayout authReq>
-                <Home />
+              <AuthLayout>
+                <Login />
               </AuthLayout>
             }
           />
           <Route
-            path="get-started"
+            path="/signup"
             element={
-              <AuthLayout authReq>
-                <GetStarted />
+              <AuthLayout>
+                <Signup />
               </AuthLayout>
             }
           />
-          <Route
-            path="portfolio"
-            element={
-              <AuthLayout authReq>
-                <Portfolio />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="invest"
-            element={
-              <AuthLayout authReq>
-                <Invest />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="wallet"
-            element={
-              <AuthLayout authReq>
-                <Wallet />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="stock/:symbol"
-            element={
-              <AuthLayout authReq>
-                <Stock />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="settings"
-            element={
-              <AuthLayout authReq>
-                <Settings />
-              </AuthLayout>
-            }
-          />
-        </Route>
-        <Route
-          path="/login"
-          element={
-            <AuthLayout>
-              <Login />
-            </AuthLayout>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <AuthLayout>
-              <Signup />
-            </AuthLayout>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </NextThemesProvider>
     </NextUIProvider>
   ) : (
     <div className="flex min-h-screen justify-center items-center">

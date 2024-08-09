@@ -40,17 +40,19 @@ function Stock() {
   return !isLoading ? (
     stockData ? (
       <div className="flex flex-col lg:flex-row gap-4">
-        <div className="lg:w-1/4 h-fit order-3 lg:order-1 flex flex-row lg:flex-col gap-4">
-          <AvailableBalance
-            balance={balance}
-            transactions={wallet_transaction?.length}
-            className="w-full h-fit"
-          />
-          <StockOwnerShipComponent
-            quantity={quantity}
-            transactions={transactions}
-            className="w-full max-h-[70vh]"
-          />
+        <div className="lg:w-1/4 order-3 lg:order-1 flex flex-col gap-4">
+          <div className="flex flex-row lg:flex-col gap-4">
+            <AvailableBalance
+              balance={balance}
+              transactions={wallet_transaction?.length}
+              className="w-full h-fit"
+            />
+            <StockOwnerShipComponent
+              quantity={quantity}
+              transactions={transactions}
+              className="w-full max-h-[70vh]"
+            />
+          </div>
           <Card>
             <CardHeader>Latest News</CardHeader>
             <CardBody>
